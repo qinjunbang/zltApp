@@ -1,0 +1,78 @@
+**添加安卓平台**
+```ionic cordova platform add android/ios```
+
+**build 安卓**
+```ionic cordova build android --release --prod```
+
+**build 后的apk文件路径**
+E:\web\app\zltShops\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk
+
+**生成签名文件（.keystore）**
+```keytool -genkey -v -keystore zltkeystore.keystore -alias zltkeystore -keyalg RSA -validity 10000
+  -keystore zltkeystore.keystore 文件名称
+  -alias zltkeystore 文件别名
+  -keyalg RSA 加密算法
+  -validity 10000 有效期 天
+```
+
+**对apk包进行签名**
+jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\web\app\zltShops\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk zltkeystore
+
+
+
+**插件安装**
+
+1、安装拍照，打开设备图片库插件
+```ionic cordova plugin add cordova-plugin-camera
+   npm install --save @ionic-native/camera
+
+```
+
+2、拨打电话
+``` ionic cordova plugin add call-number
+    npm install --save @ionic-native/call-number
+
+```
+3、启动页面
+``` ionic cordova plugin add cordova-plugin-splashscreen
+    npm install --save @ionic-native/splash-screen
+
+```
+4、设备网络连接
+``` ionic cordova plugin add cordova-plugin-network-information
+    npm install --save @ionic-native/network
+
+```
+5、最小化APP
+```ionic cordova plugin add cordova-plugin-appminimize
+   npm install --save @ionic-native/app-minimize
+
+```
+6、真机下的提示框
+```ionic cordova plugin add cordova-plugin-x-toast
+   npm install --save @ionic-native/toast
+
+```
+7、文件管理
+```ionic cordova plugin add cordova-plugin-file
+   npm install --save @ionic-native/file
+
+```
+8、多图选择
+```ionic cordova plugin add cordova-plugin-telerik-imagepicker --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="zlt"
+   npm install --save @ionic-native/image-picker
+
+```
+9、获取App版本号
+```ionic cordova plugin add cordova-plugin-app-version
+   npm install --save @ionic-native/app-version
+
+```
+10、播放声音
+```ionic cordova plugin add cordova-plugin-nativeaudio
+   npm install --save @ionic-native/native-audio
+
+```
+
+
+

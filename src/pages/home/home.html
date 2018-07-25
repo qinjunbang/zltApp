@@ -7,11 +7,13 @@
 <ion-content padding>
   <h2>Welcome to Ionic!</h2>
   <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
+   我是首页
   </p>
   <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
+    <button ion-button color="light" (click)="checkMobile()">是否是真机</button>
+    <button ion-button (click)="isAndroid()">isAndroid</button>
+    <button ion-button color="secondary" (click)="isIos()">isIos</button>
+    <button ion-button color="danger" (click)="showAlert()">alert</button>
+    <button ion-button color="dark" (click)="showToast()">showToast</button>
   </p>
 </ion-content>
