@@ -9,6 +9,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { LoginPage } from '../pages/me/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,7 +22,12 @@ import { File } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
+// import { HTTP } from '@ionic-native/http';
+import { HttpModule } from '@angular/http';
 import { NativeService } from '../providers/NativeService';
+import { HttpService } from '../providers/HttpService';
+
+
 
 @NgModule({
   declarations: [
@@ -29,11 +35,13 @@ import { NativeService } from '../providers/NativeService';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -41,7 +49,8 @@ import { NativeService } from '../providers/NativeService';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -56,7 +65,9 @@ import { NativeService } from '../providers/NativeService';
     ImagePicker,
     AppVersion,
     NativeAudio,
+    HttpService,
     NativeService
+
 
   ]
 })

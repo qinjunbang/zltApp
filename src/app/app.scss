@@ -14,3 +14,22 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+//字体
+.f30 {
+  font-size: 1.5rem;
+}
+.f36 {
+  font-size: 1.8rem;
+}
+.f40 {
+  font-size: 2rem;
+}
+.f48 {
+  font-size: 2.4rem;
+}
+
+//边框
+.no-border {
+  border: 0 none!important;
+}
