@@ -93,4 +93,5 @@
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
     <engine name="android" spec="7.0.0" />
+    <allow-navigation href="http://192.168.0.144:8100" />
 </widget>

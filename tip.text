@@ -20,6 +20,17 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 
 密码：123456 6个空格
 
+**真机调试命令**
+```ionic cordova run  android -lc -- -d
+   -l = --livereload 实时重新加载www文件
+   -c = --consolelogs 将控制台日志打印到终端
+   -d = --device 将Cordova构建部署到设备
+   资料地址：https://ionicframework.com/docs/cli/cordova/run/
+```
+如果遇到 build dev started，是因为有一个server再运行，把它关掉再 run就可以了
+
+
+
 
 **插件安装**
 
