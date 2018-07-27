@@ -9,7 +9,11 @@ import { HttpService } from '../../../providers/HttpService';
   templateUrl: 'shops-list.html'
 })
 export class ShopsListPage {
-  public shopsList = []; // 店铺列表
+  public shopsList = [
+    {id: 0},
+    {id: 1},
+    {id: 2}
+  ]; // 店铺列表
 
   constructor(
     public http: HttpService
