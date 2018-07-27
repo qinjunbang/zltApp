@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title text-center>店铺</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="no-shops" *ngIf="shopsList.length < 1">
+    <img src="assets/imgs/no-shops.png" alt="">
+    <p>空空如也~</p>
+  </div>
+  <ion-list>
+    <ion-item-sliding *ngFor="let shops of shopsList">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">
+        </ion-thumbnail>
+        <h2>店铺名称</h2>
+        <p>本店样样两元，只有两元，两元你买了不吃亏，买了不上当，买家少花钱，卖家多赚钱</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="mail"></ion-icon>
+          删除
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <!--<ion-item-sliding>-->
+      <!--<ion-item>-->
+        <!--<ion-thumbnail item-start>-->
+          <!--<img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">-->
+        <!--</ion-thumbnail>-->
+        <!--<h2>店铺名称</h2>-->
+        <!--<p>本店样样两元，只有两元，两元你买了不吃亏，买了不上当，买家少花钱，卖家多赚钱</p>-->
+      <!--</ion-item>-->
+      <!--<ion-item-options side="right">-->
+        <!--<button ion-button color="primary">-->
+          <!--<ion-icon name="mail"></ion-icon>-->
+          <!--删除-->
+        <!--</button>-->
+      <!--</ion-item-options>-->
+    <!--</ion-item-sliding>-->
+  </ion-list>
+</ion-content>

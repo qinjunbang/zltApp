@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
+import { ShopsListPage } from '../../shops/shops-list/shops-list';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class LoginPage {
 
   // 点击登录
   login () {
+    this.navCtrl.push(ShopsListPage);
     let data = {};
     data['name'] = this.name;
     data['password'] = this.password;
@@ -38,5 +40,5 @@ export class LoginPage {
        console.log("res", res);
      });
   }
- 
+
 }
