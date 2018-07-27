@@ -41,4 +41,11 @@ export class LoginPage {
      });
   }
 
+  // 获取设备UUID
+  getMyUid () {
+    let uuid = this.native.getUid();
+
+    this.native.alert(uuid);
+  }
+
 }

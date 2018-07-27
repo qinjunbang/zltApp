@@ -27,6 +27,8 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { HttpModule } from '@angular/http';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
+import { Uid } from '@ionic-native/uid';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 
 
@@ -89,8 +91,9 @@ import { HttpService } from '../providers/HttpService';
     AppVersion,
     NativeAudio,
     HttpService,
-    NativeService
-
+    NativeService,
+    Uid,
+    AndroidPermissions
 
   ]
 })

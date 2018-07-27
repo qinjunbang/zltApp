@@ -15,6 +15,8 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Observable } from 'rxjs/Rx';
+import { Uid } from '@ionic-native/uid';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 
 @Injectable()
@@ -37,6 +39,8 @@ export class NativeService {
     private appVersion: AppVersion, // 获取App版本号
     private cn: CallNumber,  // 拨打电话
     private nativeAudio: NativeAudio, // 语音播放
+    private uid: Uid, // 设备UUID组件
+    private androidPermissions: AndroidPermissions, // 安卓手机权限获取，主要针对 26以上的版本
 
   ) {
 
@@ -421,5 +425,49 @@ export class NativeService {
       len = arr[site].length;
 
     setTimeout(()=>{this.playAudio(str,++site)},delayLimit * len);
+  }
+
+  /*
+  *
+  * 获取设备UUID
+  *
+  * */
+  getUid () {
+    // 拿之前先看看有没有权限，没有就动态获取
+    if (this.checkedAndroidPermissions()) {
+      return this.uid.UUID;
+    } else {
+      return '没有拿到！'
+    }
+  }
+
+  /*
+  *
+  * 检查获取 UUID、IMEI、IMSI、ICCID、MAC 权限（只针对安卓设备）
+  *
+  * */
+  checkedAndroidPermissions (): Observable<any> {
+    // 如果不是安卓设备不用这一套来检测
+    if (!this.isAndroid()) {
+      return;
+    }
+    let myPer = this.androidPermissions.PERMISSION.READ_PHONE_STATE; // 要检测的权限
+
+    return Observable.create(observer => {
+      this.androidPermissions.checkPermission(myPer).then(hasPermission => {
+        // 如果没有，动态请求
+        if (!hasPermission) {
+          this.androidPermissions.requestPermission(myPer).then(getPer => {
+            if (getPer) {
+              observer.next(true);
+            }
+          }).catch(err => {
+            observer.next(false);
+          });
+        }
+      });
+
+
+    });
   }
 }
