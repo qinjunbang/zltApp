@@ -3,6 +3,9 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../providers/HttpService';
+import { NavController } from 'ionic-angular';
+
+import { ShopsAddPage } from '../shops-add/shops-add';
 
 @Component({
   selector: 'page-shops-list',
@@ -16,12 +19,13 @@ export class ShopsListPage {
   ]; // 店铺列表
 
   constructor(
-    public http: HttpService
+    public http: HttpService,
+    public navCtrl: NavController
   ) {
 
   }
   ionViewDidLoad() {
-    this.getShopsList();
+    // this.getShopsList();
   }
 
   // 获取店铺列表
@@ -31,4 +35,11 @@ export class ShopsListPage {
       console.log("res", res);
     });
   }
+
+  // 页面跳转
+  public goToPage () {
+    console.log('6666');
+    this.navCtrl.push(ShopsAddPage);
+  }
+
 }

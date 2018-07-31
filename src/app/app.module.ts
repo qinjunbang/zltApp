@@ -11,6 +11,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { ShopsListPage } from '../pages/shops/shops-list/shops-list';
+import { ShopsAddPage } from '../pages/shops/shops-add/shops-add';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -40,7 +41,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     HomePage,
     TabsPage,
     LoginPage,
-    ShopsListPage
+    ShopsListPage,
+    ShopsAddPage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     HomePage,
     TabsPage,
     LoginPage,
-    ShopsListPage
+    ShopsListPage,
+    ShopsAddPage
   ],
   providers: [
     StatusBar,
