@@ -39,7 +39,7 @@ export class ShopsListPage {
   // 页面跳转
   public goToPage () {
     console.log('6666');
-    this.navCtrl.push(ShopsAddPage);
+    this.navCtrl.push(ShopsAddPage, {});
   }
 
 }
