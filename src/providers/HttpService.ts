@@ -31,15 +31,16 @@ export class HttpService {
   * get请求
   * @param url 路径
   * @param data 发送的数据
+  * @param local 如果 = local 就获取本地数据
   *
   * */
-  public get (url: string, data: any = null): Observable<any> {
+  public get (url: string, data: any = null, local: string = ""): Observable<any> {
     const options = new RequestOptions({
       method: RequestMethod.Get,
       search: HttpService.buildUrlSearchParams(data)
     });
 
-    return this.request(url, options);
+    return this.request(url, options, local);
   }
 
 
@@ -85,10 +86,16 @@ export class HttpService {
   /*
   *
   * 发起请求
+  * @param url 路径
+  * @param options 数据
+  * @local 如果 == local 就请求本地
   *
   * */
-  public request(url: string, options: RequestOptionsArgs): Observable<any> {
-    url = Utils.formatUrl(url.startsWith('http') ? url : Config.app_serve_url + url);
+  public request(url: string, options: RequestOptionsArgs, local:string = ''): Observable<any> {
+    if (local !== 'local') {
+      url = Utils.formatUrl(url.startsWith('http') ? url : Config.app_serve_url + url);
+    }
+
       // 发送请求前,打开loading
     this.native.showLoading();
     console.log("123");
