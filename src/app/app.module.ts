@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { MultiPickerModule  } from 'ion-multi-picker';
 
 
 
@@ -46,6 +47,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
   ],
   imports: [
     BrowserModule,
+    MultiPickerModule,
     IonicModule.forRoot(MyApp,{
       backButtonText: '',
       backButtonIcon:'ios-arrow-back',         //用作后退按钮图标的图标

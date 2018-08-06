@@ -3,6 +3,8 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../providers/HttpService';
+import { Observable } from 'rxjs/Rx';
+// import  cityData    from '../../../assets/chinese-cities.json';
 
 @Component({
   selector: 'page-shops-add',
@@ -10,14 +12,37 @@ import { HttpService } from '../../../providers/HttpService';
 })
 export class ShopsAddPage {
 
+   public cities = []; // 城市JSON数据
+   public startTime:string = '08:00';
+   public endTime:string = '22:00';
 
   constructor(
     public http: HttpService
   ) {
 
   }
+  // 页面初始化完成
   ionViewDidLoad() {
+    // 初始化省份城市区域
+   this.getCitiesData().subscribe(data => {
+      this.cities = data;
+   });
 
+  }
+
+  // 获得省份城市区域数据
+  getCitiesData() {
+    return Observable.create(observer => {
+      this.http.get('/assets/chinese-cities.json').subscribe(data => {
+        observer.next(data);
+      })
+    });
+
+  }
+
+  // 选择省份城市区域回调
+  changeCitiesDate(event) {
+    console.log("6666", event);
   }
 
 }
