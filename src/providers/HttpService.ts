@@ -52,11 +52,13 @@ export class HttpService {
   *
   * */
   public post (url: string, body: any = {}): Observable<any> {
+    console.log("body", body);
     const options = new RequestOptions({
       method: RequestMethod.Post,
       body,
       headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*'
       })
     });
 
@@ -76,7 +78,8 @@ export class HttpService {
       method: RequestMethod.Post,
       body: HttpService.buildUrlSearchParams(data).toString(),
       headers: new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        // 'Access-Control-Allow-Origin': '*'
       })
     });
 
@@ -159,11 +162,11 @@ export class HttpService {
     if (!data) {
       return params;
     }
-
+    console.log("data", data);
     Object.keys(data).forEach(key => {
       let val = data[key];
-
-      if (val instanceof data) {
+      console.log("val", val);
+      if (val instanceof Date) {
         val = Utils.dateFormat(val, 'yyyy-MM-dd hh:mm:ss');
       }
 
