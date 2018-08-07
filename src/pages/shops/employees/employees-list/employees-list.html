@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title text-center>员工列表</ion-title>
+    <ion-buttons end class="add-menu-icon" >
+      <button ion-button icon-only (click)="goToPage()">
+        <ion-icon  color="white" name="md-add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="no-shops" *ngIf="shopsList.length < 1">
+    <img src="assets/imgs/no-shops.png" alt="">
+    <p>空空如也~</p>
+  </div>
+  <ion-list>
+    <ion-item-sliding *ngFor="let shops of shopsList">
+      <ion-item>
+        <!--<ion-thumbnail item-start>-->
+          <!--<img src="">-->
+        <!--</ion-thumbnail>-->
+        <ion-avatar item-left>
+          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">
+        </ion-avatar>
+        <h2>员工名称1</h2>
+        <p>工号：22222b</p>
+        <ion-buttons item-end>
+          <button ion-button clear small class="del-btn">
+            <ion-icon name="ios-trash"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-item>
+    </ion-item-sliding>
+
+  </ion-list>
+</ion-content>

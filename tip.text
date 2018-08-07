@@ -96,6 +96,10 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
    npm install --save @ionic-native/android-permissions
 
 ```
+13、
+```npm install ion-multi-picker --save
+   在app.module.ts中注册（imports）
+```
 
 
 
