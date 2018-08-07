@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
 import { ShopsListPage } from '../../shops/shops-list/shops-list';
+import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
 
 
 @Component({
@@ -46,6 +47,11 @@ export class LoginPage {
     let uuid = this.native.getUid();
 
     this.native.alert(uuid);
+  }
+
+  // 页面跳转
+  goToPage () {
+    this.navCtrl.push(ShopsManagePage, {});
   }
 
 }
