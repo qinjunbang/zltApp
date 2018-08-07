@@ -39,6 +39,7 @@ export class LoginPage {
 
     this.http.post('/api/app/login', data).subscribe(res => {
      console.log("res", res);
+     this.native.alert(res.info);
     });
   }
 
