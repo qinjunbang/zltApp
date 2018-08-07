@@ -20,8 +20,9 @@ export class LoginPage {
     public http: HttpService
 
   ) {
-
+      //this.login();
   }
+
 
 
   // 点击登录

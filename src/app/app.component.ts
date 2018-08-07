@@ -6,6 +6,8 @@ import { NativeService } from '../providers/NativeService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
+import { MePage } from '../pages/me/me';
+import { PrivacyPage } from '../pages/me/privacy/privacy';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +15,9 @@ import { LoginPage } from '../pages/me/login/login';
 export class MyApp {
   @ViewChild('myNav') nav: Nav;
 
-  rootPage:any = LoginPage;
+  //rootPage:any = LoginPage;
+  rootPage:any = MePage;
+  //rootPage:any = PrivacyPage;
 
   private backButtonPressed: boolean = false; // 是否连续两次按返回按钮
 

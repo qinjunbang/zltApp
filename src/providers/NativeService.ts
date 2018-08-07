@@ -151,6 +151,47 @@ export class NativeService {
 
   /*
   *
+  * 消息提示框
+  * @param title  标题
+  * @param message  提示信息
+  * @param callBack  回调方法
+  * 有取消和确定按钮
+  *
+  * */
+ confirm = (() => {
+  let isExist = false;
+  return (title: string,  message = '', callBack = null): void => {
+    // 判断是否有打开的弹框，如果有，就不再打开新的
+    if (!isExist) {
+       isExist = true; // 设置为打开状态，不能再打开新的
+       this.alertCtrl.create({
+         title,
+         message,
+         cssClass: 'alert-zIndex-highest',
+         buttons: [
+          {
+            text: '取消',
+            handler: () => {
+              isExist = false;
+            }
+          },
+           {
+             text: '确定',
+             handler: () => {
+               isExist = false;
+               typeof callBack === `function` && callBack();
+             }
+           }
+         ],
+         enableBackdropDismiss: false, // 点击背景不关闭弹框
+       }).present();
+    }
+  };
+
+})();
+
+  /*
+  *
   * 消息提示
   * @param message 信息内容
   * @param duration 显示时长
