@@ -478,7 +478,7 @@ export class NativeService {
     if (this.checkedAndroidPermissions()) {
       return this.uid.UUID;
     } else {
-      return '没有拿到！'
+      return ''
     }
   }
 
