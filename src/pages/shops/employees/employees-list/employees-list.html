@@ -17,33 +17,21 @@
   <ion-list>
     <ion-item-sliding *ngFor="let shops of shopsList">
       <ion-item>
-        <ion-thumbnail item-start>
-          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">
-        </ion-thumbnail>
-        <h2>店铺名称</h2>
-        <p>本店样样两元，只有两元，两元你买了不吃亏，买了不上当，买家少花钱，卖家多赚钱</p>
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="primary">
-          <ion-icon name="mail"></ion-icon>
-          删除
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-    <!--<ion-item-sliding>-->
-      <!--<ion-item>-->
         <!--<ion-thumbnail item-start>-->
-          <!--<img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">-->
+          <!--<img src="">-->
         <!--</ion-thumbnail>-->
-        <!--<h2>店铺名称</h2>-->
-        <!--<p>本店样样两元，只有两元，两元你买了不吃亏，买了不上当，买家少花钱，卖家多赚钱</p>-->
-      <!--</ion-item>-->
-      <!--<ion-item-options side="right">-->
-        <!--<button ion-button color="primary">-->
-          <!--<ion-icon name="mail"></ion-icon>-->
-          <!--删除-->
-        <!--</button>-->
-      <!--</ion-item-options>-->
-    <!--</ion-item-sliding>-->
+        <ion-avatar item-left>
+          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">
+        </ion-avatar>
+        <h2>员工名称1</h2>
+        <p>工号：22222b</p>
+        <ion-buttons item-end>
+          <button ion-button clear small class="del-btn">
+            <ion-icon name="ios-trash"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-item>
+    </ion-item-sliding>
+
   </ion-list>
 </ion-content>
