@@ -14,6 +14,11 @@ import { LoginPage } from '../pages/me/login/login';
 import { ShopsListPage } from '../pages/shops/shops-list/shops-list';
 import { ShopsAddPage } from '../pages/shops/shops-add/shops-add';
 import { ShopsManagePage } from '../pages/shops/shops-manage/shops-manage';
+import { EmployeesListPage } from '../pages/shops/employees/employees-list/employees-list';
+import { DishesListPage } from '../pages/shops/dishes/dishes-list/dishes-list';
+import { RoomTablesListPage } from '../pages/shops/roomtables/roomtables-list/roomtables-list';
+import { EquipmentsListPage } from '../pages/shops/equipments/equipments-list/equipments-list';
+import { OrdersListPage } from '../pages/shops/orders/orders-list/orders-list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -45,7 +50,12 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     LoginPage,
     ShopsListPage,
     ShopsAddPage,
-    ShopsManagePage
+    ShopsManagePage,
+    EmployeesListPage,
+    DishesListPage,
+    RoomTablesListPage,
+    EquipmentsListPage,
+    OrdersListPage
   ],
   imports: [
     BrowserModule,
@@ -83,7 +93,12 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     LoginPage,
     ShopsListPage,
     ShopsAddPage,
-    ShopsManagePage
+    ShopsManagePage,
+    EmployeesListPage,
+    DishesListPage,
+    RoomTablesListPage,
+    EquipmentsListPage,
+    OrdersListPage
   ],
   providers: [
     StatusBar,
