@@ -1,0 +1,54 @@
+
+<ion-header class="bar-light">
+    <ion-navbar color="primary">
+        <ion-title>我的</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="bg">
+    <ion-list no-lines class="list-mess">
+        <ion-item class="list-header-img">
+            <ion-thumbnail item-start>
+                <img src="img/thumbnail-totoro.png">
+            </ion-thumbnail>
+            <h2>丶华华华华华哥</h2>
+        </ion-item>
+    </ion-list>
+    <ion-list no-lines class="list-ion">
+        <ion-item>
+            <ion-icon item-start class="iconfont icon-app-money" ></ion-icon>
+                钱包
+            <ion-icon name="arrow-forward" item-end class="my-icon"></ion-icon>
+        </ion-item>
+    </ion-list>
+    <ion-list no-lines class="list-ion" (click)="privacy()">
+        <ion-item>
+            <ion-icon item-start class="iconfont icon-app-yinsi"></ion-icon>
+                隐私与权限
+            <ion-icon name="arrow-forward" item-end class="my-icon"></ion-icon>
+        </ion-item>
+    </ion-list>
+
+    <ion-list no-lines class="list-ion">
+        <ion-item>
+            <ion-icon class="iconfont icon-app-tan" item-start></ion-icon>
+                关于我们
+            <ion-icon name="arrow-forward" item-end class="my-icon"></ion-icon>
+        </ion-item>
+    </ion-list>
+    <ion-list no-lines class="list-ion-mar">
+        <ion-item>
+            <ion-icon class="iconfont icon-app-phone" item-start></ion-icon>
+                联系我们
+            <ion-icon name="arrow-forward" item-end class="my-icon"></ion-icon>
+        </ion-item>
+    </ion-list>
+
+    <ion-list no-lines class="list-ion" (click)="logout()">
+        <ion-item>
+            <ion-icon class="iconfont icon-app-logout" item-start></ion-icon>
+                退出登录
+            <ion-icon name="arrow-forward" item-end class="my-icon"></ion-icon>
+        </ion-item>
+    </ion-list>
+</ion-content>
