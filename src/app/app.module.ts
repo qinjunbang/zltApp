@@ -36,7 +36,6 @@ import { File } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
- import { Http } from '@angular/http';
 import { HttpModule } from '@angular/http';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
