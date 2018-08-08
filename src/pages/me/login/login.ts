@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Config } from '../../../providers/Config';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
 import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
@@ -18,6 +19,7 @@ export class LoginPage {
   public login_type: string = 'userName'; // 默认账号密码登录
   public timer; // 计时器
   public btnText: string = '获取验证码'; // 发送验证码文案
+  public role: number = 0; // 我是商家
 
   constructor(
     public navCtrl: NavController,
@@ -54,7 +56,7 @@ export class LoginPage {
     }
 
     data['device_id'] = this.getMyUid() || 'b24c3f95b198268';
-
+    data['role'] = this.role;
 
     this.http.post('/api/app/login', data).subscribe(res => {
      console.log("res", res);
@@ -64,6 +66,8 @@ export class LoginPage {
        res.data.token && this.storage.set("token", res.data.token);
        // 缓存用户信息
        res.data.shopclerk && this.storage.set("userInfo", res.data.shopclerk);
+       Config.token = res.data.token;
+       Config.userInfo = res.data.shopclerk;
        // 跳转到我的页面
        this.navCtrl.push(TabsPage);
 
@@ -127,6 +131,17 @@ export class LoginPage {
       }
 
     },1000);
+  }
+
+  // 选择角色（我是商家）
+  changeRole () {
+
+    if (!this.role) {
+      this.role = 1;
+    } else {
+      this.role = 0;
+    }
+
   }
 
 }

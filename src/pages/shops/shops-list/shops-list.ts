@@ -22,7 +22,7 @@ export class ShopsListPage {
     public http: HttpService,
     public navCtrl: NavController
   ) {
-
+    this.getShopsList();
   }
   ionViewDidLoad() {
     // this.getShopsList();

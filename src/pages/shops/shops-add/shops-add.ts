@@ -4,8 +4,8 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { HttpService } from '../../../providers/HttpService';
+import { NativeService } from '../../../providers/NativeService';
 import { Observable } from 'rxjs/Rx';
-// import  cityData    from '../../../assets/chinese-cities.json';
 
 @Component({
   selector: 'page-shops-add',
@@ -19,7 +19,8 @@ export class ShopsAddPage {
 
   constructor(
     public http: HttpService,
-    public httpService: Http
+    public httpService: Http,
+    public native: NativeService
   ) {
 
   }
@@ -45,6 +46,12 @@ export class ShopsAddPage {
   // 选择省份城市区域回调
   changeCitiesDate(event) {
     console.log("6666", event);
+  }
+
+  // 点击获取图片
+  getPictureByLibrary () {
+    console.log("666");
+    this.native.getPictureByLibrary();
   }
 
 }

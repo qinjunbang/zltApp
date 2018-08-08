@@ -3,6 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 import { NativeService } from './NativeService';
+import { Storage } from '@ionic/storage';
 import { Config } from './Config';
 import { Utils } from './Utils';
 import {
@@ -22,6 +23,7 @@ export class HttpService {
   constructor(
     public native: NativeService,
     public http: Http,
+    public storage: Storage
   ) {
 
   }
@@ -98,6 +100,7 @@ export class HttpService {
     if (local !== 'local') {
       url = Utils.formatUrl(url.startsWith('http') ? url : Config.app_serve_url + url);
     }
+
     console.log('%c 请求发送前 %c', 'color:blue', '', 'url', url, 'options', options);
       // 发送请求前,打开loading
     this.native.showLoading();
