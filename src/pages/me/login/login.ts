@@ -4,7 +4,6 @@ import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
 import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
-import { MePage } from '../../me/me';
 import { TabsPage } from '../../tabs/tabs';
 
 
@@ -34,7 +33,6 @@ export class LoginPage {
 
   // 点击登录
   login () {
-    // this.navCtrl.push(ShopsListPage);
     let data = {};
     data['mobile'] = this.name;
 
