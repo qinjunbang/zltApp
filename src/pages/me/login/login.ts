@@ -5,6 +5,7 @@ import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
 import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
 import { MePage } from '../../me/me';
+import { TabsPage } from '../../tabs/tabs';
 
 
 @Component({
@@ -66,7 +67,7 @@ export class LoginPage {
        // 缓存用户信息
        res.data.shopclerk && this.storage.set("userInfo", res.data.shopclerk);
        // 跳转到我的页面
-       this.navCtrl.push(MePage);
+       this.navCtrl.push(TabsPage);
 
      } else {
        // 显示提示框

@@ -233,3 +233,63 @@
 
 .icon-tubiaozhizuomobanyihuifu-13:before { content: "\e7bb"; }
 
+
+// tabs自定义图标
+.ion-ios-shopsImg,
+.ion-md-shopsImg,
+.ion-ios-shopsImg-outline {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ion-ios-shopsImg:before{
+  content: "\e672";
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+.ion-ios-shopsImg-outline:before {
+  content: "\e672";
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+.ion-md-shopsImg:before{
+  content: "\e672";
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+.ion-ios-meImg,
+.ion-md-meImg,
+.ion-ios-meImg-outline {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ion-ios-meImg:before{
+  content: "\e66a";
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+.ion-ios-meImg-outline:before {
+  content: "\e66a";
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+.ion-md-meImg:before{
+  content: "\e66a";
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+

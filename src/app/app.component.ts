@@ -124,7 +124,7 @@ export class MyApp {
           console.log("res", res);
           if (res.code == 200) {
             this.storage.set("token", res.data);
-            this.nav.setRoot(MePage);
+            this.nav.setRoot(TabsPage);
           } else {
             this.nav.setRoot(LoginPage);
           }
