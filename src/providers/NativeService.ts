@@ -115,7 +115,7 @@ export class NativeService {
 
   /*
   *
-  * 消息提示框
+  * 消息提示框1
   * @param title  标题
   * @param subTitle  小标题
   * @param message  提示信息
@@ -151,7 +151,7 @@ export class NativeService {
 
   /*
   *
-  * 消息提示框
+  * 消息提示框2
   * @param title  标题
   * @param message  提示信息
   * @param callBack  回调方法
