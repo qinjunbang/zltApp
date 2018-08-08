@@ -100,8 +100,9 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 ```npm install ion-multi-picker --save
    在app.module.ts中注册（imports）
 ```
-14、localforage 本地缓存 https://localforage.docschina.org/
-```npm install localforage
+14、storage 本地缓存
+```ionic cordova plugin add cordova-sqlite-storage --save
+   npm install --save @ionic/storage
 ```
 
 
