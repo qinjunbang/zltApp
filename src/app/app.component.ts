@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Events, IonicApp, Keyboard, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Storage } from '@ionic/storage';
 import { NativeService } from '../providers/NativeService';
+import { HttpService } from '../providers/HttpService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
@@ -28,8 +30,13 @@ export class MyApp {
     private events: Events,
     private keyboard: Keyboard,
     private ionicApp: IonicApp,
-    private native: NativeService
+    private native: NativeService,
+    private http: HttpService,
+    private storage: Storage
   ) {
+    // 检查登录状态
+    this.refreshToken();
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -37,9 +44,8 @@ export class MyApp {
       statusBar.styleDefault();
       // 隐藏启动页面
       splashScreen.hide();
-
       // 检查网络
-       this.assertNetwork();
+      this.assertNetwork();
       // 检查版本更新
 
       // 初初始化极光推送事件
@@ -107,6 +113,22 @@ export class MyApp {
 
   // 刷新token
   refreshToken () {
-    
+    this.storage.get("token").then(token => {
+      // 如果没有 token 说明没登录
+      if (!token) {
+        this.nav.setRoot(LoginPage);
+      } else {
+        // 如果有token，用旧token获取新的token,重新缓存，并设置我的页面为根页面
+        this.http.post("/api/app/refreshtoken", {token: token,device_id: this.native.getUid() ||'b24c3f95b198268' }).subscribe(res => {
+          console.log("res", res);
+          if (res.code == 200) {
+            this.storage.set("token", res.data);
+            this.nav.setRoot(MePage);
+          } else {
+            this.nav.setRoot(LoginPage);
+          }
+        });
+      }
+    });
   }
 }

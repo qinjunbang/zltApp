@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
 import { ShopsListPage } from '../../shops/shops-list/shops-list';
@@ -18,7 +19,8 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public native: NativeService,
-    public http: HttpService
+    public http: HttpService,
+    public storage: Storage
 
   ) {
       //this.login();
@@ -44,7 +46,9 @@ export class LoginPage {
      console.log("res", res);
      if (res.code == 200) {
        this.native.showToast(res.info);
-       // this.navCtrl.push(MePage);
+       res.data.token && this.storage.set("token", res.data.token);
+       res.data.shopclerk && this.storage.set("userInfo", res.data.shopclerk);
+       this.navCtrl.push(MePage);
      } else {
        this.native.alert(res.info);
      }

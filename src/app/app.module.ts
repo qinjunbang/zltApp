@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { MultiPickerModule  } from 'ion-multi-picker';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule  } from '@ionic/storage';
 
 
 
@@ -89,7 +89,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
         },
       }
     }),
-    HttpModule
+    HttpModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -127,9 +128,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     HttpService,
     NativeService,
     Uid,
-    AndroidPermissions,
-    Storage
-
+    AndroidPermissions
   ]
 })
 export class AppModule {}
