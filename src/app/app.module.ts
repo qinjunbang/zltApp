@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { MultiPickerModule  } from 'ion-multi-picker';
+import { Storage } from '@ionic/storage';
 
 
 
@@ -20,6 +21,7 @@ import { DetailsPage } from '../pages/me/wallet/details/details';
 import { PrivacyPage } from '../pages/me/privacy/privacy';
 import { ShopsManagePage } from '../pages/shops/shops-manage/shops-manage';
 import { EmployeesListPage } from '../pages/shops/employees/employees-list/employees-list';
+import { EmployeesAddPage } from '../pages/shops/employees/employees-add/employees-add';
 import { DishesListPage } from '../pages/shops/dishes/dishes-list/dishes-list';
 import { RoomTablesListPage } from '../pages/shops/roomtables/roomtables-list/roomtables-list';
 import { EquipmentsListPage } from '../pages/shops/equipments/equipments-list/equipments-list';
@@ -66,7 +68,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     DishesListPage,
     RoomTablesListPage,
     EquipmentsListPage,
-    OrdersListPage
+    OrdersListPage,
+    EmployeesAddPage
   ],
   imports: [
     BrowserModule,
@@ -114,7 +117,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     DishesListPage,
     RoomTablesListPage,
     EquipmentsListPage,
-    OrdersListPage
+    OrdersListPage,
+    EmployeesAddPage
   ],
   providers: [
     StatusBar,
@@ -132,7 +136,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     HttpService,
     NativeService,
     Uid,
-    AndroidPermissions
+    AndroidPermissions,
+    Storage
 
   ]
 })

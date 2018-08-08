@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title text-center>员工添加</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <ion-item>
+      <ion-label>店铺名称</ion-label>
+      <ion-input type="text" placeholder="请输入店铺名称"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>店铺类型</ion-label>
+      <ion-select placeholder="请选择店铺类型" cancelText="取消" okText="确定">
+        <ion-option value="nes">NES</ion-option>
+        <ion-option value="n64">Nintendo64</ion-option>
+        <ion-option value="ps">PlayStation</ion-option>
+        <ion-option value="genesis">Sega Genesis</ion-option>
+        <ion-option value="saturn">Sega Saturn</ion-option>
+        <ion-option value="snes">SNES</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>经营模块</ion-label>
+      <ion-label>
+        <span class="business-btn active">外卖</span>
+      </ion-label>
+      <ion-label>
+        <span class="business-btn">预定</span>
+      </ion-label>
+      <ion-label>
+        <span class="business-btn">排队</span>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>店铺地址</ion-label>
+      <ion-multi-picker item-content (ionChange)="changeCitiesDate($event)" [cancelText]="'取消'" [doneText]="'确定'" [multiPickerColumns]="cities" placeholder="省-市-区（县）" ></ion-multi-picker>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>详细地址</ion-label>
+      <ion-input type="text" placeholder="请输入详细地址"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>营业时间</ion-label>
+      <ion-label class="time-label">
+        <ion-datetime displayFormat="HH:mm" cancelText="取消" doneText="确定" [(ngModel)]="startTime" text-center></ion-datetime>
+      </ion-label>
+      <ion-label class="time-label">
+        <ion-datetime displayFormat="HH:mm" cancelText="取消" doneText="确定" [(ngModel)]="endTime"></ion-datetime>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>营业执照</ion-label>
+      <div class="img-label border" item-end>
+        <!--<img src="assets/imgs/no-shops.png">-->
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>店铺门面</ion-label>
+      <div class="img-label border" item-end>
+        <!--<img src="assets/imgs/no-shops.png">-->
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>店铺头像</ion-label>
+      <div class="img-label border" item-end>
+        <!--<img src="assets/imgs/no-shops.png">-->
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>店主姓名</ion-label>
+      <ion-input type="text" placeholder="请输入姓名"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>联系方式</ion-label>
+      <ion-input type="number" maxlength="11" placeholder="请输入手机号"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>店铺介绍</ion-label>
+      <ion-textarea placeholder="不能少于五个字" rows="4"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <button ion-button block>提交</button>
+  </div>
+</ion-content>

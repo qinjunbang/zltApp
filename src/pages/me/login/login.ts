@@ -4,6 +4,7 @@ import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
 import { ShopsListPage } from '../../shops/shops-list/shops-list';
 import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
+import { MePage } from '../../me/me';
 
 
 @Component({
@@ -29,10 +30,11 @@ export class LoginPage {
   login () {
     // this.navCtrl.push(ShopsListPage);
     let data = {};
-    data['name'] = this.name;
+    data['mobile'] = this.name;
     data['password'] = this.password;
+    data['device_id'] = this.getMyUid() || 'b24c3f95b198268';
 
-    if (!data['name']) {
+    if (!data['mobile']) {
       return this.native.showToast("用户名不能为空~");
     } else if (!data['password']) {
       return this.native.showToast("密码不能为空~");
@@ -40,6 +42,13 @@ export class LoginPage {
 
     this.http.post('/api/app/login', data).subscribe(res => {
      console.log("res", res);
+     if (res.code == 200) {
+       this.native.showToast(res.info);
+       // this.navCtrl.push(MePage);
+     } else {
+       this.native.alert(res.info);
+     }
+
     });
   }
 
@@ -47,7 +56,7 @@ export class LoginPage {
   getMyUid () {
     let uuid = this.native.getUid();
 
-    this.native.alert(uuid);
+    return uuid;
   }
 
   // 页面跳转

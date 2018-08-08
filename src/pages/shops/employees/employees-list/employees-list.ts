@@ -4,6 +4,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NavController } from 'ionic-angular';
+import { EmployeesAddPage } from '../employees-add/employees-add';
 
 
 @Component({
@@ -37,8 +38,8 @@ export class EmployeesListPage {
 
   // 页面跳转
   public goToPage () {
-    console.log('6666');
-    // this.navCtrl.push(ShopsAddPage, {});
+    console.log('123');
+    this.navCtrl.push(EmployeesAddPage, {});
   }
 
 }

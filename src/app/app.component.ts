@@ -16,9 +16,9 @@ import { DetailsPage } from '../pages/me/wallet/details/details';
 export class MyApp {
   @ViewChild('myNav') nav: Nav;
 
-  //rootPage:any = LoginPage;
-  //rootPage:any = DetailsPage;
-  rootPage:any = MePage;
+  rootPage:any = LoginPage;
+  // rootPage:any = MePage;
+  //rootPage:any = PrivacyPage;
 
   private backButtonPressed: boolean = false; // 是否连续两次按返回按钮
 
@@ -104,5 +104,10 @@ export class MyApp {
         this.backButtonPressed = false;
       }, 2000)
     }
+  }
+
+  // 刷新token
+  refreshToken () {
+    
   }
 }
