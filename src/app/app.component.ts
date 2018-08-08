@@ -10,6 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { MePage } from '../pages/me/me';
 import { PrivacyPage } from '../pages/me/privacy/privacy';
+import { DetailsPage } from '../pages/me/wallet/details/details';
 
 @Component({
   templateUrl: 'app.html'

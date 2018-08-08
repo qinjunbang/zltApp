@@ -15,6 +15,9 @@ import { LoginPage } from '../pages/me/login/login';
 import { ShopsListPage } from '../pages/shops/shops-list/shops-list';
 import { ShopsAddPage } from '../pages/shops/shops-add/shops-add';
 import { MePage } from '../pages/me/me';
+import { WePage } from '../pages/me/we/we';
+import { WalletPage } from '../pages/me/wallet/wallet';
+import { DetailsPage } from '../pages/me/wallet/details/details';
 import { PrivacyPage } from '../pages/me/privacy/privacy';
 import { ShopsManagePage } from '../pages/shops/shops-manage/shops-manage';
 import { EmployeesListPage } from '../pages/shops/employees/employees-list/employees-list';
@@ -55,6 +58,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     ShopsListPage,
     ShopsAddPage,
     MePage,
+    WePage,
+    WalletPage,
+    DetailsPage,
     PrivacyPage,
     ShopsManagePage,
     EmployeesListPage,
@@ -102,6 +108,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     ShopsListPage,
     ShopsAddPage,
     MePage,
+    WePage,
+    WalletPage,
+    DetailsPage,
     PrivacyPage,
     ShopsManagePage,
     EmployeesListPage,
