@@ -17,6 +17,9 @@ import { ShopsAddPage } from '../pages/shops/shops-add/shops-add';
 import { MePage } from '../pages/me/me';
 import { WePage } from '../pages/me/we/we';
 import { WalletPage } from '../pages/me/wallet/wallet';
+import { forwardPage } from '../pages/me/wallet/forward/forward';
+import { addCardPage } from '../pages/me/wallet/addCard/addCard';
+import { addNewCardPage } from '../pages/me/wallet/addCard/addNewCard/addNewCard';
 import { DetailsPage } from '../pages/me/wallet/details/details';
 import { PrivacyPage } from '../pages/me/privacy/privacy';
 import { ShopsManagePage } from '../pages/shops/shops-manage/shops-manage';
@@ -60,6 +63,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     MePage,
     WePage,
     WalletPage,
+    forwardPage,
+    addCardPage,
+    addNewCardPage,
     DetailsPage,
     PrivacyPage,
     ShopsManagePage,
@@ -110,6 +116,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     MePage,
     WePage,
     WalletPage,
+    forwardPage,
+    addCardPage,
+    addNewCardPage,
     DetailsPage,
     PrivacyPage,
     ShopsManagePage,

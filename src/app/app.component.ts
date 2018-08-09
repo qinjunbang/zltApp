@@ -11,7 +11,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { MePage } from '../pages/me/me';
 import { PrivacyPage } from '../pages/me/privacy/privacy';
-import { DetailsPage } from '../pages/me/wallet/details/details';
+import { addCardPage } from '../pages/me/wallet/addCard/addCard';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,8 +20,8 @@ export class MyApp {
   @ViewChild('myNav') nav: Nav;
 
   rootPage:any = LoginPage;
-  // rootPage:any = MePage;
-  //rootPage:any = PrivacyPage;
+  //rootPage:any = MePage;
+  //rootPage:any = addCardPage;
 
   private backButtonPressed: boolean = false; // 是否连续两次按返回按钮
 
