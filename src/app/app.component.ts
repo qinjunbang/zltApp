@@ -3,6 +3,7 @@ import { Platform, Events, IonicApp, Keyboard, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+import { Config } from '../providers/Config';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
 
@@ -119,12 +120,14 @@ export class MyApp {
       if (!token) {
         this.nav.setRoot(LoginPage);
       } else {
+        console.log("token", token);
         // 如果有token，用旧token获取新的token,重新缓存，并设置我的页面为根页面
-        this.http.post("/api/app/refreshtoken", {token: token,device_id: this.native.getUid() ||'b24c3f95b198268' }).subscribe(res => {
+        this.http.post("/api/app/refreshtoken", {token: token, device_id: this.native.getUid() ||'b24c3f95b198268' }).subscribe(res => {
           console.log("res", res);
           if (res.code == 200) {
-            this.storage.set("token", res.data);
-            this.nav.setRoot(MePage);
+            this.storage.set("token", res.data.token);
+            Config.token = res.data;
+            this.nav.setRoot(TabsPage);
           } else {
             this.nav.setRoot(LoginPage);
           }

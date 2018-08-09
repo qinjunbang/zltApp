@@ -4,4 +4,6 @@
 export class Config {
   // public static app_serve_url = 'https://r.zhanglitong.com';
   public static app_serve_url = 'http://localhost:8100/';
+  public static token = ''; // token
+  public static userInfo = []; // user info
 }

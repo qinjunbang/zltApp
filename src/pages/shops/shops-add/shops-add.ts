@@ -3,9 +3,10 @@
  */
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
+import { ActionSheetController } from 'ionic-angular';
 import { HttpService } from '../../../providers/HttpService';
+import { NativeService } from '../../../providers/NativeService';
 import { Observable } from 'rxjs/Rx';
-// import  cityData    from '../../../assets/chinese-cities.json';
 
 @Component({
   selector: 'page-shops-add',
@@ -19,7 +20,9 @@ export class ShopsAddPage {
 
   constructor(
     public http: HttpService,
-    public httpService: Http
+    public httpService: Http,
+    public native: NativeService,
+    public actionSheetCtrl: ActionSheetController
   ) {
 
   }
@@ -45,6 +48,52 @@ export class ShopsAddPage {
   // 选择省份城市区域回调
   changeCitiesDate(event) {
     console.log("6666", event);
+  }
+
+  // 从图库获取图片
+  getPictureByLibrary () {
+    console.log("666");
+    this.native.getPictureByLibrary().subscribe(res => {
+      console.log("res", res);
+    }, err => {
+      console.log("err1", err);
+    });
+  }
+
+  // 拍照获取图片
+  getPictureByCamera () {
+    this.native.getPictureByCamera().subscribe(res => {
+      console.log("res", res);
+    }, err => {
+      console.log("err", err);
+    });
+  }
+
+  // 点击上传图片
+  getImage () {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: "获取图片",
+      buttons: [
+        {
+          text: "从相册中获取",
+          handler: () => {
+            this.getPictureByLibrary();
+          }
+        },
+        {
+          text: "拍照",
+          handler: () => {
+            this.getPictureByCamera();
+          }
+        },
+        {
+          text: '取消',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 
 }
