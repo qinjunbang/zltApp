@@ -7,6 +7,7 @@ import { PrivacyPage } from './privacy/privacy';
 import { WePage } from './we/we'
 import { WalletPage } from './wallet/wallet'
 import { LoginPage } from './login/login'
+import { forwardPage } from './wallet/forward/forward'  //ceshi
 
 @Component({
     selector: 'page-me',
@@ -30,7 +31,7 @@ export class MePage {
         this.navCtrl.push(PrivacyPage)
     }
     we() {
-        this.navCtrl.push(WePage)
+        this.navCtrl.push(forwardPage)
     }
     logout() {
         let data = {};

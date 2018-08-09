@@ -7,7 +7,7 @@ import { NavController } from 'ionic-angular';
     templateUrl: 'forward.html'
 })
 
-export class WalletPage {
+export class forwardPage {
     constructor(
         public navCtrl: NavController
     ) {

@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>提现</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="con-bg">
+    <div class="forward">
+        <ion-list inset class="ion-list-bg">
+            <ion-item class="ion-black">
+                <ion-label>到账银行卡</ion-label>
+                <ion-select [(ngModel)]="gaming">
+                    <ion-option value="zs">招商银行</ion-option>
+                    <ion-option value="gs">中国工商银行</ion-option>
+                    <ion-option value="ny">中国农业银行</ion-option>
+                    <ion-option value="js">中国建设银行</ion-option>
+                    <ion-option value="jt">中国交通银行</ion-option>
+                    <ion-option value="china">中国银行</ion-option>
+                    <ion-option value="chuxu">邮政储蓄</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked class="font-size">提现金额 ¥:</ion-label>
+                <ion-input type="number" placeholder="100"></ion-input>
+            </ion-item>
+            <div class="forward-con">每日交易金额10000.0元</div>
+        </ion-list>
+        <div class="yes">提现</div>
+        <div class="no">取消</div>
+    </div>
+</ion-content>
