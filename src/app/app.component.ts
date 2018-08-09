@@ -125,7 +125,7 @@ export class MyApp {
         this.http.post("/api/app/refreshtoken", {token: token, device_id: this.native.getUid() ||'b24c3f95b198268' }).subscribe(res => {
           console.log("res", res);
           if (res.code == 200) {
-            this.storage.set("token", res.data);
+            this.storage.set("token", res.data.token);
             Config.token = res.data;
             this.nav.setRoot(TabsPage);
           } else {

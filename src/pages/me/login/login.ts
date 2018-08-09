@@ -60,6 +60,7 @@ export class LoginPage {
 
     this.http.post('/api/app/login', data).subscribe(res => {
      console.log("res", res);
+     console.log("res", JSON.stringify(res));
      if (res.code == 200) {
        this.native.showToast(res.info);
        // 缓存token
