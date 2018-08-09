@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../providers/HttpService';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ShopsListPage } from '../shops-list/shops-list';
 import { EmployeesListPage } from '../employees/employees-list/employees-list';
 import { DishesListPage } from '../dishes/dishes-list/dishes-list';
@@ -18,10 +18,15 @@ import { OrdersListPage } from '../orders/orders-list/orders-list';
 })
 export class ShopsManagePage {
   public menuList = [];
+  public sid; // 店铺id
   constructor(
     public http: HttpService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public navParams: NavParams
   ) {
+    // 获取店铺ID
+    this.sid = navParams.get("sid");
+    console.log(this.sid);
     this.setManageMenu();
   }
   ionViewDidLoad() {

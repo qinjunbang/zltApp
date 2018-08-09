@@ -6,6 +6,7 @@ import { HttpService } from '../../../providers/HttpService';
 import { NavController } from 'ionic-angular';
 
 import { ShopsAddPage } from '../shops-add/shops-add';
+import { ShopsManagePage } from '../shops-manage/shops-manage';
 
 @Component({
   selector: 'page-shops-list',
@@ -17,6 +18,9 @@ export class ShopsListPage {
     {id: 1},
     {id: 2}
   ]; // 店铺列表
+
+  public ShopsAddPage = ShopsAddPage; // 添加店铺页面
+  public ShopsManagePage = ShopsManagePage; // 店铺管理页面
 
   constructor(
     public http: HttpService,
@@ -37,9 +41,9 @@ export class ShopsListPage {
   }
 
   // 页面跳转
-  public goToPage () {
+  public goToPage (page, sid= '') {
     console.log('6666');
-    this.navCtrl.push(ShopsAddPage, {});
+    this.navCtrl.push(page, {sid: sid});
   }
 
 }
