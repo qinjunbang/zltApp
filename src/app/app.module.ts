@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { MultiPickerModule  } from 'ion-multi-picker';
 import { IonicStorageModule  } from '@ionic/storage';
+import { JPush } from '@jiguang-ionic/jpush';
 
 
 
@@ -148,7 +149,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     HttpService,
     NativeService,
     Uid,
-    AndroidPermissions
+    AndroidPermissions,
+    JPush
   ]
 })
 export class AppModule {}
