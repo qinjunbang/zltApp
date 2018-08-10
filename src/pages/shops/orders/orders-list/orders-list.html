@@ -1,34 +1,52 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title text-center>订单列表</ion-title>
-    <ion-buttons end class="add-menu-icon" >
-      <button ion-button icon-only (click)="goToPage()">
-        <ion-icon  color="white" name="md-add"></ion-icon>
-      </button>
-    </ion-buttons>
+    <ion-title text-center>订单管理</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <div class="no-shops" *ngIf="shopsList.length < 1">
-    <img src="assets/imgs/no-shops.png" alt="">
-    <p>空空如也~</p>
+<ion-content class="con-bg">
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="defaultTitle">
+      <ion-segment-button *ngFor="let item of menuList" value="{{item.title}}" (click)="clickList(item.id)">
+        {{item.title}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div class="orders" [ngSwitch]="defaultTitle">
+    <div class="orders-list" *ngSwitchCase="'预定'" (click)="deleteList()">
+      <ion-list no-lines>
+        <ion-item>订单号：1212121121
+          <div item-end>10:00</div>
+        </ion-item>
+      </ion-list>
+      <div class="orders-con">
+        <div class="list clearfix">
+          <div class="list-left">订单金额</div>
+          <div class="list-right">$1111</div>
+        </div>
+        <div class="list clearfix">
+          <div class="list-left">下单人</div>
+          <div class="list-right">$1111</div>
+        </div>
+        <div class="list clearfix">
+          <div class="list-left">联系方式</div>
+          <div class="list-right">$1111</div>
+        </div>
+        <div class="list clearfix">
+          <div class="list-left">房间/桌号</div>
+          <div class="list-right">$1111</div>
+        </div>
+        <div class="list clearfix">
+          <div class="list-left">用餐人数</div>
+          <div class="list-right">$1111</div>
+        </div>
+        <div class="list clearfix">
+          <div class="list-left">备注</div>
+          <div class="list-right">asdads</div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <ion-list>
-    <ion-item-sliding *ngFor="let shops of shopsList">
-      <ion-item>
-        <ion-thumbnail item-start>
-          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">
-        </ion-thumbnail>
-        <h2>店铺名称</h2>
-        <p>本店样样两元，只有两元，两元你买了不吃亏，买了不上当，买家少花钱，卖家多赚钱</p>
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="primary">
-          <ion-icon name="mail"></ion-icon>
-          删除
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
 </ion-content>

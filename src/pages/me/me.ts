@@ -31,7 +31,7 @@ export class MePage {
         this.navCtrl.push(PrivacyPage)
     }
     we() {
-        this.navCtrl.push(forwardPage)
+        this.navCtrl.push(WePage)
     }
     logout() {
         let data = {};

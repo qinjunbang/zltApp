@@ -4,6 +4,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NavController } from 'ionic-angular';
+import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
 
 
 @Component({
@@ -12,10 +13,11 @@ import { NavController } from 'ionic-angular';
 })
 export class RoomTablesListPage {
   public shopsList = [
-    {id: 0},
-    {id: 1},
-    {id: 2}
+    {id: 0,title:'包间'},
+    {id: 1,title:'大厅'},
+    {id: 2,title:'卡座'}
   ]; // 店铺列表
+  public defaultTitle = '包间';
 
   constructor(
     public http: HttpService,
@@ -32,13 +34,16 @@ export class RoomTablesListPage {
     console.log("我要获取数据");
     this.http.post("/api/shop/all", {}).subscribe(res => {
       console.log("res", res);
-    });
+    })
   }
 
-  // 页面跳转
-  public goToPage () {
-    console.log('6666');
-    // this.navCtrl.push(ShopsAddPage, {});
+  //点击列表
+  clickList(id) {
+    console.log(id)
+  }
+
+  addRoomTablesPage() {
+    this.navCtrl.push(addRoomTablesPage)
   }
 
 }

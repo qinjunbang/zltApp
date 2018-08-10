@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
-import { NavController } from 'ionic-angular';
+import { NavController , ActionSheetController} from 'ionic-angular';
 
 
 @Component({
@@ -11,15 +11,18 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'orders-list.html'
 })
 export class OrdersListPage {
-  public shopsList = [
-    {id: 0},
-    {id: 1},
-    {id: 2}
-  ]; // 店铺列表
+  public menuList = [
+    {id: 0,title:'预定'},
+    {id: 1,title:'排队'},
+    {id: 2,title:'配送'},
+    {id: 3,title:'扫码'}
+  ]; // 订单列表
+  public defaultTitle = '预定'
 
   constructor(
     public http: HttpService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public actionSheetCtrl: ActionSheetController
   ) {
 
   }
@@ -27,18 +30,29 @@ export class OrdersListPage {
     // this.getShopsList();
   }
 
-  // 获取店铺列表
-  public getShopsList () {
-    console.log("我要获取数据");
-    this.http.post("/api/shop/all", {}).subscribe(res => {
-      console.log("res", res);
-    });
+  //点击列表
+  clickList(id) {
+    console.log(id)
   }
 
-  // 页面跳转
-  public goToPage () {
-    console.log('6666');
-    // this.navCtrl.push(ShopsAddPage, {});
+  //点击订单出现删除
+  deleteList() {
+    const actionSheet = this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: "删除订单",
+          handler: () => {
+            
+          }
+        },
+        {
+          text: '取消',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 
 }
