@@ -1,3 +1,44 @@
 page-orders-list {
-
+    .con-bg{
+        background: $bgColor;
+        ion-toolbar{
+            background: #fff;
+        }
+        .orders{
+            margin-top: 0px;
+            .orders-list{
+                margin-top: 8px;
+                ion-list{
+                    margin-bottom: 0;
+                    height: 40px;
+                    line-height: 40px;
+                    ion-item{
+                        font-size: 16px;
+                        height: 40px;
+                        min-height: 0;
+                        padding: 0 10px;
+                    }
+                }
+            }
+            .orders-con{
+                background: #fff;
+                padding: 0 5px;
+                border-top: 1px solid #eee;
+                padding: 0 10px 10px;
+                .list{
+                    font-size: 14px;
+                    line-height: 20px;
+                    margin-top: 15px;
+                    .list-left{
+                        width: 25%;
+                        float: left;
+                    }
+                    .list-right{
+                        width:74%;
+                        float: left;
+                    }
+                }
+            }
+        }
+    }
 }

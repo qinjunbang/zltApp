@@ -1,3 +1,19 @@
 page-roomtables-list {
-
+    .con-bg{
+        background: $bgColor;
+        .toolbar-background-ios{
+            background: #fff;
+        }
+        .room{
+            // border-top: 1px solid #c8c7cc;
+            .use{
+                font-size: 14px;
+                color: #999;
+            }
+            .list-icon{
+                font-size: 25px;
+                color: #000;
+            }
+        }
+    }
 }

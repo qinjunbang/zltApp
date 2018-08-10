@@ -1,34 +1,47 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title text-center>房桌列表</ion-title>
+    <ion-title text-center>房桌管理</ion-title>
     <ion-buttons end class="add-menu-icon" >
-      <button ion-button icon-only (click)="goToPage()">
+      <button ion-button icon-only (click)="addRoomTablesPage()">
         <ion-icon  color="white" name="md-add"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="con-bg">
+    <ion-toolbar no-border-top>
+      <ion-segment [(ngModel)]="defaultTitle">
+        <ion-segment-button *ngFor="let item of shopsList" value="{{item.title}}" (click)="clickList(item.id)">
+          {{item.title}}
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  <!-- 没有房间 -->
   <div class="no-shops" *ngIf="shopsList.length < 1">
     <img src="assets/imgs/no-shops.png" alt="">
     <p>空空如也~</p>
   </div>
-  <ion-list>
-    <ion-item-sliding *ngFor="let shops of shopsList">
+
+  <!-- 有房间 -->
+  <div class="room">
+    <ion-list>
       <ion-item>
-        <ion-thumbnail item-start>
-          <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">
-        </ion-thumbnail>
-        <h2>店铺名称</h2>
-        <p>本店样样两元，只有两元，两元你买了不吃亏，买了不上当，买家少花钱，卖家多赚钱</p>
+        房间名
+        <span item-end class="use">使用中</span>
+        <div item-end class="iconfont icon-app-menu list-icon"></div>
       </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="primary">
-          <ion-icon name="mail"></ion-icon>
-          删除
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+      <ion-item>
+        房间名
+        <span item-end class="use">已预订</span>
+        <div item-end class="iconfont icon-app-menu list-icon"></div>
+      </ion-item>
+      <ion-item>
+        房间名
+        <span item-end class="use">禁用</span>
+        <div item-end class="iconfont icon-app-menu list-icon"></div>
+      </ion-item>
+    </ion-list>
+  </div>
+  
 </ion-content>

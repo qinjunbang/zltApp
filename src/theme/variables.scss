@@ -99,4 +99,7 @@ $button-ios-border-radius: 6px;
 $bgColor: #f6f6f6;
 
 //主题颜色
-$themeColor: #3b95e3
+$themeColor: #3b95e3;
+
+//清除浮动
+.clearfix:after{display:block;clear:both;content:"";visibility:hidden;height:0}

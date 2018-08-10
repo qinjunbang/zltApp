@@ -10,9 +10,7 @@ import { JPushService } from '../providers/JPushService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
-import { MePage } from '../pages/me/me';
-import { PrivacyPage } from '../pages/me/privacy/privacy';
-import { addCardPage } from '../pages/me/wallet/addCard/addCard';
+import { addRoomTablesPage } from '../pages/shops/roomtables/addRoomTables/addRoomTables'; //测试
 
 @Component({
   templateUrl: 'app.html'
@@ -20,9 +18,12 @@ import { addCardPage } from '../pages/me/wallet/addCard/addCard';
 export class MyApp {
   @ViewChild('myNav') nav: Nav;
 
-  // rootPage:any = LoginPage;
+
+  //rootPage:any = LoginPage;
   //rootPage:any = MePage;
   //rootPage:any = addCardPage;
+
+
 
   private backButtonPressed: boolean = false; // 是否连续两次按返回按钮
 
@@ -133,7 +134,7 @@ export class MyApp {
           if (res.code == 200) {
             this.storage.set("token", res.data.token);
             Config.token = res.data;
-            this.nav.setRoot(TabsPage);
+            this.nav.setRoot(addRoomTablesPage);
           } else {
             this.nav.setRoot(LoginPage);
           }
