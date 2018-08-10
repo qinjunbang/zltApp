@@ -7,7 +7,6 @@ import { IonicStorageModule  } from '@ionic/storage';
 import { JPush } from '@jiguang-ionic/jpush';
 
 
-
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -46,6 +45,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { HttpModule } from '@angular/http';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
+import { JPushService } from '../providers/JPushService';
 import { Uid } from '@ionic-native/uid';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 
@@ -145,9 +145,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     NativeAudio,
     HttpService,
     NativeService,
+    JPushService,
+    JPush,
     Uid,
-    AndroidPermissions,
-    JPush
+    AndroidPermissions
   ]
 })
 export class AppModule {}

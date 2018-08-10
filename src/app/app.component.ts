@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { Config } from '../providers/Config';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
+import { JPushService } from '../providers/JPushService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
@@ -19,7 +20,7 @@ import { addCardPage } from '../pages/me/wallet/addCard/addCard';
 export class MyApp {
   @ViewChild('myNav') nav: Nav;
 
-  rootPage:any = LoginPage;
+  // rootPage:any = LoginPage;
   //rootPage:any = MePage;
   //rootPage:any = addCardPage;
 
@@ -34,7 +35,8 @@ export class MyApp {
     private ionicApp: IonicApp,
     private native: NativeService,
     private http: HttpService,
-    private storage: Storage
+    private storage: Storage,
+    private jPush: JPushService
   ) {
     // 检查登录状态
     this.refreshToken();
@@ -50,7 +52,11 @@ export class MyApp {
       this.assertNetwork();
       // 检查版本更新
 
-      // 初初始化极光推送事件
+      // 初始化极光推送事件
+      this.jPush.initJpush();
+
+      // 处理点击消息推送事件
+      this.jPushOpenNotification();
 
       // 注册android返回按钮事件
       this.registerBackButtonAction();
@@ -134,5 +140,10 @@ export class MyApp {
         });
       }
     });
+  }
+
+  // 点击推送的消息，跳到指定的页面
+  jPushOpenNotification () {
+    console.log("点进来我要干嘛");
   }
 }
