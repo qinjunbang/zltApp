@@ -1,3 +1,46 @@
 page-dishes-list {
-
+    .dish-class{
+        color: #fff;
+        font-size: 14px;
+        float: right;
+        z-index: 10;
+        margin-right: 10px;
+    }
+    .con-bg{
+        background: $bgColor;
+        .dishes{
+            background: #fff;
+            padding: 4px;
+            border-radius: 3px;
+            img{
+                width: 100%;
+                height: 70px;
+            }
+            .dishes-title{
+                display: flex;
+                width: 100%;
+                font-size: 12px;
+                line-height: 20px;
+                align-items: center;
+                .dishes-name{
+                    flex: 1;
+                }
+                .dishes-price{
+                    color: red;
+                }
+            }
+        }
+        .dishes-add{
+            background: #fff;
+            padding: 4px;
+            border-radius: 3px;
+            height: 120px;
+            line-height: 110px;
+            text-align: center;
+            .add-img{
+                font-size: 60px;
+                color: $themeColor
+            }
+        }
+    }
 }

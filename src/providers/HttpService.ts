@@ -15,7 +15,7 @@ import {
   Response,
   URLSearchParams
 } from '@angular/http';
-import { Observable, TimeoutError } from 'rxjs/Rx';
+import { Observable, TimeoutError } from 'rxjs';
 
 @Injectable()
 export class HttpService {

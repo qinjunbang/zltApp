@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
-import { NavController } from 'ionic-angular';
+import { NavController , AlertController} from 'ionic-angular';
 import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
 
 
@@ -18,10 +18,12 @@ export class RoomTablesListPage {
     {id: 2,title:'卡座'}
   ]; // 店铺列表
   public defaultTitle = '包间';
-
+  testRadioOpen = false;
+  testRadioResult: any;
   constructor(
     public http: HttpService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public alertCtrl: AlertController
   ) {
 
   }
@@ -44,6 +46,42 @@ export class RoomTablesListPage {
 
   addRoomTablesPage() {
     this.navCtrl.push(addRoomTablesPage)
+  }
+  handleRoom() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('管理房桌');
+
+    alert.addInput({
+      type: 'radio',
+      label: '删除房桌信息',
+      value: '删除房桌信息',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: '暂停使用',
+      value: '暂停使用'
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: '立即使用',
+      value: '立即使用'
+    });
+
+
+    alert.addButton('取消');
+    alert.addButton({
+      text: '确定',
+      handler: (data: any) => {
+        console.log('Radio data:', data);
+        this.testRadioOpen = false;
+        this.testRadioResult = data;
+      }
+    });
+
+    alert.present();
   }
 
 }

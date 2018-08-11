@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import { ActionSheetController } from 'ionic-angular';
 import { HttpService } from '../../../providers/HttpService';
 import { NativeService } from '../../../providers/NativeService';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'page-shops-add',
