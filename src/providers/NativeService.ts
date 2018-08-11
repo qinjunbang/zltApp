@@ -14,7 +14,7 @@ import { File, FileEntry } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { Uid } from '@ionic-native/uid';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 

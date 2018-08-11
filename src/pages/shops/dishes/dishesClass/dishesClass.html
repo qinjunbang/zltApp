@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title text-center>菜品分类</ion-title>
+    <ion-buttons end class="add-menu-icon" >
+      <button ion-button icon-only (click)="add()">
+        <ion-icon  color="white" name="md-add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="con-bg">
+    <ion-list>
+      <ion-item>
+        <ion-label>奶茶</ion-label>
+        <div item-end class="del-color" (click)="edit()">编辑</div>
+        <div item-end class="del-color" (click)="delete()">删除</div>
+      </ion-item>
+      <ion-item>
+        <ion-label>云烟成雨</ion-label>
+        <div item-end class="del-color">编辑</div>
+        <div item-end class="del-color">删除</div>
+      </ion-item>
+    </ion-list>
+</ion-content>

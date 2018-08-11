@@ -9,7 +9,7 @@ import { HttpService } from '../providers/HttpService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
-import { addRoomTablesPage } from '../pages/shops/roomtables/addRoomTables/addRoomTables'; //测试
+import { DishesListPage } from '../pages/shops/dishes/dishes-list/dishes-list'; //测试
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +17,7 @@ import { addRoomTablesPage } from '../pages/shops/roomtables/addRoomTables/addRo
 export class MyApp {
   @ViewChild('myNav') nav: Nav;
 
-  //rootPage:any = LoginPage;
+  rootPage:any = LoginPage;
   //rootPage:any = OrdersListPage;
 
   private backButtonPressed: boolean = false; // 是否连续两次按返回按钮
@@ -124,7 +124,7 @@ export class MyApp {
           if (res.code == 200) {
             this.storage.set("token", res.data.token);
             Config.token = res.data;
-            this.nav.setRoot(addRoomTablesPage);
+            this.nav.setRoot(TabsPage);
           } else {
             this.nav.setRoot(LoginPage);
           }

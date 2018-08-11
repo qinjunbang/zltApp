@@ -13,7 +13,7 @@ export class addRoomTablesPage{
     constructor(
         public navCtrl: NavController,
         public actionSheetCtrl: ActionSheetController,
-        public native: NativeService,
+        public native: NativeService
     ){
     }
 

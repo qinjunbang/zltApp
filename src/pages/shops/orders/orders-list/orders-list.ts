@@ -4,6 +4,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NavController , ActionSheetController} from 'ionic-angular';
+import { OrderDetailPage } from '../orderDetail/orderDetail';
 
 
 @Component({
@@ -31,8 +32,8 @@ export class OrdersListPage {
   }
 
   //点击列表
-  clickList(id) {
-    console.log(id)
+  listDetail() {
+    this.navCtrl.push(OrderDetailPage)
   }
 
   //点击订单出现删除
@@ -42,7 +43,6 @@ export class OrdersListPage {
         {
           text: "删除订单",
           handler: () => {
-            
           }
         },
         {

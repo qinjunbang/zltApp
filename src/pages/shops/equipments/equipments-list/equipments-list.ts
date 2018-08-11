@@ -3,7 +3,9 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
-import { NavController } from 'ionic-angular';
+import { NavController, ActionSheetController} from 'ionic-angular';
+
+import { addEquipmentsPage } from '../addEquipments/addEquipments';
 
 
 @Component({
@@ -11,15 +13,11 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'equipments-list.html'
 })
 export class EquipmentsListPage {
-  public shopsList = [
-    {id: 0},
-    {id: 1},
-    {id: 2}
-  ]; // 店铺列表
 
   constructor(
     public http: HttpService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public actionSheetCtrl: ActionSheetController
   ) {
 
   }
@@ -36,9 +34,31 @@ export class EquipmentsListPage {
   }
 
   // 页面跳转
-  public goToPage () {
-    console.log('6666');
-    // this.navCtrl.push(ShopsAddPage, {});
+  public addEquipments () {
+    this.navCtrl.push(addEquipmentsPage);
+  }
+
+  //删除设备
+  deleteEquip() {
+    const actionSheet = this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: "删除设备",
+          handler: () => {
+          }
+        },
+        {
+          text: '取消',
+          role: 'cancel'
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
+  //查看设备详情
+  seeDeatils() {
+    //this.navCtrl.push()
   }
 
 }

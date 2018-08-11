@@ -24,24 +24,34 @@
   </div>
 
   <!-- 有房间 -->
-  <div class="room">
+  <div class="room" *ngIf="shopsList.length > 0">
     <ion-list>
       <ion-item>
         房间名
         <span item-end class="use">使用中</span>
-        <div item-end class="iconfont icon-app-menu list-icon"></div>
+        <div item-end class="iconfont icon-app-menu list-icon" (click)="handleRoom()"></div>
       </ion-item>
       <ion-item>
         房间名
         <span item-end class="use">已预订</span>
-        <div item-end class="iconfont icon-app-menu list-icon"></div>
+        <div item-end class="iconfont icon-app-menu list-icon" (click)="handleRoom()"></div>
       </ion-item>
       <ion-item>
         房间名
         <span item-end class="use">禁用</span>
-        <div item-end class="iconfont icon-app-menu list-icon"></div>
+        <div item-end class="iconfont icon-app-menu list-icon" (click)="handleRoom()"></div>
       </ion-item>
     </ion-list>
   </div>
   
+  <!-- <div class="module">
+    <div class="close">
+      <div class="iconfont icon-guanbi"></div>
+    </div>
+    <div class="module-con">
+      <div class="module-item">
+          <div class="iconfont icon-guanbi"></div>
+      </div>
+    </div>
+  </div> -->
 </ion-content>

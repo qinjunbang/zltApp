@@ -5,18 +5,15 @@ import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NavController } from 'ionic-angular';
 
+import { addDishesPage } from '../addDishes/addDishes';
+import { dishesClassPage } from '../dishesClass/dishesClass';
+
 
 @Component({
   selector: 'page-dishes-list',
   templateUrl: 'dishes-list.html'
 })
 export class DishesListPage {
-  public shopsList = [
-    {id: 0},
-    {id: 1},
-    {id: 2}
-  ]; // 店铺列表
-
   constructor(
     public http: HttpService,
     public navCtrl: NavController
@@ -36,9 +33,12 @@ export class DishesListPage {
   }
 
   // 页面跳转
-  public goToPage () {
-    console.log('6666');
-    // this.navCtrl.push(ShopsAddPage, {});
+  public addDishes () {
+     this.navCtrl.push(addDishesPage);
+  }
+
+  dishesClass() {
+    this.navCtrl.push(dishesClassPage);
   }
 
 }
