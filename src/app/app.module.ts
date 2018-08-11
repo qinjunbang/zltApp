@@ -47,7 +47,7 @@ import { HttpModule } from '@angular/http';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
 import { JPushService } from '../providers/JPushService';
-import { Uid } from '@ionic-native/uid';
+import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 
@@ -150,7 +150,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     NativeService,
     JPushService,
     JPush,
-    Uid,
+    Device,
     AndroidPermissions
   ]
 })
