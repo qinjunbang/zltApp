@@ -130,7 +130,7 @@ export class MyApp {
           if (res.code == 200) {
             this.storage.set("token", res.data.token);
             Config.token = res.data;
-            this.nav.setRoot(TabsPage);
+            this.nav.setRoot(DishesListPage);
           } else {
             this.nav.setRoot(LoginPage);
           }
