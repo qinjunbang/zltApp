@@ -86,9 +86,9 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 
 ```
 
-11、获取设备UUID （https://ionicframework.com/docs/native/uid/）
-```ionic cordova plugin add cordova-plugin-uid
-   npm install --save @ionic-native/uid
+11、获取设备UUID
+```ionic cordova plugin add cordova-plugin-device
+   npm install --save @ionic-native/device
 
 ```
 12、Android新权限检查机制，主要配合获取设备的UUID使用

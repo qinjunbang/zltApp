@@ -14,8 +14,8 @@ import { File, FileEntry } from '@ionic-native/file';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
-import { Observable } from 'rxjs';
-import { Uid } from '@ionic-native/uid';
+import { Observable } from 'rxjs/Rx';
+import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 
@@ -39,7 +39,7 @@ export class NativeService {
     private appVersion: AppVersion, // 获取App版本号
     private cn: CallNumber,  // 拨打电话
     private nativeAudio: NativeAudio, // 语音播放
-    private uid: Uid, // 设备UUID组件
+    private device: Device, // 设备UUID组件
     private androidPermissions: AndroidPermissions, // 安卓手机权限获取，主要针对 26以上的版本
 
   ) {
@@ -476,7 +476,7 @@ export class NativeService {
   getUid () {
     // 拿之前先看看有没有权限，没有就动态获取
     if (this.checkedAndroidPermissions()) {
-      return this.uid.UUID;
+      return this.device.uuid;
     } else {
       return ''
     }
