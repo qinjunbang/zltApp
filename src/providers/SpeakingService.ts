@@ -20,6 +20,7 @@ export class SpeakingService {
   * */
 
   startSpeak(str: string = '') {
+    console.log("xunfeiListenSpeaking", xunfeiListenSpeaking);
     xunfeiListenSpeaking.startSpeak(success => {
       console.log("success");
     }, err => {

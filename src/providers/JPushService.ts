@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { JPush } from '@jiguang-ionic/jpush';
 import { NativeService } from './NativeService';
+import { SpeakingService } from './SpeakingService';
 import { Config } from './Config';
 
 @Injectable()
@@ -13,7 +14,8 @@ export class JPushService {
   constructor (
     private jPush: JPush,
     private events: Events,
-    private native: NativeService
+    private native: NativeService,
+    private speaking: SpeakingService
   ) {
 
   }
@@ -59,6 +61,7 @@ export class JPushService {
     document.addEventListener('jpush.receiveNotification', event => {
       const content = this.native.isIos() ? event['aps'].alert : event['alert'];
       console.log("jpush收到内容", content);
+      this.speaking.startSpeak(content);
     }, false);
 
     // 收到自定义消息

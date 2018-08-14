@@ -93,10 +93,11 @@
     <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
     <allow-navigation href="http://192.168.0.144:8100" />
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-sqlite-storage" spec="^2.3.3" />
     <plugin name="jpush-phonegap-plugin" spec="^3.4.3">
         <variable name="APP_KEY" value="443eca432eff14581d12c724" />
     </plugin>
-    <plugin name="cordova-plugin-device" spec="^2.0.2" />
+    <plugin name="cordova-plugin-xunfeiListenSpeaking" spec="E:\cordova-plugin-IFlyspeech-master" />
     <engine name="android" spec="~7.0.0" />
 </widget>

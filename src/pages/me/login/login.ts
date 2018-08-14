@@ -4,9 +4,9 @@ import { Storage } from '@ionic/storage';
 import { Config } from '../../../providers/Config';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
+import { SpeakingService } from '../../../providers/SpeakingService';
 import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
 import { TabsPage } from '../../tabs/tabs';
-
 
 @Component({
   selector: 'page-login',
@@ -25,7 +25,8 @@ export class LoginPage {
     public navCtrl: NavController,
     public native: NativeService,
     public http: HttpService,
-    public storage: Storage
+    public storage: Storage,
+    public speaking: SpeakingService
 
   ) {
 
