@@ -9,9 +9,9 @@
     <ion-list no-lines class="list-mess">
         <ion-item class="list-header-img">
             <ion-thumbnail item-start>
-                <img src="img/thumbnail-totoro.png">
+                <img src="{{serverUrl}}{{user.avatar}}">
             </ion-thumbnail>
-            <h2>丶华华华华华哥</h2>
+            <h2>{{user.name}}</h2>
         </ion-item>
     </ion-list>
     <ion-list no-lines class="list-ion" (click)="wallet()">

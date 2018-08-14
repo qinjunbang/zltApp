@@ -7,20 +7,20 @@
 <ion-content>
     <ion-list>
         <ion-item>
-            <ion-label>部门</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-label>名字</ion-label>
+            <ion-input type="text"  [(ngModel)]="eqName" placeholder="起个名字以便识别"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>终端号</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" value="{{machinecode}}" [(ngModel)]="machinecode"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>密钥</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" value="{{machinekey}}" [(ngModel)]="machinekey"></ion-input>
         </ion-item>
   </ion-list>
 
     <div padding>
-        <button ion-button block>确认添加</button>
+        <button ion-button block (click)="add()">确认添加</button>
     </div>
 </ion-content>

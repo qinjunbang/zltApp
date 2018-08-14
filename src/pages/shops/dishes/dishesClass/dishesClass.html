@@ -11,15 +11,10 @@
 
 <ion-content class="con-bg">
     <ion-list>
-      <ion-item>
-        <ion-label>奶茶</ion-label>
-        <div item-end class="del-color" (click)="edit()">编辑</div>
-        <div item-end class="del-color" (click)="delete()">删除</div>
-      </ion-item>
-      <ion-item>
-        <ion-label>云烟成雨</ion-label>
-        <div item-end class="del-color">编辑</div>
-        <div item-end class="del-color">删除</div>
+      <ion-item *ngFor="let list of dishesList">
+        <ion-label>{{list.menu_name}}</ion-label>
+        <div item-end class="del-color" (click)="edit(list.id)">编辑</div>
+        <div item-end class="del-color" (click)="delete(list.id)">删除</div>
       </ion-item>
     </ion-list>
 </ion-content>

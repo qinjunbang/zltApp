@@ -58,9 +58,9 @@ export class ShopsManagePage {
   }
 
   // 页面跳转
-  goToPage (event) {
-    console.log("event", event);
-    this.navCtrl.push(event, {});
+  goToPage (event,sid) {
+    console.log("event", sid);
+    this.navCtrl.push(event, {'sid':sid});
   }
 
 }

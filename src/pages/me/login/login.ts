@@ -57,6 +57,8 @@ export class LoginPage {
 
     data['device_id'] = this.getMyUid() || 'b24c3f95b198268';
     data['role'] = this.role;
+    // 缓存设备id
+    this.storage.set("device_id", data['device_id']);
 
     this.http.post('/api/app/login', data).subscribe(res => {
      console.log("res", res);
