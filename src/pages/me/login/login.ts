@@ -4,10 +4,11 @@ import { Storage } from '@ionic/storage';
 import { Config } from '../../../providers/Config';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
+import { SpeakingService } from '../../../providers/SpeakingService';
 import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
 import { TabsPage } from '../../tabs/tabs';
 
-
+declare var xunfeiListenSpeaking: any;
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -25,7 +26,8 @@ export class LoginPage {
     public navCtrl: NavController,
     public native: NativeService,
     public http: HttpService,
-    public storage: Storage
+    public storage: Storage,
+    public speaking: SpeakingService
 
   ) {
 
@@ -143,6 +145,15 @@ export class LoginPage {
       this.role = 0;
     }
 
+  }
+
+  play () {
+    console.log("我要播放");
+    xunfeiListenSpeaking.startSpeak(success => {
+      console.log("success");
+    }, err => {
+      console.log("err");
+    }, '6,6,6');
   }
 
 }
