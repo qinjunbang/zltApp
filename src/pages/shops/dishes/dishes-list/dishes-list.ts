@@ -14,11 +14,12 @@ import { dishesClassPage } from '../dishesClass/dishesClass';
   templateUrl: 'dishes-list.html'
 })
 export class DishesListPage {
+  public isToggled: boolean;
   constructor(
     public http: HttpService,
     public navCtrl: NavController
   ) {
-
+    this.isToggled = true
   }
   ionViewDidLoad() {
     // this.getShopsList();
@@ -39,6 +40,10 @@ export class DishesListPage {
 
   dishesClass() {
     this.navCtrl.push(dishesClassPage);
+  }
+
+  public toggleFun() {
+    console.log("Toggled: "+ this.isToggled); 
   }
 
 }

@@ -8,40 +8,48 @@
 </ion-header>
 
 <ion-content class="con-bg">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-4>
-          <div class="dishes">
-            <img src="../../../../assets/imgs/1.jpg" />
-            <div class="dishes-title">
-              <div class="dishes-name">我是傻逼我是傻逼我是傻逼</div>
-              <div class="dishes-price">¥55</div>
+  <ion-list>
+      <ion-item-sliding (click)="dishesClass()">
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="../../../../assets/imgs/1.jpg">
+          </ion-thumbnail>
+          <ion-label>
+              <h2>我是傻逼</h2>
+              <p>12元</p>
+          </ion-label>
+          <div class="use" item-end>
+            <ion-toggle  [(ngModel)]="isToggled" (ionChange)="toggleFun()"></ion-toggle>
+          </div>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="primary">
+            <ion-icon name="mail"></ion-icon>
+            删除
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item-sliding>
+          <ion-item>
+            <ion-thumbnail item-start>
+              <img src="../../../../assets/imgs/1.jpg">
+            </ion-thumbnail>
+            <ion-label>
+                <h2>我是傻逼</h2>
+                <p>12元</p>
+            </ion-label>
+            <div class="use" item-end>
+              <ion-toggle  [(ngModel)]="isToggled" (ionChange)="toggleFun()"></ion-toggle>
             </div>
-          </div>
-        </ion-col>
-        <ion-col col-4>
-          <div class="dishes">
-            <img src="../../../../assets/imgs/1.jpg" />
-            <div class="dishes-title">
-              <div class="dishes-name">我是傻傻逼</div>
-              <div class="dishes-price">¥55</div>
-            </div>
-          </div>
-        </ion-col>
-        <ion-col col-4>
-          <div class="dishes">
-            <img src="../../../../assets/imgs/1.jpg" />
-            <div class="dishes-title">
-              <div class="dishes-name">我是傻逼我是傻逼我是傻逼</div>
-              <div class="dishes-price">¥55</div>
-            </div>
-          </div>
-        </ion-col>
-        <ion-col col-4>
-          <div class="dishes-add" (click)="addDishes()">
-            <div class="iconfont icon-app-add add-img"></div>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button color="primary">
+              <ion-icon name="mail"></ion-icon>
+              删除
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+  </ion-list>
+  
+  
 </ion-content>
