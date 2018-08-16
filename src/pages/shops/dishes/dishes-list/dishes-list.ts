@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
 
 import { addDishesPage } from '../addDishes/addDishes';
+import { editDishesPage } from '../editDishes/editDishes';
 import { dishesClassPage } from '../dishesClass/dishesClass';
 
 
@@ -16,9 +17,9 @@ import { dishesClassPage } from '../dishesClass/dishesClass';
   templateUrl: 'dishes-list.html'
 })
 export class DishesListPage {
-  public isToggled: boolean;
   public dishesList = [];
   public shopId = '';
+  public serverUrl = 'https://r.zhanglitong.com'
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
@@ -26,11 +27,10 @@ export class DishesListPage {
     public native: NativeService,
     public params: NavParams
   ) {
-    this.isToggled = true;
     this.shopId = this.params.get('sid');
   }
-  ionViewDidLoad() {
-     this.getDishesList();
+  ionViewWillEnter() {
+    this.getDishesList();
   }
   public getToken(){
     return new Promise((resolve) => {
@@ -65,17 +65,21 @@ export class DishesListPage {
     getDishes()
   }
 
-  // 页面跳转
+  // 增加菜式
   public addDishes () {
      this.navCtrl.push(addDishesPage,{'shopId':this.shopId});
   }
+  // 编辑菜式
+  public editDishes (id) {
+    this.navCtrl.push(editDishesPage,{'shopId':this.shopId,'id':id});
+ }
 
   dishesClass() {
     this.navCtrl.push(dishesClassPage,{'shopId':this.shopId});
   }
 
-  public toggleFun() {
-    console.log("Toggled: "+ this.isToggled); 
+  public toggleFun(e) {
+    console.log(e._value);
   }
 
 }

@@ -13,7 +13,7 @@
     <ion-list>
       <ion-item *ngFor="let list of dishesList">
         <ion-label>{{list.menu_name}}</ion-label>
-        <div item-end class="del-color" (click)="edit(list.id)">编辑</div>
+        <div item-end class="del-color" (click)="edit(list.id,list.menu_name,list.menu_sort)">编辑</div>
         <div item-end class="del-color" (click)="delete(list.id)">删除</div>
       </ion-item>
     </ion-list>
