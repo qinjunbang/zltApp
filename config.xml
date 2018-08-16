@@ -99,6 +99,6 @@
         <variable name="APP_KEY" value="443eca432eff14581d12c724" />
     </plugin>
     <plugin name="cordova-plugin-xunfeiListenSpeaking" spec="C:\Users\Administrator\Desktop\cordova-plugin-IFlyspeech-master" />
-    <engine name="android" spec="^7.0.0" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
+    <engine name="android" spec="^7.0.0" />
 </widget>

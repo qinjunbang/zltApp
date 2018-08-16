@@ -79,8 +79,12 @@ export class JPushService {
     if (!this.native.isMobile()) {
       return;
     }
-
-    this.jPush.setAlias({sequence: 1, alias: Config.userInfo['role'] + '_' + Config.userInfo['id']}).then(result => {
+    if (Config.userInfo['role'] == -1) {
+      Config.userInfo['role'] = 0;
+    } else {
+      Config.userInfo['role'] = 1;
+    }
+    this.jPush.setAlias({sequence: 1, alias:  Config.userInfo['role'] + "_" + Config.userInfo['id']}).then(result => {
       console.log("jpush-设置别名成功");
       console.log(result);
     }, error => {

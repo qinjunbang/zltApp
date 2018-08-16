@@ -10,12 +10,12 @@
 </ion-header>
 
 <ion-content>
-  <div class="no-shops" text-center *ngIf="shopsList.length < 1">
+  <div class="no-shops" text-center *ngIf="employees_list.length < 1">
     <img src="assets/imgs/no-shops.png" alt="">
     <p text-center>您还没有添加任何员工~</p>
   </div>
   <ion-list>
-    <ion-item-sliding *ngFor="let shops of shopsList">
+    <ion-item-sliding *ngFor="let em of employees_list">
       <ion-item>
         <!--<ion-thumbnail item-start>-->
           <!--<img src="">-->
@@ -23,11 +23,11 @@
         <ion-avatar item-left>
           <img src="https://ionicframework.com/dist/preview-app/www/assets/img/thumbnail-totoro.png">
         </ion-avatar>
-        <h2>员工名称1</h2>
-        <p>工号：22222b</p>
+        <h2>{{em.name}} ({{em.rolename}})</h2>
+        <p>手机号：{{em.mobile}}</p>
 
         <button item-end text-right ion-button clear small class="del-btn">
-          <ion-icon name="ios-trash"></ion-icon>
+          <ion-icon name="ios-trash" (click)="deleteEmployees(em.id)"></ion-icon>
         </button>
 
       </ion-item>

@@ -3,6 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
+import { NativeService } from '../../../../providers/NativeService';
 import { Config } from '../../../../providers/Config';
 import { NavController, NavParams } from 'ionic-angular';
 import { EmployeesAddPage } from '../employees-add/employees-add';
@@ -14,27 +15,48 @@ import { EmployeesAddPage } from '../employees-add/employees-add';
 })
 export class EmployeesListPage {
   public shop_id: string = ''; // 店铺ID
-  public shopsList: any = []; // 店铺列表
+  public employees_list: any = []; // 员工列表
 
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
-    public navParam: NavParams
+    public navParam: NavParams,
+    public native: NativeService
   ) {
     this.shop_id = this.navParam.get("sid");
   }
-  ionViewDidLoad() {
-     this.getShopsList();
+  ionViewWillEnter() {
+     this.getEmployeesList();
   }
 
   // 获取店铺列表
-  public getShopsList () {
+  public getEmployeesList () {
     console.log("我要获取数据");
     this.http.post("/api/app/clerkAll", {token: Config.token, device_id: Config.device_id, shop_id: this.shop_id}).subscribe(res => {
       console.log("res", res);
       if (res.code == 200) {
-        this.shopsList = res.data;
+        this.employees_list = res.data;
+      } else {
+        this.native.alert(res.info);
       }
+    });
+  }
+
+  // 删除员工
+  public deleteEmployees (eid) {
+    let data = {};
+    data['token'] = Config.token;
+    data['device_id'] = Config.device_id;
+    data['id'] = eid;
+    data['shop_id'] = this.shop_id;
+
+    this.native.alert("确定删除该员工？", "", "", () => {
+      this.http.post("/api/app/clerkDel", data).subscribe(res => {
+        this.native.showToast(res.info);
+        if (res.code == 200) {
+          this.getEmployeesList();
+        }
+      });
     });
   }
 
