@@ -129,7 +129,8 @@ export class MyApp {
           console.log("res", res);
           if (res.code == 200) {
             this.storage.set("token", res.data.token);
-            Config.token = res.data;
+            Config.token = res.data.token;
+            Config.device_id = res.data.shopclerk.device_id;
             this.nav.setRoot(TabsPage);
           } else {
             this.nav.setRoot(LoginPage);

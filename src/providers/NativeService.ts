@@ -17,6 +17,9 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { Observable } from 'rxjs/Rx';
 import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Config } from './Config';
+import { Utils } from './Utils';
 
 
 @Injectable()
@@ -41,6 +44,7 @@ export class NativeService {
     private nativeAudio: NativeAudio, // 语音播放
     private device: Device, // 设备UUID组件
     private androidPermissions: AndroidPermissions, // 安卓手机权限获取，主要针对 26以上的版本
+    public transfer: FileTransfer, // 文件上传
 
   ) {
 
@@ -508,6 +512,52 @@ export class NativeService {
         }
       });
 
+
+    });
+  }
+
+  /*
+   *
+   * 上传图片到服务器
+   * @param fileUrl 图片原始路径
+   * @param serverUrl 上传到服务器的路径
+   *
+   * */
+
+  uploadImages (fileUrl, serverUrl) :Observable <any> {
+
+    serverUrl = Utils.formatUrl(serverUrl.startsWith('http') ? serverUrl : Config.app_upload_serve_url + serverUrl);
+
+    return Observable.create(observer => {
+      console.log("fileUrl", fileUrl);
+      const fileTransfer: FileTransferObject = this.transfer.create();
+
+      let options: FileUploadOptions = {
+        chunkedMode: false,  //是否是在流模式下传送数据 default true
+        fileKey: 'thumb',  //接收图片时的key
+        params: {  //自己可另外加的参数
+          device_id: Config.device_id,
+          token: Config.token,
+
+        },
+        headers: {
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' //不加入 发生错误！！
+        }
+      };
+
+      fileTransfer.upload(fileUrl, serverUrl, options).then(res => {
+        if (res.response) {
+          res = JSON.parse(res.response);
+        }
+        if (res['code'] == 200) {
+          console.log("上传图片成功:", res);
+          this.showToast("上传图片成功");
+          observer.next(res['data']);
+        }
+      }).catch(err => {
+        this.showToast("上传图片失败！");
+        console.log("上传图片err", JSON.stringify(err));
+      });
 
     });
   }
