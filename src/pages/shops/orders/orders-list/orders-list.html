@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content class="con-bg">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="刷新中..."></ion-refresher-content>
+  </ion-refresher>
+
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="defaultTitle">
       <ion-segment-button *ngFor="let item of menuList" value="{{item.title}}">

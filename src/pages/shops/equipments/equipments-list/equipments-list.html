@@ -11,13 +11,9 @@
 
 <ion-content>
   <ion-list>
-    <ion-item (click)="deleteEquip()">
-      <ion-label>打印机1</ion-label>
-      <ion-icon name="menu" item-end class="my-icon" (click)="seeDeatils()"></ion-icon>
-    </ion-item>
-    <ion-item>
-      <ion-label>打印机2</ion-label>
-      <ion-icon name="menu" item-end class="my-icon"></ion-icon>
+    <ion-item  *ngFor="let list of equipmentList">
+      <ion-label>{{list.department}}</ion-label>
+      <ion-icon name="menu" item-end class="my-icon" (click)="seeDeatils(list)"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>

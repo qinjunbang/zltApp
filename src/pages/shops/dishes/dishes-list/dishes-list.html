@@ -2,14 +2,17 @@
   <ion-navbar color="primary">
     <ion-title text-center>菜品列表</ion-title>
     <div class="dish-class" (click)="dishesClass()" >
-      菜品分类
+      菜单分类
     </div>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="con-bg">
   <ion-list>
-      <ion-item-sliding (click)="dishesClass()">
+      <ion-list-header >
+        分类
+      </ion-list-header>
+      <ion-item-sliding (click)="addDishes()">
         <ion-item>
           <ion-thumbnail item-start>
             <img src="../../../../assets/imgs/1.jpg">
@@ -29,27 +32,6 @@
           </button>
         </ion-item-options>
       </ion-item-sliding>
-      <ion-item-sliding>
-          <ion-item>
-            <ion-thumbnail item-start>
-              <img src="../../../../assets/imgs/1.jpg">
-            </ion-thumbnail>
-            <ion-label>
-                <h2>我是傻逼</h2>
-                <p>12元</p>
-            </ion-label>
-            <div class="use" item-end>
-              <ion-toggle  [(ngModel)]="isToggled" (ionChange)="toggleFun()"></ion-toggle>
-            </div>
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button color="primary">
-              <ion-icon name="mail"></ion-icon>
-              删除
-            </button>
-          </ion-item-options>
-        </ion-item-sliding>
   </ion-list>
-  
-  
+  <div class="addDishes" (click)="addDishes()">添加菜式</div>
 </ion-content>

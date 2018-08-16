@@ -3,9 +3,12 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
-import { NavController, ActionSheetController} from 'ionic-angular';
+import { NavController, ActionSheetController , NavParams} from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { NativeService } from '../../../../providers/NativeService';
 
 import { addEquipmentsPage } from '../addEquipments/addEquipments';
+import { EquipmentsDetailsPage } from '../equipments-details/equipments-details';
 
 
 @Component({
@@ -13,52 +16,73 @@ import { addEquipmentsPage } from '../addEquipments/addEquipments';
   templateUrl: 'equipments-list.html'
 })
 export class EquipmentsListPage {
+  public equipmentList: Object;
+  public shopId = ''
 
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public storage: Storage,
+    public native: NativeService,
+    public params: NavParams
   ) {
-
+    this.shopId = this.params.get('sid');
+    console.log(this.shopId)
   }
   ionViewDidLoad() {
     // this.getShopsList();
   }
+  ionViewWillEnter() {
+    this.getEquipList()
+  }
 
-  // 获取店铺列表
-  public getShopsList () {
-    console.log("我要获取数据");
-    this.http.post("/api/shop/all", {}).subscribe(res => {
-      console.log("res", res);
-    });
+  public getToken(){
+    return new Promise((resolve) => {
+      this.storage.get('token').then((val) => {
+          resolve(val)
+      });
+    })
+  }
+  public getDeviceId(){
+    return new Promise((resolve) => {
+      this.storage.get('device_id').then((val) => {
+          resolve(val)
+      });
+    })
+  }
+
+  // 获取打印机列表
+  public getEquipList () {
+    let that = this;
+    async function getList(){
+      let token = await that.getToken();
+      let deviceId = await that.getDeviceId();
+      that.http.post("/api/app/printerAll", {'token':token,'device_id': deviceId,'shop_id':that.shopId}).subscribe(res => {
+          console.log("res", res);
+          if(res.code == 200){
+            that.equipmentList = res.data;
+          }else if(res.code == 201){
+            that.equipmentList = [];
+            that.native.alert('提示','',res.info);
+          }else{
+            that.native.alert('提示','',res.info);
+          }
+      })
+    }
+    getList()
   }
 
   // 页面跳转
   public addEquipments () {
-    this.navCtrl.push(addEquipmentsPage);
+    this.navCtrl.push(addEquipmentsPage,{'shopId':this.shopId});
   }
 
-  //删除设备
-  deleteEquip() {
-    const actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: "删除设备",
-          handler: () => {
-          }
-        },
-        {
-          text: '取消',
-          role: 'cancel'
-        }
-      ]
-    });
-    actionSheet.present();
-  }
+  
 
   //查看设备详情
-  seeDeatils() {
-    //this.navCtrl.push()
+  seeDeatils(equip) {
+    this.navCtrl.push(EquipmentsDetailsPage,{'shopId':this.shopId,'equip':equip})
   }
 
 }

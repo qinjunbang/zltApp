@@ -15,14 +15,18 @@ import { forwardPage } from './wallet/forward/forward'  //ceshi
 })
 
 export class MePage {
-
+    public user = {};
+    public serverUrl = 'https://r.zhanglitong.com'
     constructor(
         public native: NativeService,
         public navCtrl: NavController,
         public storage: Storage,
         public http: HttpService
     ) {
-
+        this.storage.get('userInfo').then((val) => {
+            console.log(val)
+            this.user = val
+        });
     }
     wallet() {
         this.navCtrl.push(WalletPage) 

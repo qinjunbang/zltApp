@@ -31,6 +31,7 @@ import { addDishesPage } from '../pages/shops/dishes/addDishes/addDishes';
 import { RoomTablesListPage } from '../pages/shops/roomtables/roomtables-list/roomtables-list';
 import { addRoomTablesPage } from '../pages/shops/roomtables/addRoomTables/addRoomTables';
 import { EquipmentsListPage } from '../pages/shops/equipments/equipments-list/equipments-list';
+import { EquipmentsDetailsPage } from '../pages/shops/equipments/equipments-details/equipments-details';
 import { addEquipmentsPage } from '../pages/shops/equipments/addEquipments/addEquipments';
 import { OrdersListPage } from '../pages/shops/orders/orders-list/orders-list';
 import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
@@ -87,7 +88,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     OrderDetailPage,
     EmployeesAddPage,
     addEquipmentsPage,
-    addDishesPage
+    addDishesPage,
+    EquipmentsDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -145,7 +147,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     OrderDetailPage,
     EmployeesAddPage,
     addEquipmentsPage,
-    addDishesPage
+    addDishesPage,
+    EquipmentsDetailsPage
   ],
   providers: [
     StatusBar,
