@@ -14,7 +14,7 @@
             <h2>{{user.name}}</h2>
         </ion-item>
     </ion-list>
-    <ion-list no-lines class="list-ion" (click)="wallet()">
+    <ion-list no-lines class="list-ion" (click)="wallet()" *ngIf="user.role == -1">
         <ion-item>
             <ion-icon item-start class="iconfont icon-app-money" ></ion-icon>
                 钱包
