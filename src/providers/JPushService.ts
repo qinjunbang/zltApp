@@ -29,9 +29,6 @@ export class JPushService {
     // 初始化
     this.jPush.init();
 
-    // 设置别名
-    this.setAlias();
-
     // 监听推送事件
     this.jPushAddEventListener();
   }
@@ -63,6 +60,7 @@ export class JPushService {
     // 收到通知时触发
     document.addEventListener('jpush.receiveNotification', event => {
       const content = this.native.isIos() ? event['aps'].alert : event['alert'];
+      console.log("jpush收到内容", JSON.stringify(event));
       console.log("jpush收到内容", content);
       this.speaking.startSpeak(content);
     }, false);
@@ -86,7 +84,7 @@ export class JPushService {
     }
     this.jPush.setAlias({sequence: 1, alias:  Config.userInfo['role'] + "_" + Config.userInfo['id']}).then(result => {
       console.log("jpush-设置别名成功");
-      console.log(result);
+      console.log(JSON.stringify(result));
     }, error => {
       console.log("jpush-设置别名失败->",  error);
     });

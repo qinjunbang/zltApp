@@ -10,7 +10,6 @@ import { JPushService } from '../providers/JPushService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
-import { DishesListPage } from '../pages/shops/dishes/dishes-list/dishes-list'; //测试
 
 @Component({
   templateUrl: 'app.html'
@@ -132,6 +131,8 @@ export class MyApp {
             Config.token = res.data.token;
             Config.userInfo = res.data.shopclerk;
             Config.device_id = res.data.shopclerk.device_id;
+            // 设置别名
+            this.jPush.setAlias();
             this.nav.setRoot(TabsPage);
           } else {
             this.nav.setRoot(LoginPage);
