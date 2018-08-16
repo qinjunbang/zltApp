@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { DetailsPage } from './details/details';
 import { addCardPage } from './addCard/addCard';
 import { forwardPage } from './forward/forward';
+import { Storage } from '@ionic/storage';
 
 @Component({
     selector: 'wallet-page',
@@ -10,10 +11,15 @@ import { forwardPage } from './forward/forward';
 })
 
 export class WalletPage {
+    public user = '';
     constructor(
-        public navCtrl: NavController
+        public navCtrl: NavController,
+        public storage: Storage
     ) {
-
+        this.storage.get('userInfo').then((val) => {
+            console.log(val)
+            this.user = val
+        });
     }
     forward() {
         this.navCtrl.push(forwardPage)
