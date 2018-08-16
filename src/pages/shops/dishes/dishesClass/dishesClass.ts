@@ -61,17 +61,19 @@ export class dishesClassPage {
   }
 
 
-  edit(id){
+  edit(id,name,sort){
     let that = this;
     let alert = this.alertCtrl.create({
       title: '修改分类',
       inputs: [
         {
           name: 'name',
+          value:name,
           placeholder: '分类名称'
         },
         {
           name: 'sort',
+          value:sort,
           placeholder: '排序'
         },
       ],

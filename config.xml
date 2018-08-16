@@ -98,6 +98,6 @@
     <plugin name="jpush-phonegap-plugin" spec="^3.4.3">
         <variable name="APP_KEY" value="443eca432eff14581d12c724" />
     </plugin>
-    <plugin name="cordova-plugin-xunfeiListenSpeaking" spec="E:\cordova-plugin-IFlyspeech-master" />
-    <engine name="android" spec="~7.0.0" />
+    <plugin name="cordova-plugin-xunfeiListenSpeaking" spec="C:\Users\Administrator\Desktop\cordova-plugin-IFlyspeech-master" />
+    <engine name="android" spec="^7.0.0" />
 </widget>

@@ -28,6 +28,7 @@ import { EmployeesAddPage } from '../pages/shops/employees/employees-add/employe
 import { DishesListPage } from '../pages/shops/dishes/dishes-list/dishes-list';
 import { dishesClassPage } from '../pages/shops/dishes//dishesClass/dishesClass';
 import { addDishesPage } from '../pages/shops/dishes/addDishes/addDishes';
+import { editDishesPage } from '../pages/shops/dishes/editDishes/editDishes';
 import { RoomTablesListPage } from '../pages/shops/roomtables/roomtables-list/roomtables-list';
 import { addRoomTablesPage } from '../pages/shops/roomtables/addRoomTables/addRoomTables';
 import { EquipmentsListPage } from '../pages/shops/equipments/equipments-list/equipments-list';
@@ -88,6 +89,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     EmployeesAddPage,
     addEquipmentsPage,
     addDishesPage,
+    editDishesPage,
     EquipmentsDetailsPage
   ],
   imports: [
@@ -147,6 +149,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     EmployeesAddPage,
     addEquipmentsPage,
     addDishesPage,
+    editDishesPage,
     EquipmentsDetailsPage
   ],
   providers: [

@@ -8,22 +8,24 @@
 </ion-header>
 
 <ion-content class="con-bg">
-  <ion-list>
+  <ion-list *ngFor="let menu of dishesList" no-lines>
+    <div>
       <ion-list-header >
-        分类
+        {{menu.menu_name}}
       </ion-list-header>
-      <ion-item-sliding (click)="addDishes()">
+      <ion-item-sliding (click)="editDishes(shops.id)" *ngFor="let shops of menu.shopdish">
         <ion-item>
           <ion-thumbnail item-start>
-            <img src="../../../../assets/imgs/1.jpg">
+            <img src="{{serverUrl}}{{shops.thumb}}">
           </ion-thumbnail>
           <ion-label>
-              <h2>我是傻逼</h2>
-              <p>12元</p>
+              <h2>{{shops.dishes_name}}</h2>
+              <p class="discount-price">折后价：{{shops.discount_price}}元</p>
+              <p class="price">原价：{{shops.price}}元</p>
           </ion-label>
-          <div class="use" item-end>
-            <ion-toggle  [(ngModel)]="isToggled" (ionChange)="toggleFun()"></ion-toggle>
-          </div>
+          <!-- <div class="use" item-end>
+            <ion-toggle  [(ngModel)]="shops.status" (ionChange)="toggleFun($event)"></ion-toggle>
+          </div> -->
         </ion-item>
         <ion-item-options side="right">
           <button ion-button color="primary">
@@ -32,6 +34,8 @@
           </button>
         </ion-item-options>
       </ion-item-sliding>
+    </div>
   </ion-list>
+  <div class="padding-bottom"></div>
   <div class="addDishes" (click)="addDishes()">添加菜式</div>
 </ion-content>

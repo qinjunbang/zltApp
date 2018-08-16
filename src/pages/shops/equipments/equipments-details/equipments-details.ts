@@ -27,10 +27,14 @@ export class EquipmentsDetailsPage {
       public actionSheetCtrl: ActionSheetController
     ) {
       this.shopId = this.params.get('shopId');
+      console.log(this.params.get('equip'))
       if(this.params.get('equip') != '' || this.params.get('equip') != undefined){
         this.equip = this.params.get('equip');
         this.eqName = this.params.get('equip').department;
-        this.id = this.params.get('equip').id
+        this.id = this.params.get('equip').id;
+        this.useAll = this.params.get('equip').is_useall;
+        this.dishesSelect = this.params.get('equip').cuisine;
+        this.priterNum = this.params.get('equip').priter_number;
       }else{
           this.equip = ''
       }

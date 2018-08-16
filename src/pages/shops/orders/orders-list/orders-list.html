@@ -10,39 +10,46 @@
   </ion-refresher>
 
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="defaultTitle">
-      <ion-segment-button *ngFor="let item of menuList" value="{{item.title}}">
+    <ion-segment [(ngModel)]="defaultType" (click)="seeOrders()">
+      <ion-segment-button *ngFor="let item of menuType" value="{{item.id}}">
         {{item.title}}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
-  <div class="orders" [ngSwitch]="defaultTitle">
-    <div class="orders-list" *ngSwitchCase="'预定'" (click)="listDetail()">
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="defaultList" (click)="seeOrders()">
+      <ion-segment-button *ngFor="let item of menuList" value="{{item.id}}">
+        {{item.title}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div class="orders" >
+    <div class="orders-list" (click)="listDetail(orders.id)" *ngFor="let orders of ordersList">
       <ion-list no-lines>
-        <ion-item>订单号：1212121121
-          <div item-end>10:00</div>
+        <ion-item>订单号：{{orders.order_number}}
+          <div item-end class="time">{{orders.created_at}}</div>
         </ion-item>
       </ion-list>
       <div class="orders-con">
-        <div class="list clearfix">
-          <div class="list-left">店铺</div>
-          <div class="list-right">沙县小吃</div>
-        </div>
         <div class="list clearfix">
           <div class="list-left">菜式</div>
           <div class="list-right">炒粉x1</div>
         </div>
         <div class="list clearfix">
           <div class="list-left">付款金额</div>
-          <div class="list-right">$1111</div>
+          <div class="list-right">{{orders.order_amount}}</div>
         </div>
         <div class="list clearfix">
-          <div class="list-left">状态</div>
-          <div class="list-right">已支付</div>
+          <div class="list-left">下单人</div>
+          <div class="list-right">{{orders.order_address.name}}</div>
+        </div>
+        <div class="list clearfix">
+          <div class="list-left">联系方式</div>
+          <div class="list-right">{{orders.order_address.mobile}}</div>
         </div>
       </div>
     </div>
-
   </div>
 </ion-content>

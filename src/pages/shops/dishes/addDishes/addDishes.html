@@ -8,28 +8,33 @@
     <ion-list>
         <ion-item>
             <ion-label>菜名：</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="dishName"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>价格：</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="number" [(ngModel)]="dishPrice"></ion-input>
             <div item-end>元</div>
         </ion-item>
         <ion-item>
             <ion-label>选择菜式分类：</ion-label>
-            <ion-input type="text" readonly (click)="selectList()" value="甜品"></ion-input>
+            <!-- <ion-input type="text" readonly (click)="selectList($event)" value="{{selectListVal}}"></ion-input> -->
+            <ion-select [(ngModel)]="dishesListSelect" (ionChange)="getSelect($event)" okText="确认" cancelText="取消">
+                <ion-option *ngFor="let item of dishesList" value="{{item.id}}">{{item.menu_name}}</ion-option>
+            </ion-select>
         </ion-item>
-        <ion-item class="haosha">
+        <!-- <ion-item class="haosha">
             <ion-label>选择分类：</ion-label>
-            <ion-input type="text" readonly (click)="selectClass()" value="推荐"></ion-input>
-        </ion-item>
+            <ion-select [(ngModel)]="classSelect" (ionChange)="getClassSelect($event)" okText="确认" cancelText="取消">
+                <ion-option *ngFor="let item of dishesList" value="{{item.id}}">{{item.menu_name}}</ion-option>
+            </ion-select>
+        </ion-item> -->
         <ion-item>
             <ion-label>折扣：</ion-label>
-            <ion-input type="number" value="0.9"></ion-input>
+            <ion-input type="number" value="{{discount}}" [(ngModel)]="discount"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>介绍：</ion-label>
-            <ion-textarea type="text" value="我多想再见你 哪怕匆匆一眼就别离 路灯下昏黄的剪影 越走越漫长的林径" autoresize="100"></ion-textarea>
+            <ion-textarea type="text" value="{{text}}" [(ngModel)]="text" autoresize="100" placeholder="菜式介绍"></ion-textarea>
         </ion-item>
 
         <ion-item>
@@ -48,6 +53,6 @@
     </ion-list>
 
     <div padding>
-        <button ion-button block>确认添加</button>
+        <button ion-button block (click)="addDishes()">确认添加</button>
     </div>
 </ion-content>

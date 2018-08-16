@@ -3,14 +3,13 @@ import { HttpService } from '../../../../providers/HttpService';
 import { NavController , AlertController , ActionSheetController , NavParams} from 'ionic-angular';
 import { NativeService } from '../../../../providers/NativeService';
 import { Storage } from '@ionic/storage';
-import { timestamp } from '../../../../../node_modules/rxjs/operators';
 
 
 @Component({
-  selector: 'add-dishes',
-  templateUrl: 'addDishes.html'
+  selector: 'edit-dishes',
+  templateUrl: 'editDishes.html'
 })
-export class addDishesPage {
+export class editDishesPage {
     public testRadioOpen = false;
     public dishName = '';
     public dishPrice = '';
@@ -18,7 +17,10 @@ export class addDishesPage {
     public dishesList = '';
     public dishesListSelect = 0;
     public discount = 0.9;
-    public text = ''
+    public text = '';
+    public id = 0;
+    public dishesMess = '';
+    public img = '';
     constructor(
         public http: HttpService,
         public navCtrl: NavController,
@@ -29,8 +31,9 @@ export class addDishesPage {
         public storage: Storage
     ){
         this.shopId = this.params.get('shopId');
-        console.log(this.params.get('shopId'))
+        this.id = this.params.get('id');
         this.getDishesList();
+        this.getDishesMess();
     }
 
     public getToken(){
@@ -66,36 +69,29 @@ export class addDishesPage {
         getDishes()
     }
 
-    getSelect(e) {
-        console.log(e)
+    // 获取菜式信息
+    public getDishesMess () {
+        let that = this;
+        async function getDishes(){
+        let token = await that.getToken();
+        let deviceId = await that.getDeviceId();
+        that.http.post("/api/app/dishOne", {'token':token,'device_id': deviceId,'shop_id':that.shopId,'id':that.id}).subscribe(res => {
+            console.log("res", res);
+            if(res.code == 200){
+                that.dishesMess = res.data;
+                that.dishName = res.data.dishes_name;
+                that.dishPrice = res.data.price;
+                that.dishesListSelect = res.data.menu_id;
+                that.discount = res.data.discount;
+                that.text = res.data.description;
+            }else {
+                that.native.alert('提示','',res.info);
+            }
+        })
+        }
+        getDishes()
     }
     
-
-    // selectList(e) {
-    //     let alert = this.alertCtrl.create();
-    //     alert.setTitle('请选择菜品分类');
-    //     console.log(this.dishesList)
-    //     for(let i=0;i<this.dishesList.length;i++){
-    //         console.log(this.dishesList[i].menu_name)
-    //         alert.addInput({
-    //             type: 'radio',
-    //             label: this.dishesList[i].menu_name,
-    //             value: this.dishesList[i].menu_name,
-    //             checked: i==0 ? true : false
-    //         });
-    //     }
-
-    //     alert.addButton('取消');
-    //     alert.addButton({
-    //     text: '确定',
-    //     handler: (data: any) => {
-    //         console.log('Radio data:', data);
-    //         this.selectListVal = data;
-    //         this.testRadioOpen = false;
-    //     }
-    //     });
-    //     alert.present();
-    // }
 
 
     // 从图库获取图片
@@ -145,7 +141,7 @@ export class addDishesPage {
 
     addDishes() {
         let that = this;
-        async function dishAdd(){
+        async function dishEdit(){
             console.log(that.dishName)
             let token = await that.getToken();
             let deviceId = await that.getDeviceId();
@@ -159,9 +155,10 @@ export class addDishesPage {
                 'discount': that.discount,
                 'is_attr':0,
                 'thumb':'../../../../assets/imgs1.jpg',
-                'description':that.text
+                'description':that.text,
+                'id':that.id
             }
-            that.http.post("/api/app/dishAdd", data).subscribe(res => {
+            that.http.post("/api/app/dishEdit", data).subscribe(res => {
                 console.log("res", res);
                 if(res.code == 200){
                     that.dishesList = res.data;
@@ -176,7 +173,7 @@ export class addDishesPage {
         } else if(that.discount<0 || that.discount>1){
             that.native.alert('提示','','折扣请填写0~1范围数字')
         } else{
-            dishAdd()
+            dishEdit()
         }
     }
 }
