@@ -29,6 +29,9 @@ export class JPushService {
     // 初始化
     this.jPush.init();
 
+    // 设置别名
+    this.setAlias();
+
     // 监听推送事件
     this.jPushAddEventListener();
   }
@@ -77,7 +80,7 @@ export class JPushService {
       return;
     }
 
-    this.jPush.setAlias({sequence: 1, alias: Config.userInfo['id']}).then(result => {
+    this.jPush.setAlias({sequence: 1, alias: Config.userInfo['role'] + '_' + Config.userInfo['id']}).then(result => {
       console.log("jpush-设置别名成功");
       console.log(result);
     }, error => {
