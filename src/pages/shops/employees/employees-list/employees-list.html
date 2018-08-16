@@ -10,9 +10,9 @@
 </ion-header>
 
 <ion-content>
-  <div class="no-shops" *ngIf="shopsList.length < 1">
+  <div class="no-shops" text-center *ngIf="shopsList.length < 1">
     <img src="assets/imgs/no-shops.png" alt="">
-    <p>空空如也~</p>
+    <p text-center>您还没有添加任何员工~</p>
   </div>
   <ion-list>
     <ion-item-sliding *ngFor="let shops of shopsList">
