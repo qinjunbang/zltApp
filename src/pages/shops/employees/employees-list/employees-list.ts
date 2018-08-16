@@ -3,7 +3,8 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
-import { NavController } from 'ionic-angular';
+import { Config } from '../../../../providers/Config';
+import { NavController, NavParams } from 'ionic-angular';
 import { EmployeesAddPage } from '../employees-add/employees-add';
 
 
@@ -12,34 +13,34 @@ import { EmployeesAddPage } from '../employees-add/employees-add';
   templateUrl: 'employees-list.html'
 })
 export class EmployeesListPage {
-  public shopsList = [
-    {id: 0},
-    {id: 1},
-    {id: 2}
-  ]; // 店铺列表
+  public shop_id: string = ''; // 店铺ID
+  public shopsList: any = []; // 店铺列表
 
   constructor(
     public http: HttpService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public navParam: NavParams
   ) {
-
+    this.shop_id = this.navParam.get("sid");
   }
   ionViewDidLoad() {
-    // this.getShopsList();
+     this.getShopsList();
   }
 
   // 获取店铺列表
   public getShopsList () {
     console.log("我要获取数据");
-    this.http.post("/api/shop/all", {}).subscribe(res => {
+    this.http.post("/api/app/clerkAll", {token: Config.token, device_id: Config.device_id, shop_id: this.shop_id}).subscribe(res => {
       console.log("res", res);
+      if (res.code == 200) {
+        this.shopsList = res.data;
+      }
     });
   }
 
   // 页面跳转
   public goToPage () {
-    console.log('123');
-    this.navCtrl.push(EmployeesAddPage, {});
+    this.navCtrl.push(EmployeesAddPage, {"sid": this.shop_id});
   }
 
 }

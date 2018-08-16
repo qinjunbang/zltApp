@@ -20,8 +20,13 @@
             <ion-thumbnail item-start>
               <img src="{{serverUrl}}{{shops.shop_avatar}}">
             </ion-thumbnail>
-            <h2>{{shops.shop_name}}</h2>
-            <p>{{shops.note}}</p>
+            <ion-label>
+              <h2>{{shops.shop_name}}</h2>
+              <p>{{shops.note}}</p>
+            </ion-label>
+
+            <ion-toggle></ion-toggle>
+
           </ion-item>
           <ion-item-options side="right" (click)="deleteShop(shops.id)">
             <button ion-button color="danger">
