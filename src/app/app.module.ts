@@ -46,6 +46,7 @@ import { Network } from '@ionic-native/network';
 import { AppMinimize } from '@ionic-native/app-minimize';
 import { Toast } from '@ionic-native/toast';
 import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -171,7 +172,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     SpeakingService,
     JPush,
     Device,
-    AndroidPermissions
+    AndroidPermissions,
+    FileTransfer,
   ]
 })
 export class AppModule {}

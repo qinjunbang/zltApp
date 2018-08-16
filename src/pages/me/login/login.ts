@@ -72,6 +72,7 @@ export class LoginPage {
        res.data.shopclerk && this.storage.set("userInfo", res.data.shopclerk);
        Config.token = res.data.token;
        Config.userInfo = res.data.shopclerk;
+       Config.device_id = res.data.shopclerk.device_id;
        // 跳转到我的页面
        this.navCtrl.push(TabsPage);
 

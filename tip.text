@@ -111,5 +111,9 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 16、安装讯飞语音插件
 ```ionic cordova plugin add  E:\cordova-plugin-IFlyspeech-master
 ```
+17、文件上传插件
+```ionic cordova plugin add cordova-plugin-file-transfer
+   npm install --save @ionic-native/file-transfer
+```
 
 

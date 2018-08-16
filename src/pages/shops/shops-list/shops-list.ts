@@ -6,6 +6,7 @@ import { HttpService } from '../../../providers/HttpService';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../providers/NativeService';
+import { Config } from '../../../providers/Config';
 
 import { ShopsAddPage } from '../shops-add/shops-add';
 import { ShopsManagePage } from '../shops-manage/shops-manage';
@@ -27,68 +28,45 @@ export class ShopsListPage {
     public storage: Storage,
     public native: NativeService
   ) {
+
+  }
+
+  // 将进入页面时触发
+  ionViewWillEnter () {
     this.getShopsList();
   }
+
+  // 页面加载的时候触发
   ionViewDidLoad() {
-    // this.getShopsList();
+
   }
 
-  public getToken(){
-    return new Promise((resolve) => {
-      this.storage.get('token').then((val) => {
-          resolve(val)
-      });
-    })
-  }
-  public getDeviceId(){
-    return new Promise((resolve) => {
-      this.storage.get('device_id').then((val) => {
-          resolve(val)
-      });
-    })
-  }
 
-  
+
   // 获取店铺列表
   public getShopsList () {
-    console.log("我要获取数据");
-    let that = this;
-    async function getshops(){
-      let token = await that.getToken();
-      let deviceId = await that.getDeviceId();
-      that.http.post("/api/app/shopAll", {'token':token,'device_id': deviceId}).subscribe(res => {
-          console.log("res", res);
-          if(res.code == 200){
-            that.shopsList = res.data;
-          }else if(res.code == 2001) {
-            that.native.alert('提示','','你还没有登录，请先登录！');
-          }else {
-            that.native.alert('提示','',res.info);
-          }
-      })
-    }
-    getshops()
+    this.http.post("/api/app/shopAll", {token: Config.token, device_id: Config.device_id}).subscribe(res => {
+      console.log("res", res);
+      if(res.code == 200){
+        this.shopsList = res.data;
+      } else {
+        this.native.alert(res.info);
+      }
+    })
   }
 
   //删除店铺
-  public deleteShop(id) {
-    let that = this;
-    async function delShops(){
-      let token = await that.getToken();
-      let deviceId = await that.getDeviceId();
-      that.http.post("/api/app/shopDel", {'token':token,'device_id': deviceId,'shop_id':id}).subscribe(res => {
-          console.log("res", res);
-          if(res.code == 200){
-            that.native.alert('提示','','删除店铺成功！');
-            that.getShopsList();
-          }else {
-            that.native.alert('提示','',res.info)
-          }
-      })
-    }
-    that.native.confirm('提示','确定要删除此店铺？', function() {
-      delShops()
-    }) 
+  public deleteShop(sid) {
+    this.http.post("/api/app/shopDel", {token: Config.token, device_id: Config.device_id, shop_id: sid}).subscribe(res => {
+      console.log("res", res);
+      this.native.alert(res.info, '', '', () => {
+        // 删除成功，重新获取店铺列表
+        if (res.code == 200) {
+          this.getShopsList();
+        }
+
+      });
+    })
   }
 
   // 页面跳转
