@@ -9,7 +9,7 @@
 
     <ion-item>
       <ion-label>店铺名称</ion-label>
-      <ion-input type="text" [(ngModel)]="shopInfo.name" placeholder="请输入店铺名称"></ion-input>
+      <ion-input type="text" [(ngModel)]="shopInfo.shop_name" placeholder="请输入店铺名称"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -35,7 +35,7 @@
 
     <ion-item>
       <ion-label>店铺地址</ion-label>
-      <ion-multi-picker item-content (ionChange)="changeCitiesDate($event)" [cancelText]="'取消'" [doneText]="'确定'" [multiPickerColumns]="cities" placeholder="省-市-区（县）" ></ion-multi-picker>
+      <ion-multi-picker item-content (ionChange)="changeCitiesDate($event)" [cancelText]="'取消'" [doneText]="'确定'" [multiPickerColumns]="cities" placeholder="{{address}}" ></ion-multi-picker>
     </ion-item>
 
     <ion-item>

@@ -22,6 +22,9 @@ export class ShopsDetailPage {
    public cities: any = []; // 城市JSON数据
    public codeList: any = []; // 商圈
    public shopsType: any = [];
+   public address: string = '';
+
+
    public shopInfo = {
     id: '', // 店铺id
     shop_name: '', // 店铺名称
@@ -79,15 +82,34 @@ export class ShopsDetailPage {
       console.log("res", res);
       let addressArr = res.data.shop_address.split(" ");
       console.log("addressArr", addressArr);
-      res.data.shop_address = addressArr[0] + " " + addressArr[1] + " " + addressArr[2];
+
       res.data['detail_address'] = addressArr[3];
 
-      let openTimeArr = res.data.opentime.splite("--");
+      let openTimeArr = res.data.opentime.split("--");
       console.log("openTimeArr", openTimeArr);
-      res.data['startTime'] = openTimeArr[0];
-      res.data['endTime'] = openTimeArr[1];
 
-      this.shopInfo = res.data;
+
+
+      this.shopInfo['shop_id'] = res.data.id; // 店铺id
+      this.shopInfo['shop_name'] = res.data.shop_name; // 店铺名称
+      this.shopInfo['type_id'] = res.data.type_id; // 店铺类型id
+      this.address = addressArr[0] + " " + addressArr[1]  + " " + addressArr[2];; // 店铺地址
+      this.shopInfo['detail_address'] = res.data.detail_address; // 店铺详细地址
+      this.shopInfo['startTime'] = openTimeArr[0]; // 开始营业时间
+      this.shopInfo['endTime'] = openTimeArr[1]; // 结束营业时间
+      this.shopInfo['is_takeout'] = res.data.is_takeout; // 是否开启外卖
+      this.shopInfo['is_reserve'] = res.data.is_reserve; // 是否开启预定
+      this.shopInfo['is_list'] = res.data.is_list; // 是否开户排队
+      this.shopInfo['name'] = res.data.name; // 店主姓名
+      this.shopInfo['shop_phone'] = res.data.shop_phone; // 联系电话
+      this.shopInfo['note'] = res.data.note; // 店铺介绍
+      this.shopInfo['lience_pic'] = res.data.lience_pic; // 营业执照
+      this.shopInfo['shop_avatar'] = res.data.shop_avatar; // 店铺头像
+      this.shopInfo['shop_pic'] = res.data.shop_pic; // 店铺门面
+      this.shopInfo['business_code'] = res.data.business_code; // 商圈
+
+      console.log(" this.shopInfo",  this.shopInfo);
+      this.getCodeList(this.shopInfo['business_code']);
     });
   }
 
@@ -115,7 +137,8 @@ export class ShopsDetailPage {
     console.log("6666", event);
 
     // 拼接地址
-    this.shopInfo.shop_address = event[0]['text'] + event[1]['text'] + event[2]['text'];
+    this.address = event[0]['text'] + " " +  event[1]['text'] + " " + event[2]['text'];
+    console.log("address", this.address);
 
     // 拿到区（县的code）去获取商圈
     let lastCode = event[2]['value'];
@@ -226,6 +249,8 @@ export class ShopsDetailPage {
   // 添加店铺
   savaData() {
     let data = this.shopInfo;
+    data['opentime'] = this.shopInfo['startTime'] + "--" + this.shopInfo['endTime'];
+    data['shop_address'] = this.address + " " + this.shopInfo['detail_address'];
     data['token'] = Config.token;
     data['device_id'] = Config.device_id;
 

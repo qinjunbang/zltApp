@@ -85,7 +85,7 @@ export class ShopsAddPage {
     console.log("6666", event);
 
     // 拼接地址
-    this.shop_address = event[0]['text'] + " " +  event[1]['text'] + "" + event[2]['text'];
+    this.shop_address = event[0]['text'] + " " +  event[1]['text'] + " " + event[2]['text'];
 
     // 拿到区（县的code）去获取商圈
     let lastCode = event[2]['value'];
