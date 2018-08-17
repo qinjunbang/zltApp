@@ -21,6 +21,7 @@ export class EmployeesDetailPage {
   public employeesInfo = {
     shop_id: '',
     id: '',
+    avatar: '', // 头像
     name: '', // 名称
     sex: 1, // 性别
     role: 1, // 角色id (0财务，1服务员，2经理，3主管)

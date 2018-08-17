@@ -14,6 +14,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { ShopsListPage } from '../pages/shops/shops-list/shops-list';
 import { ShopsAddPage } from '../pages/shops/shops-add/shops-add';
+import { ShopsDetailPage } from '../pages/shops/shops-detail/shops-detail';
 import { MePage } from '../pages/me/me';
 import { WePage } from '../pages/me/we/we';
 import { WalletPage } from '../pages/me/wallet/wallet';
@@ -72,6 +73,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     LoginPage,
     ShopsListPage,
     ShopsAddPage,
+    ShopsDetailPage,
     MePage,
     WePage,
     WalletPage,
@@ -133,6 +135,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     LoginPage,
     ShopsListPage,
     ShopsAddPage,
+    ShopsDetailPage,
     MePage,
     WePage,
     WalletPage,

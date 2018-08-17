@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { ActionSheetController, NavController } from 'ionic-angular';
+import { ActionSheetController, NavController, NavParams } from 'ionic-angular';
 import { HttpService } from '../../../providers/HttpService';
 import { NativeService } from '../../../providers/NativeService';
 import { Config } from '../../../providers/Config';
@@ -12,44 +12,52 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'page-shops-add',
-  templateUrl: 'shops-add.html'
+  selector: 'page-shops-detail',
+  templateUrl: 'shops-detail.html'
 })
-export class ShopsAddPage {
+export class ShopsDetailPage {
 
-   public local = 'https://r.zhanglitong.com/'; // 服务器url
-   public cities = []; // 城市JSON数据
-   public shop_name: string = ''; // 店铺名称
-   public type_id: number; // 店铺类型id
-   public shop_address: string = ''; // 店铺地址
-   public detail_address: string = ''; // 店铺详细地址
-   public codeList = []; // 商圈列表
-   public startTime:string = '08:00'; // 开始营业时间
-   public endTime:string = '22:00'; // 结束营业时间
-   public is_takeout: number = 1; // 是否开启外卖
-   public is_reserve: number = 0; // 是否开启预定
-   public is_list: number = 0; // 是否开户排队
-   public shopsType: any = []; // 店铺所有分类
+   public local = Config.app_upload_serve_url; // 图片服务器url
+   public shop_id:string = ''; // 店铺id
+   public cities: any = []; // 城市JSON数据
+   public codeList: any = []; // 商圈
+   public shopsType: any = [];
+   public shopInfo = {
+    id: '', // 店铺id
+    shop_name: '', // 店铺名称
+    type_id: 0, // 店铺类型id
+    shop_address: '', // 店铺地址
+    detail_address: '', // 店铺详细地址
+    startTime: '', // 开始营业时间
+    endTime: '', // 结束营业时间
+    is_takeout: 1, // 是否开启外卖
+    is_reserve: 0, // 是否开启预定
+    is_list: 0, // 是否开户排队
+    name: '', // 店主姓名
+    shop_phone: '', // 联系电话
+    note: '', // 店铺介绍
+    lience_pic: '', // 营业执照
+    shop_avatar: '', // 店铺头像
+    shop_pic: '', // 店铺门面
+    business_code: '', // 商圈
+   };
 
-   public name: string = ''; // 店主姓名
-   public shop_phone: string = ''; // 联系电话
-   public note: string = ''; // 店铺介绍
-   public license_pic: string = ''; // 营业执照
-   public shop_avatar: string = ''; // 店铺头像
-   public shop_pic: string = ''; // 店铺门面
-   public business_code: number = 0; // 商圈
 
   constructor(
     public http: HttpService,
     public httpService: Http,
     public native: NativeService,
     public actionSheetCtrl: ActionSheetController,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public navParam: NavParams
   ) {
-
+    this.shop_id = this.navParam.get('sid');
   }
   // 页面初始化完成
   ionViewDidLoad() {
+    // 获取店铺信息
+    this.getShopOne();
+
     // 初始化省份城市区域
     this.getCitiesData().subscribe(data => {
       console.log("data", data.json());
@@ -59,6 +67,28 @@ export class ShopsAddPage {
 
     // 获取店铺分类
     this.getShopType();
+  }
+
+  // 获取店铺信息
+  getShopOne() {
+    let data = {};
+    data['token'] = Config.token;
+    data['device_id'] = Config.device_id;
+    data['shop_id'] = this.shop_id;
+    this.http.post("/api/app/shopShow", data).subscribe(res => {
+      console.log("res", res);
+      let addressArr = res.data.shop_address.split(" ");
+      console.log("addressArr", addressArr);
+      res.data.shop_address = addressArr[0] + " " + addressArr[1] + " " + addressArr[2];
+      res.data['detail_address'] = addressArr[3];
+
+      let openTimeArr = res.data.opentime.splite("--");
+      console.log("openTimeArr", openTimeArr);
+      res.data['startTime'] = openTimeArr[0];
+      res.data['endTime'] = openTimeArr[1];
+
+      this.shopInfo = res.data;
+    });
   }
 
   // 获取店铺分类
@@ -85,7 +115,7 @@ export class ShopsAddPage {
     console.log("6666", event);
 
     // 拼接地址
-    this.shop_address = event[0]['text'] + " " +  event[1]['text'] + "" + event[2]['text'];
+    this.shopInfo.shop_address = event[0]['text'] + event[1]['text'] + event[2]['text'];
 
     // 拿到区（县的code）去获取商圈
     let lastCode = event[2]['value'];
@@ -103,7 +133,7 @@ export class ShopsAddPage {
         this.codeList = res.data.city;
       } else {
         // 如果没有商圈，就把code 给到
-        this.business_code = code;
+        this.shopInfo.business_code = code;
       }
     });
   }
@@ -178,43 +208,26 @@ export class ShopsAddPage {
   // 是否外卖
   isTakeout () {
 
-    this.is_takeout ? this.is_takeout = 0 : this.is_takeout = 1;
+    this.shopInfo.is_takeout ? this.shopInfo.is_takeout = 0 : this.shopInfo.is_takeout = 1;
   }
 
   // 是否预定
   isReserve () {
 
-    this.is_reserve ? this.is_reserve = 0 : this.is_reserve = 1;
+    this.shopInfo.is_reserve ? this.shopInfo.is_reserve = 0 : this.shopInfo.is_reserve = 1;
   }
 
   // 是否排队
   isList () {
 
-    this.is_list ? this.is_list = 0 : this.is_list = 1;
+    this.shopInfo.is_list ? this.shopInfo.is_list = 0 : this.shopInfo.is_list = 1;
   }
 
   // 添加店铺
   savaData() {
-    let data = {};
-    data['shop_name'] = this.shop_name; // 店铺名称
-    data['shop_address'] = this.shop_address; // 店铺地址
-    data['detail_address'] = this.detail_address; // 店铺详细地址
-    // data['startTime'] = this.startTime; // 开始营业时间
-    // data['endTime'] = this.endTime; // 结束营业时间
-    data['opentime'] = this.startTime + '--' + this.endTime;
-    data['is_takeout'] = this.is_takeout; // 是否开启外卖
-    data['is_reserve'] = this.is_reserve; // 是否开启预定
-    data['is_list'] = this.is_list; // 是否开户排队
-    data['type_id'] = this.type_id; // 店铺类型id
-    data['name'] = this.name; // 店主姓名
-    data['shop_phone'] = this.shop_phone; // 联系电话
-    data['note'] = this.note; // 店铺介绍
-    data['lience_pic'] = this.license_pic; // 营业执照
-    data['shop_avatar'] = this.shop_avatar; // 店铺头像
-    data['shop_pic'] = this.shop_pic; // 店铺门面
-    data['business_code'] = this.business_code; // 商圈
+    let data = this.shopInfo;
     data['token'] = Config.token;
-    data['device_id'] = Config.device_id
+    data['device_id'] = Config.device_id;
 
     // 简单的验证
     if (!data['shop_name']) {
@@ -255,8 +268,8 @@ export class ShopsAddPage {
     console.log("data", JSON.stringify(data));
     console.log("data", data);
 
-    this.http.post("/api/app/shopAdd", data).subscribe(res => {
-      console.log("添加商铺res", JSON.stringify(res));
+    this.http.post("/api/app/shopEdit", data).subscribe(res => {
+      console.log("修改商铺res", JSON.stringify(res));
       this.native.alert(res.info, '', '', () => {
         if (res.code == 200) {
           this.navCtrl.pop();
