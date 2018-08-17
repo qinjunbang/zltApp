@@ -16,10 +16,17 @@ import { Config } from '../../../../providers/Config';
 export class EmployeesDetailPage {
 
   public shop_id: string = '';	//	商家ID
-  public role: number = 1;	// 角色id (0财务，1服务员，2经理，3主管)
-  public mobile: string = '';	// 手机号
-  public name: string = '';	// 名称
-  public password: string = ''; 	// 密码
+  public e_id: string = '';	//	员工ID
+
+  public employeesInfo = {
+    shop_id: '',
+    id: '',
+    name: '', // 名称
+    sex: 1, // 性别
+    role: 1, // 角色id (0财务，1服务员，2经理，3主管)
+    mobile: '', // 手机号
+    password: '' // 密码
+  };
 
   constructor(
     public http: HttpService,
@@ -28,20 +35,34 @@ export class EmployeesDetailPage {
     public native: NativeService
   ) {
     this.shop_id = this.navParam.get('sid');
+    this.e_id = this.navParam.get('eid');
   }
   // 页面初始化完成
   ionViewDidLoad() {
+
+    this.getEmployeesOne(this.shop_id, this.e_id);
+  }
+
+  // 获取一个员工信息
+  getEmployeesOne (sid, eid) {
+    let data = {};
+    data['token'] = Config.token;
+    data['device_id'] = Config.device_id;
+    data['shop_id'] = sid;
+    data['id'] = eid;
+    this.http.post("/api/app/clerkOne", data).subscribe(res => {
+      console.log("res", res);
+      if (res.code == 200) {
+        this.employeesInfo = res.data;
+      }
+    });
 
   }
 
   // 添加员工
   saveData () {
-    let data = {};
-    data['shop_id'] = this.shop_id;
-    data['role'] = this.role;
-    data['mobile'] = this.mobile;
-    data['name'] = this.name;
-    data['password'] = this.password;
+    let data =  this.employeesInfo;
+
     data['token'] = Config.token;
     data['device_id'] = Config.device_id;
 
@@ -54,11 +75,9 @@ export class EmployeesDetailPage {
     if (!data['mobile']) {
       return this.native.showToast("请输入手机号");
     }
-    if (!data['password']) {
-      return this.native.showToast("请输入员工密码");
-    }
 
-    this.http.post("/api/app/clerkAdd", data).subscribe(res => {
+
+    this.http.post("/api/app/clerkEdit", data).subscribe(res => {
       this.native.alert(res.info, "", "", () => {
         if (res.code == 200) {
           this.navCtrl.pop();

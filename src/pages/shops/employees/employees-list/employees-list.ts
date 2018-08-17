@@ -7,6 +7,7 @@ import { NativeService } from '../../../../providers/NativeService';
 import { Config } from '../../../../providers/Config';
 import { NavController, NavParams } from 'ionic-angular';
 import { EmployeesAddPage } from '../employees-add/employees-add';
+import { EmployeesDetailPage } from '../employees-detail/employees-detail';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { EmployeesAddPage } from '../employees-add/employees-add';
 export class EmployeesListPage {
   public shop_id: string = ''; // 店铺ID
   public employees_list: any = []; // 员工列表
+  public EmployeesAddPage = EmployeesAddPage; // 员工添加页面
+  public EmployeesDetailPage = EmployeesDetailPage; // 员工添加页面
 
   constructor(
     public http: HttpService,
@@ -61,8 +64,8 @@ export class EmployeesListPage {
   }
 
   // 页面跳转
-  public goToPage () {
-    this.navCtrl.push(EmployeesAddPage, {"sid": this.shop_id});
+  public goToPage (page, eid = '') {
+    this.navCtrl.push(page, {"sid": this.shop_id, "eid": eid});
   }
 
 }

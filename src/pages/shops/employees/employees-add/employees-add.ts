@@ -19,6 +19,7 @@ export class EmployeesAddPage {
   public role: number = 1;	// 角色id (0财务，1服务员，2经理，3主管)
   public mobile: string = '';	// 手机号
   public name: string = '';	// 名称
+  public sex: number = 1;	// 性别
   public password: string = ''; 	// 密码
 
   constructor(
@@ -41,6 +42,7 @@ export class EmployeesAddPage {
     data['role'] = this.role;
     data['mobile'] = this.mobile;
     data['name'] = this.name;
+    data['sex'] = this.sex;
     data['password'] = this.password;
     data['token'] = Config.token;
     data['device_id'] = Config.device_id;

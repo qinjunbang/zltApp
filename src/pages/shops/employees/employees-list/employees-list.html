@@ -2,7 +2,7 @@
   <ion-navbar color="primary">
     <ion-title text-center>员工列表</ion-title>
     <ion-buttons end class="add-menu-icon" >
-      <button ion-button icon-only (click)="goToPage()">
+      <button ion-button icon-only (click)="goToPage(EmployeesAddPage)">
         <ion-icon  color="white" name="md-add"></ion-icon>
       </button>
     </ion-buttons>
@@ -16,7 +16,7 @@
   </div>
   <ion-list>
     <ion-item-sliding *ngFor="let em of employees_list">
-      <ion-item>
+      <ion-item (click)="goToPage(EmployeesDetailPage, em.id)">
         <!--<ion-thumbnail item-start>-->
           <!--<img src="">-->
         <!--</ion-thumbnail>-->
