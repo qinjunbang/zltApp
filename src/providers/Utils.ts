@@ -88,6 +88,61 @@ export class Utils {
     return url.substring(0, index) + url.substring(index).replace(/\/\/*/g, '/');
   }
 
+  /**
+   * 验证数字
+   * @param val 需要验证的字符串
+   * @returns {string}
+   */
+  static isNumber(val = ''): string {
+    return /^[0-9]+(\.[0-9]+)?$/.test(val) ? '' : '请输入数字';
+  }
+
+  /**
+   * 验证手机号
+   * @param val 需要验证的字符串
+   * @returns {string}
+   */
+  static isMobile(val = ''): string {
+    return  /^0?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[57])[0-9]{8}$/.test(val) ? '' : '手机号格式不正确';
+  }
+
+  /**
+   * 验证是否是本地电话
+   * @param val 需要验证的字符串
+   * @returns {string}
+   */
+  static isPhone (val = ''): string {
+    return /^\d{3}\-\d{8}$|^\d{4}\-\d{7}$/.test(val) ? '' : '请输入正确的电话号码,如010-12345678';
+  }
+
+
+  /**
+   * 验证是否是银行卡号
+   * @param val 需要验证的字符串
+   * @returns {string}
+   */
+  static isBank (val = ''): string {
+    return /^([1-9]{1})(\d{15}|\d{18})$/.test(val) ? '' : '请输入正确的银行卡号';
+  }
+
+
+  /**
+   * 验证名字
+   * @param val 需要验证的字符串
+   * @returns {string}
+   */
+  static isUserName (val = ''): string {
+    return /^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(val) ? '' : '请输入正确名字';
+  }
+
+  /**
+   * 验证身份证号
+   * @param val 需要验证的字符串
+   * @returns {string}
+   */
+  static isCardNo (val = ''): string {
+    return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(val) ? '' : '请输入正确的身份证号';
+  }
 
 }
 
