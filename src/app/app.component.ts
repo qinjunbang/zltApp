@@ -10,6 +10,7 @@ import { JPushService } from '../providers/JPushService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
+import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
 
 @Component({
   templateUrl: 'app.html'
@@ -144,6 +145,12 @@ export class MyApp {
 
   // 点击推送的消息，跳到指定的页面
   jPushOpenNotification () {
-    console.log("点进来我要干嘛");
+   // 监听用户点击推送进来的事件
+    this.events.subscribe("jpush.openNotification", (event) => {
+      let order_id = event['extras']['order_id']
+      if (order_id) {
+        this.nav.push(OrderDetailPage, {order_id: order_id});
+      }
+    });
   }
 }

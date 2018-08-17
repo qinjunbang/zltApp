@@ -46,23 +46,24 @@ export class JPushService {
 
     // 点击通知进入应用
     document.addEventListener('jpush.openNotification', event => {
+      // 进入应用，停止播放话音
+      this.speaking.stopSpeak();
       // 把应用提示角标清0
       this.setIosIconBadgeNumber(0);
-      // 获取推送的内容
-      const content = this.native.isIos() ? event['aps'].alert : event['alert'];
-      console.log("jpush打开推送内容", content);
 
       // 发布订阅消息，内容
-      this.events.publish('jpush.openNotification', content);
+      this.events.publish('jpush.openNotification', event);
 
     }, false);
 
     // 收到通知时触发
     document.addEventListener('jpush.receiveNotification', event => {
-      const content = this.native.isIos() ? event['aps'].alert : event['alert'];
+      // 收到通知，停止播放
+      this.speaking.stopSpeak();
+      const content = event['extras']['sound'];
       console.log("jpush收到内容", JSON.stringify(event));
       console.log("jpush收到内容", content);
-      this.speaking.startSpeak(content);
+      this.speaking.startSpeak(content, 1);
     }, false);
 
     // 收到自定义消息
