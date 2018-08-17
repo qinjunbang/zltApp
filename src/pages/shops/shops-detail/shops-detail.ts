@@ -203,7 +203,7 @@ export class ShopsDetailPage {
           handler: () => {
             this.getPictureByLibrary().subscribe(url => {
               // 拿到图片的url，显示在页面上
-              this[`${img}`] = url;
+              this.shopInfo[`${img}`] = url
             });
           }
         },
@@ -213,7 +213,7 @@ export class ShopsDetailPage {
             this.getPictureByCamera().subscribe(url => {
               // 拿到图片的url，显示在页面上
               console.log("拍照图片url", url);
-              this[`${img}`] = url;
+              this.shopInfo[`${img}`] = url
             });
           }
         },
