@@ -7,7 +7,7 @@ import { PrivacyPage } from './privacy/privacy';
 import { WePage } from './we/we'
 import { WalletPage } from './wallet/wallet'
 import { LoginPage } from './login/login'
-import { forwardPage } from './wallet/forward/forward'  //ceshi
+import { JPushService } from '../../providers/JPushService'  //ceshi
 
 @Component({
     selector: 'page-me',
@@ -21,7 +21,8 @@ export class MePage {
         public native: NativeService,
         public navCtrl: NavController,
         public storage: Storage,
-        public http: HttpService
+        public http: HttpService,
+        public Jpush: JPushService,
     ) {
         this.storage.get('userInfo').then((val) => {
             console.log(val)
@@ -50,7 +51,9 @@ export class MePage {
                 if(res.code == 200){
                     that.native.showToast(res.info);
                     that.storage.remove('token');
-                    that.navCtrl.push(LoginPage)
+                    that.storage.remove('userInfo');
+                    that.Jpush.deleteAlias();
+                    that.navCtrl.push(LoginPage);
                 }else{
                     that.native.alert('提示',' ',res.info)
                 }

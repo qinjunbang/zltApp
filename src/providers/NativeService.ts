@@ -607,7 +607,7 @@ export class NativeService {
   /*
   *
   * 下载App
-  *
+  * 使用config里面设置的url进行下载
   *
   * */
   downloadApp () {
