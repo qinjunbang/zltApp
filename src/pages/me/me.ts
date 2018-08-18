@@ -29,7 +29,7 @@ export class MePage {
         });
     }
     wallet() {
-        this.navCtrl.push(WalletPage) 
+        this.navCtrl.push(WalletPage)
     }
     privacy() {
         this.navCtrl.push(PrivacyPage)
@@ -57,4 +57,9 @@ export class MePage {
             })
         });
     }
+
+    // 检查app新版本
+  checkAppVersion  () {
+      this.native.checkAppVersion('0.0.2');
+  }
 }
