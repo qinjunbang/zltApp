@@ -29,7 +29,7 @@ export class OrdersListPage {
   public defaultList = '0';
   public defaultType= '2';
   public shopId = '';
-  public ordersList = ''
+  public ordersList:any = []
 
   constructor(
     public http: HttpService,
@@ -71,6 +71,8 @@ export class OrdersListPage {
           console.log("res", res);
           if(res.code == 200){
             that.ordersList = res.data.data
+          }else if(res.code == 201){
+            that.ordersList = []
           }else {
             that.native.alert('提示','',res.info)
           }

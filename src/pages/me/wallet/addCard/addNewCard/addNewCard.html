@@ -9,12 +9,12 @@
     <ion-list inset>
         <ion-item>
           <ion-label>持卡人姓名</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input type="text" [(ngModel)]="name"></ion-input>
         </ion-item>
       
         <ion-item>
           <ion-label>银行卡卡号</ion-label>
-          <ion-input type="number"></ion-input>
+          <ion-input type="number" [(ngModel)]="card"></ion-input>
         </ion-item>
         <!-- <ion-item>
             中国建设银行
@@ -22,16 +22,15 @@
         </ion-item> -->
         <ion-item>
             <ion-label>银行卡类型</ion-label>
-            <ion-select [(ngModel)]="gaming">
-                <ion-option value="zs">招商银行</ion-option>
-                <ion-option value="gs">中国工商银行</ion-option>
-                <ion-option value="ny">中国农业银行</ion-option>
-                <ion-option value="js">中国建设银行</ion-option>
-                <ion-option value="jt">中国交通银行</ion-option>
-                <ion-option value="china">中国银行</ion-option>
-                <ion-option value="chuxu">邮政储蓄</ion-option>
+            <ion-select [(ngModel)]="cardType" okText="确认" cancelText="取消">
+                <ion-option value="1">中国建设银行</ion-option>
+                <ion-option value="2">中国工商银行</ion-option>
+                <ion-option value="3">中国农业银行</ion-option>
+                <ion-option value="4">中国交通银行</ion-option>
+                <ion-option value="5">中国银行</ion-option>
+                <ion-option value="6">邮政储蓄</ion-option>
             </ion-select>
         </ion-item>
       </ion-list>
-      <div class="next">确定</div>
+      <div class="next" (click)="addCard()">确定</div>
 </ion-content>

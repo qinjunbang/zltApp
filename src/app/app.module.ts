@@ -19,6 +19,7 @@ import { WePage } from '../pages/me/we/we';
 import { WalletPage } from '../pages/me/wallet/wallet';
 import { forwardPage } from '../pages/me/wallet/forward/forward';
 import { addCardPage } from '../pages/me/wallet/addCard/addCard';
+import { readyNamePage } from '../pages/me/wallet/readyName/readyName';
 import { addNewCardPage } from '../pages/me/wallet/addCard/addNewCard/addNewCard';
 import { DetailsPage } from '../pages/me/wallet/details/details';
 import { PrivacyPage } from '../pages/me/privacy/privacy';
@@ -91,7 +92,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     addEquipmentsPage,
     addDishesPage,
     editDishesPage,
-    EquipmentsDetailsPage
+    EquipmentsDetailsPage,
+    readyNamePage
   ],
   imports: [
     BrowserModule,
@@ -151,7 +153,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     addEquipmentsPage,
     addDishesPage,
     editDishesPage,
-    EquipmentsDetailsPage
+    EquipmentsDetailsPage,
+    readyNamePage
   ],
   providers: [
     StatusBar,

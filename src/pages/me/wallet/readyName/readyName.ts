@@ -5,52 +5,50 @@ import { HttpService } from '../../../../providers/HttpService';
 import { NativeService } from '../../../../providers/NativeService';
 
 @Component({
-    selector: 'forward-page',
-    templateUrl: 'forward.html'
+    selector: 'ready-name',
+    templateUrl: 'readyName.html'
 })
 
-export class forwardPage {
+export class readyNamePage {
     public userInfo = Config.userInfo;
     public token = Config.token;
     public deviceId = Config.device_id;
     public cardsList:any=[];
-    public cardId = 0;
-    public money = 100;
+    public name = '';
+    public card = '';
+    public realName = '';
+    public cardNo = '';
     constructor(
         public navCtrl: NavController,
         public http: HttpService,
         public native: NativeService
     ) {
-        console.log(Config.userInfo);
-        this.getCardList()
+        console.log(Config.userInfo)
+        this.checkIdentify()
     }
 
-    getCardList() {
-        this.http.post("/api/app/showCards", {'token':this.token,'device_id': this.deviceId}).subscribe(res => {
+    readyName() {   //未完成
+        this.http.post("/api/app/identify", {'token':this.token,'device_id': this.deviceId,'realname':this.name,'cardno':this.card}).subscribe(res => {
             console.log("res", res);
             if(res.code == 200){
-             this.cardsList = res.data;
+                this.native.alert('提示','',res.info)
             }else {
               this.native.alert('提示','',res.info)
             }
         })
     }
 
-    forward() {
-        this.http.post("/api/app/withdraw", {'token':this.token,'device_id': this.deviceId,'id':this.cardId,'money':this.money}).subscribe(res => {
+    checkIdentify() {   //未完成
+        this.http.post("/api/app/checkIdentify", {'token':this.token,'device_id': this.deviceId}).subscribe(res => {
             console.log("res", res);
             if(res.code == 200){
-             //this.cardsList = res.data
-             this.native.alert('提示','',res.info)
-             this.navCtrl.pop()
+                this.realName = res.data.realName;
+                this.cardNo = res.data.cardNo;
+                this.native.alert('提示','',res.info)
             }else {
-              this.native.alert('提示','',res.info)
+              //this.native.alert('提示','',res.info)
             }
         })
-    }
-
-    return() {
-        this.navCtrl.pop()
     }
 
 }

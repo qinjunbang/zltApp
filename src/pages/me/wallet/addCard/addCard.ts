@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController , ActionSheetController } from 'ionic-angular';
 import { addNewCardPage } from './addNewCard/addNewCard';
 import { Config } from '../../../../providers/Config';
 import { HttpService } from '../../../../providers/HttpService';
@@ -14,11 +14,12 @@ export class addCardPage {
     public userInfo = Config.userInfo;
     public token = Config.token;
     public deviceId = Config.device_id;
-    public cardsList = ''
+    public cardsList:any=[]
     constructor(
         public navCtrl: NavController,
         public http: HttpService,
-        public native: NativeService
+        public native: NativeService,
+        public actionSheetCtrl: ActionSheetController
     ) {
         console.log(Config.userInfo)
     }
@@ -30,7 +31,7 @@ export class addCardPage {
         this.http.post("/api/app/showCards", {'token':this.token,'device_id': this.deviceId}).subscribe(res => {
             console.log("res", res);
             if(res.code == 200){
-             // this.cardsList = res.data.data
+             this.cardsList = res.data
             }else {
               this.native.alert('提示','',res.info)
             }
@@ -38,5 +39,37 @@ export class addCardPage {
     }
     addCard() {
         this.navCtrl.push(addNewCardPage)
+    }
+
+      //删除银行卡
+      delCards(id) {
+        let that = this;
+        const actionSheet = this.actionSheetCtrl.create({
+        buttons: [
+            {
+            text: "删除设备",
+            handler: () => {
+                this.http.post("/api/app/delCard", {'token':this.token,'device_id': this.deviceId,'id':id}).subscribe(res => {
+                    console.log("res", res);
+                    if(res.code == 200){
+                        this.native.alert('提示','',res.info);
+                        this.cardsList.forEach((res,index) => {
+                            if(res.id == id){
+                                this.cardsList.splice(index,1)
+                            }
+                        });
+                    }else {
+                      this.native.alert('提示','',res.info)
+                    }
+                })
+            }
+            },
+            {
+            text: '取消',
+            role: 'cancel'
+            }
+        ]
+        });
+        actionSheet.present();
     }
 }
