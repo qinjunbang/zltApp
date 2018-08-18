@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title text-center>菜单列表</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="con-bg">
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="defaultType" (click)="seeOrders()">
+      <ion-segment-button *ngFor="let item of menuType" value="{{item.id}}">
+        {{item.title}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col col-4 class="menu">
+                <div class="dish-menu active">分类</div>
+            </ion-col>
+            <ion-col col-8 class="dishes">
+                <div class="dish-list">
+                    <img src="assets/imgs/1.jpg" class="list-img"/>
+                    <div class="list-con">
+                        <div class="list-title">汉堡</div>
+                        <div class="list-sale">月售：66</div>
+                        <div class="list-price">
+                            <span class="origin">¥20</span>
+                            <span class="discount">¥10</span>
+                        </div>
+                        <div class="handle">
+                            <div class="desc">-</div>
+                            <div class="num">1</div>
+                            <div class="add">+</div>
+                        </div>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div class="dosome">
+        <div class="see-shop">查看已点</div>
+        <div class="buy">确认</div>
+    </div>
+</ion-content>

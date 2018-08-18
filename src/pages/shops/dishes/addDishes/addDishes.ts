@@ -48,7 +48,7 @@ export class addDishesPage {
         })
     }
 
-    // 获取菜式列表
+    // 获取菜式分类
     public getDishesList () {
         let that = this;
         async function getDishes(){

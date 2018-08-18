@@ -122,7 +122,7 @@ export class Utils {
    * @returns {string}
    */
   static isBank (val = ''): string {
-    return /^([1-9]{1})(\d{15}|\d{18})$/.test(val) ? '' : '请输入正确的银行卡号';
+    return /^([1-9]{1})(\d{15}|\d{18})$/.test(val) ? 'true' : '请输入正确的银行卡号';
   }
 
 
@@ -132,7 +132,7 @@ export class Utils {
    * @returns {string}
    */
   static isUserName (val = ''): string {
-    return /^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(val) ? '' : '请输入正确名字';
+    return /^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(val) ? 'true' : '请输入正确名字';
   }
 
   /**
@@ -141,7 +141,7 @@ export class Utils {
    * @returns {string}
    */
   static isCardNo (val = ''): string {
-    return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(val) ? '' : '请输入正确的身份证号';
+    return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(val) ? 'true' : '请输入正确的身份证号';
   }
 
 }
