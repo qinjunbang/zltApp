@@ -9,4 +9,5 @@ export class Config {
   public static token = ''; // token
   public static userInfo = []; // user info
   public static device_id = ''; // 设备id
+  public static apkDownloadUrl = 'https://r.zhanglitong.com/app/android/20180818/zhanglitong.apk'; // apk下载路径
 }

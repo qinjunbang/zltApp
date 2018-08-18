@@ -104,7 +104,7 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 ```ionic cordova plugin add cordova-sqlite-storage --save
    npm install --save @ionic/storage
 ```
-15、极光推送
+15、极光推送 https://github.com/jpush/jpush-phonegap-plugin
 ```ionic cordova plugin add jpush-phonegap-plugin --variable APP_KEY=443eca432eff14581d12c724
    npm install --save @jiguang-ionic/jpush
 ```

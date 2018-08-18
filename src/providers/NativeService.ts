@@ -443,11 +443,26 @@ export class NativeService {
   * @param number 电话号码
   * */
   callNumber(number: string): void {
-    this.cn.callNumber(number, true).then(() => {
-      console.log("成功拨打电话：" + number);
-    }).catch(err => {
-      console.log("拨打电话失败：" + number);
-    });
+    let alert = this.alertCtrl.create({
+      title: "是否拨打这个电话:",
+      subTitle: number,
+      buttons: [{
+        text: "取消",
+        handler: () => {
+          console.log("取消了");
+        }
+      },{
+        text: "确定",
+        handler: () => {
+          this.cn.callNumber(number, true).then(() => {
+            console.log("成功拨打电话：" + number);
+          }).catch(err => {
+            console.log("拨打电话失败：" + number);
+          });
+        }
+      }]
+    }).present();
+
   }
 
   /*
@@ -559,6 +574,68 @@ export class NativeService {
         console.log("上传图片err", JSON.stringify(err));
       });
 
+    });
+  }
+
+  /*
+  *
+  * 检查app版本
+  * @param newVarsion 新版本号
+  *
+  * */
+
+  checkAppVersion (newVersion: string) {
+    this.getVersionNumber().subscribe((value: string) => {
+      let curVersion = value.replace(/\./g, ""),
+          curNewVersion = newVersion; // 用于显示
+
+      newVersion = newVersion.replace(/\./g, "");
+
+      console.log("newVersion", newVersion);
+      console.log("curVersion", curVersion);
+
+      if (newVersion > curVersion && curVersion != undefined) {
+        this.confirm("提示", "发现新版本[" + curNewVersion + "]，是否立即升级？", () => {
+          this.downloadApp();
+        });
+      } else {
+        this.showToast("没有发现新版本");
+      }
+    });
+  }
+
+  /*
+  *
+  * 下载App
+  * 使用config里面设置的url进行下载
+  *
+  * */
+  downloadApp () {
+    // 显示一个下载进度条框
+    let alert = this.alertCtrl.create({
+      title: "下载进度： 0%",
+      buttons: ['后台下载']
+    });
+    alert.present();
+
+    const fileTransfer: FileTransferObject = this.transfer.create(),
+          apkFileUrl = this.file.externalRootDirectory + 'zltshops.apk'; // apk保存目录
+
+    // 下载路径 保存路径
+    fileTransfer.download(Config.apkDownloadUrl, apkFileUrl).then(() => {
+      window['install'].install(apkFileUrl.replace('file://', ''));
+    });
+
+    // 监听下载进度
+    fileTransfer.onProgress((event: ProgressEvent) => {
+      let num = Math.floor(event.loaded / event.total * 100);
+      // 下载完成关闭进度提示框
+      if (num === 100)　{
+        alert.dismiss();
+      } else {
+        let title = document.getElementsByClassName("alert-title")[0];
+        title && (title.innerHTML = "下载进度：" + num + "%");
+      }
     });
   }
 }
