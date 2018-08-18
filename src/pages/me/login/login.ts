@@ -4,9 +4,9 @@ import { Storage } from '@ionic/storage';
 import { Config } from '../../../providers/Config';
 import { NativeService } from '../../../providers/NativeService';
 import { HttpService } from '../../../providers/HttpService';
-import { SpeakingService } from '../../../providers/SpeakingService';
 import { ShopsManagePage } from '../../shops/shops-manage/shops-manage';
 import { TabsPage } from '../../tabs/tabs';
+import { JPushService } from '../../../providers/JPushService';
 
 @Component({
   selector: 'page-login',
@@ -26,7 +26,7 @@ export class LoginPage {
     public native: NativeService,
     public http: HttpService,
     public storage: Storage,
-    public speaking: SpeakingService
+    private jPush: JPushService
 
   ) {
 
@@ -73,6 +73,7 @@ export class LoginPage {
        Config.token = res.data.token;
        Config.userInfo = res.data.shopclerk;
        Config.device_id = res.data.shopclerk.device_id;
+       this.jPush.setAlias();
        // 跳转到我的页面
        this.navCtrl.push(TabsPage);
 
@@ -148,5 +149,6 @@ export class LoginPage {
     }
 
   }
+
 
 }

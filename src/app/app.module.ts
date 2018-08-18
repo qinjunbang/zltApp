@@ -14,6 +14,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { ShopsListPage } from '../pages/shops/shops-list/shops-list';
 import { ShopsAddPage } from '../pages/shops/shops-add/shops-add';
+import { ShopsDetailPage } from '../pages/shops/shops-detail/shops-detail';
 import { MePage } from '../pages/me/me';
 import { WePage } from '../pages/me/we/we';
 import { WalletPage } from '../pages/me/wallet/wallet';
@@ -26,6 +27,7 @@ import { PrivacyPage } from '../pages/me/privacy/privacy';
 import { ShopsManagePage } from '../pages/shops/shops-manage/shops-manage';
 import { EmployeesListPage } from '../pages/shops/employees/employees-list/employees-list';
 import { EmployeesAddPage } from '../pages/shops/employees/employees-add/employees-add';
+import { EmployeesDetailPage } from '../pages/shops/employees/employees-detail/employees-detail';
 import { DishesListPage } from '../pages/shops/dishes/dishes-list/dishes-list';
 import { dishesClassPage } from '../pages/shops/dishes//dishesClass/dishesClass';
 import { addDishesPage } from '../pages/shops/dishes/addDishes/addDishes';
@@ -37,6 +39,7 @@ import { EquipmentsDetailsPage } from '../pages/shops/equipments/equipments-deta
 import { addEquipmentsPage } from '../pages/shops/equipments/addEquipments/addEquipments';
 import { OrdersListPage } from '../pages/shops/orders/orders-list/orders-list';
 import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
+
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -71,6 +74,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     LoginPage,
     ShopsListPage,
     ShopsAddPage,
+    ShopsDetailPage,
     MePage,
     WePage,
     WalletPage,
@@ -81,6 +85,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     PrivacyPage,
     ShopsManagePage,
     EmployeesListPage,
+    EmployeesDetailPage,
     DishesListPage,
     dishesClassPage,
     RoomTablesListPage,
@@ -132,6 +137,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     LoginPage,
     ShopsListPage,
     ShopsAddPage,
+    ShopsDetailPage,
     MePage,
     WePage,
     WalletPage,
@@ -142,6 +148,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     PrivacyPage,
     ShopsManagePage,
     EmployeesListPage,
+    EmployeesDetailPage,
     DishesListPage,
     dishesClassPage,
     RoomTablesListPage,

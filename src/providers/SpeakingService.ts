@@ -19,13 +19,18 @@ export class SpeakingService {
   *
   * */
 
-  startSpeak(str: string = '') {
+  startSpeak(str: string = '', loop: number = 0) {
     console.log("xunfeiListenSpeaking", xunfeiListenSpeaking);
     xunfeiListenSpeaking.startSpeak(success => {
       console.log("success");
+      if (loop == 1) {
+        this.startSpeak(str, loop);
+      }
     }, err => {
       console.log("err");
     }, str);
+
+
   }
 
   /*

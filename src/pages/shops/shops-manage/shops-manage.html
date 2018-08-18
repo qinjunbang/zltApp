@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title text-center>店铺管理</ion-title>
+    <ion-buttons end class="edit-menu-icon" >
+      <button ion-button icon-only (click)="goToPage(ShopsDetailPage)">
+        修改资料
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -8,7 +13,7 @@
   <ion-grid>
     <ion-row>
       <ion-col col-6 *ngFor="let menu of menuList">
-        <div class="menu-box" (click)="goToPage(menu.comment,sid)">{{menu.name}}</div>
+        <div class="menu-box" (click)="goToPage(menu.comment)">{{menu.name}}</div>
       </ion-col>
     </ion-row>
   </ion-grid>

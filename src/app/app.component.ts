@@ -10,7 +10,7 @@ import { JPushService } from '../providers/JPushService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
-import { DishesListPage } from '../pages/shops/dishes/dishes-list/dishes-list'; //测试
+import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
 
 @Component({
   templateUrl: 'app.html'
@@ -132,6 +132,8 @@ export class MyApp {
             Config.token = res.data.token;
             Config.userInfo = res.data.shopclerk;
             Config.device_id = res.data.shopclerk.device_id;
+            // 设置别名
+            this.jPush.setAlias();
             this.nav.setRoot(TabsPage);
           } else {
             this.nav.setRoot(LoginPage);
@@ -143,6 +145,12 @@ export class MyApp {
 
   // 点击推送的消息，跳到指定的页面
   jPushOpenNotification () {
-    console.log("点进来我要干嘛");
+   // 监听用户点击推送进来的事件
+    this.events.subscribe("jpush.openNotification", (event) => {
+      let order_id = event['extras']['order_id']
+      if (order_id) {
+        this.nav.push(OrderDetailPage, {order_id: order_id});
+      }
+    });
   }
 }
