@@ -443,11 +443,26 @@ export class NativeService {
   * @param number 电话号码
   * */
   callNumber(number: string): void {
-    this.cn.callNumber(number, true).then(() => {
-      console.log("成功拨打电话：" + number);
-    }).catch(err => {
-      console.log("拨打电话失败：" + number);
-    });
+    let alert = this.alertCtrl.create({
+      title: "是否拨打这个电话:",
+      subTitle: number,
+      buttons: [{
+        text: "取消",
+        handler: () => {
+          console.log("取消了");
+        }
+      },{
+        text: "确定",
+        handler: () => {
+          this.cn.callNumber(number, true).then(() => {
+            console.log("成功拨打电话：" + number);
+          }).catch(err => {
+            console.log("拨打电话失败：" + number);
+          });
+        }
+      }]
+    }).present();
+
   }
 
   /*
