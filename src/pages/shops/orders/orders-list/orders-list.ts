@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NavController , ActionSheetController , NavParams} from 'ionic-angular';
 import { OrderDetailPage } from '../orderDetail/orderDetail';
+import { OrderAddDishesPage } from '../order-add-dishes/order-add-dishes';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
 
@@ -14,9 +15,9 @@ import { NativeService } from '../../../../providers/NativeService';
 })
 export class OrdersListPage {
   public menuList = [
-    {id: 0,title:'预定'},
-    {id: 1,title:'排队'},
-    {id: 2,title:'配送'},
+    {id: 0,title:'外卖'},
+    {id: 1,title:'预定'},
+    {id: 2,title:'排队'},
     {id: 3,title:'扫码'}
   ]; // 订单列表
   public menuType = [
@@ -27,7 +28,7 @@ export class OrdersListPage {
     {id: 6,title:'退款'}
   ]; // 订单列表
   public defaultList = '0';
-  public defaultType= '2';
+  public defaultType= '9';
   public shopId = '';
   public ordersList:any = []
 
@@ -86,8 +87,8 @@ export class OrdersListPage {
   }
 
   //点击列表
-  listDetail(id) {
-    this.navCtrl.push(OrderDetailPage,{'order_id':id,'shopId':this.shopId})
+  listDetail(id,type) {
+    this.navCtrl.push(OrderDetailPage,{'order_id':id,'shopId':this.shopId,'order_type':type})
   }
 
   //点击订单出现删除
@@ -107,6 +108,12 @@ export class OrdersListPage {
     });
 
     actionSheet.present();
+  }
+
+  //加菜
+  addDishes(e) {
+    e.stopPropagation();
+    this.navCtrl.push(OrderAddDishesPage)
   }
 
   //下拉刷新

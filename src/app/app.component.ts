@@ -11,6 +11,7 @@ import { JPushService } from '../providers/JPushService';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
+import { OrderAddDishesPage } from '../pages/shops/orders/order-add-dishes/order-add-dishes';
 
 @Component({
   templateUrl: 'app.html'

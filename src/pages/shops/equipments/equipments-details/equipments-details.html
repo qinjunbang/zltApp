@@ -24,8 +24,7 @@
             <ion-item *ngIf="useAll == '1'">
                 <ion-label>菜品分类</ion-label>
                 <ion-select [(ngModel)]="dishesSelect" (ionChange)="getSelect($event)" okText="确认" cancelText="取消">
-                    <ion-option value="0">辣椒</ion-option>
-                    <ion-option value="1">苹果</ion-option>
+                    <ion-option *ngFor="let item of dishesList" value="{{item.id}}">{{item.menu_name}}</ion-option>
                 </ion-select>
             </ion-item>
     </ion-list>

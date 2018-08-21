@@ -17,6 +17,7 @@ export class EquipmentsDetailsPage {
     public dishesSelect = 0;
     public priterNum = 1;
     public id = 0;
+    public dishesList = []
     constructor(
       public http: HttpService,
       public navCtrl: NavController,
@@ -38,6 +39,7 @@ export class EquipmentsDetailsPage {
       }else{
           this.equip = ''
       }
+      this.getDishesList()
     }
 
     //获取本地设备id和token
@@ -73,6 +75,24 @@ export class EquipmentsDetailsPage {
       }
       addEquip()
     }
+
+    // 获取菜式分类
+    public getDishesList () {
+      let that = this;
+      async function getDishes(){
+      let token = await that.getToken();
+      let deviceId = await that.getDeviceId();
+      that.http.post("/api/app/dishAllDesign", {'token':token,'device_id': deviceId,'shop_id':that.shopId}).subscribe(res => {
+          console.log("res", res);
+          if(res.code == 200){
+              that.dishesList = res.data;
+          }else {
+              that.native.alert('提示','',res.info);
+          }
+      })
+      }
+      getDishes()
+  }
 
     //删除设备
   deleteEquip() {

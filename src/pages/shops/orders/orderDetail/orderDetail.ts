@@ -16,7 +16,8 @@ export class OrderDetailPage {
   public defaultType= '0';
   public shopId = '';
   public ordersList:any = {};
-  public order_id = ''
+  public order_id = '';
+  public order_type = ''
 
   constructor(
     public http: HttpService,
@@ -28,6 +29,7 @@ export class OrderDetailPage {
   ) {
     this.shopId = this.params.get('shopId');
     this.order_id = this.params.get('order_id');
+    this.order_type = this.params.get('order_type');
     this.getOrders()
   }
   ionViewDidLoad() {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Config } from '../../../../providers/Config';
+import { Utils } from '../../../../providers/Utils';
 import { HttpService } from '../../../../providers/HttpService';
 import { NativeService } from '../../../../providers/NativeService';
 
@@ -27,24 +28,33 @@ export class readyNamePage {
         this.checkIdentify()
     }
 
-    readyName() {   //未完成
-        this.http.post("/api/app/identify", {'token':this.token,'device_id': this.deviceId,'realname':this.name,'cardno':this.card}).subscribe(res => {
-            console.log("res", res);
-            if(res.code == 200){
-                this.native.alert('提示','',res.info)
-            }else {
-              this.native.alert('提示','',res.info)
+    readyName() {   //实名认证
+        if(Utils.isUserName(this.name) == 'true'){
+            if(Utils.isCardNo(this.card) == 'true'){
+                this.http.post("/api/app/identify", {'token':this.token,'device_id': this.deviceId,'realname':this.name,'cardno':this.card}).subscribe(res => {
+                    console.log("res", res);
+                    if(res.code == 200){
+                        this.native.alert('提示','',res.info)
+                        this.navCtrl.pop()
+                    }else {
+                      this.native.alert('提示','',res.info)
+                    }
+                })
+            }else{
+                this.native.showToast(Utils.isCardNo(this.card))
             }
-        })
+        }else{
+            this.native.showToast(Utils.isCardNo(this.name))
+        }
+        
     }
 
-    checkIdentify() {   //未完成
+    checkIdentify() {   //已经实名认证
         this.http.post("/api/app/checkIdentify", {'token':this.token,'device_id': this.deviceId}).subscribe(res => {
             console.log("res", res);
             if(res.code == 200){
                 this.realName = res.data.realName;
                 this.cardNo = res.data.cardNo;
-                this.native.alert('提示','',res.info)
             }else {
               //this.native.alert('提示','',res.info)
             }
