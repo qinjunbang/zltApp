@@ -40,6 +40,9 @@ import { addEquipmentsPage } from '../pages/shops/equipments/addEquipments/addEq
 import { OrdersListPage } from '../pages/shops/orders/orders-list/orders-list';
 import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
 import { OrderAddDishesPage } from '../pages/shops/orders/order-add-dishes/order-add-dishes';
+import { FinancialsCategoryPage } from '../pages/shops/financials/financials-category/financials-category';
+import { FinancialsFindPage } from '../pages/shops/financials/financials-find/financials-find';
+import { FinancialsListPage } from '../pages/shops/financials/financials-list/financials-list';
 
 
 
@@ -100,7 +103,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     editDishesPage,
     EquipmentsDetailsPage,
     readyNamePage,
-    OrderAddDishesPage
+    OrderAddDishesPage,
+    FinancialsCategoryPage,
+    FinancialsFindPage,
+    FinancialsListPage
   ],
   imports: [
     BrowserModule,
@@ -164,7 +170,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     editDishesPage,
     EquipmentsDetailsPage,
     readyNamePage,
-    OrderAddDishesPage
+    OrderAddDishesPage,
+    FinancialsCategoryPage,
+    FinancialsFindPage,
+    FinancialsListPage
   ],
   providers: [
     StatusBar,
