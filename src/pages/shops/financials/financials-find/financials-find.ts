@@ -19,10 +19,9 @@ import { FinancialsListPage } from '../financials-list/financials-list';
   templateUrl: 'financials-find.html'
 })
 export class FinancialsFindPage {
-  public menuList = [];
   public sid; // 店铺id
-  public ShopsDetailPage: any = ShopsDetailPage; // 修改店铺资料页面
-  public items = ["预定", "扫码", "排队", "外卖"];
+  public title: string = ''; // 标题类型
+
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
@@ -31,41 +30,20 @@ export class FinancialsFindPage {
   ) {
     // 获取店铺ID
     this.sid = navParams.get("sid");
+    this.title = navParams.get("title");
     console.log(this.sid);
-    this.setManageMenu();
+    console.log(this.title );
   }
   ionViewDidLoad() {
 
   }
 
-  // 设置菜单
-  setManageMenu () {
-    // console.log("666");
-    this.menuList = [{
-      name: '员工管理',
-      comment: EmployeesListPage
-    },{
-      name: '菜单管理',
-      comment: DishesListPage
-    },{
-      name: '房桌管理',
-      comment: RoomTablesListPage
-    },{
-      name: '设备管理',
-      comment: EquipmentsListPage
-    },{
-      name: '订单管理',
-      comment: OrdersListPage
-    },{
-      name: '财务管理',
-      comment: OrdersListPage
-    }];
-  }
+
 
   // 页面跳转
   goToPage (event) {
     console.log("event", event);
-    this.navCtrl.push(FinancialsListPage, {'sid': this.sid});
+    this.navCtrl.push(FinancialsListPage, {'title': this.title, 'sid': this.sid});
   }
 
 }
