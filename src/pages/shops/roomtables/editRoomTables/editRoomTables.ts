@@ -5,11 +5,12 @@ import { NativeService } from '../../../../providers/NativeService';
 import { Config } from '../../../../providers/Config';
 
 @Component({
-  selector: 'add-room-tables',
-  templateUrl: 'addRoomTables.html'
+  selector: 'edit-room-tables',
+  templateUrl: 'editRoomTables.html'
 })
 
-export class addRoomTablesPage{
+export class editRoomTablesPage{
+    public roomDetails = [];
     public shopsList = [
         {id: 1,title:'房间'},
         {id: 0,title:'桌子'}
@@ -18,9 +19,10 @@ export class addRoomTablesPage{
         {id: 1,title:'开启'},
         {id: 0,title:'关闭'}
     ]; // 是否开启二维码列表
+    public id = 0;
     public type = '1';  //0桌子,1房间
     public name = '';   //房间名字
-    public hold : Number;   //容纳人数;
+    public hold: Number;   //容纳人数;
     public min_consumption: Number; //最低消费
     public lock_qrcode = '0'    //是否开启二维码,0否，1是
     public note = ''    //备注
@@ -36,6 +38,8 @@ export class addRoomTablesPage{
         public params: NavParams
     ){
         this.shopId = this.params.get('shopId');
+        this.id = this.params.get('id');
+        this.getRoomDetails();
     }
 
     // 从图库获取图片
@@ -83,12 +87,30 @@ export class addRoomTablesPage{
         actionSheet.present();
     }
 
+    //获取房桌详细信息
+    getRoomDetails() {
+        this.http.post("/api/app/showOneRoomTable", {'token':this.token,'device_id':this.deviceId,'id':this.id}).subscribe(res => {
+            console.log(res)
+            if(res.code == 200){
+                this.roomDetails = res.data;
+                this.name = res.data.name;
+                this.hold = res.data.hold;
+                this.min_consumption = res.data.min_consumption;
+                this.thumb = res.data.thumb;
+                this.note = res.data.note;
+            }else{
+                this.native.alert('提示','',res.info)
+            }
+        })
+    }
+
     //确认修改
     edit() {
         let data = {
             'shop_id':this.shopId,
             'token':this.token,
             'device_id':this.deviceId,
+            'id': this.id,
             'type': this.type,
             'name': this.name,
             'hold': this.hold,
@@ -97,7 +119,19 @@ export class addRoomTablesPage{
             'thumb': this.thumb,
             'note': this.note
         }
-        this.http.post("/api/app/createRoomTable", data).subscribe(res => {
+        this.http.post("/api/app/updateRoomTable", data).subscribe(res => {
+            console.log(res)
+            if(res.code == 200){
+                this.navCtrl.pop()
+            }else{
+                this.native.alert('提示','',res.info)
+            }
+        })
+    }
+
+    //删除房桌
+    delete() {
+        this.http.post("/api/app/deleteRoomTable", {'id':this.id}).subscribe(res => {
             console.log(res)
             if(res.code == 200){
                 this.navCtrl.pop()

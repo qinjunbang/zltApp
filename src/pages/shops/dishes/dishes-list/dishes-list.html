@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content class="con-bg">
-  <ion-list *ngFor="let menu of dishesList" no-lines>
+  <ion-list *ngFor="let menu of dishesList; let i=index" no-lines>
     <div>
       <ion-list-header >
         {{menu.menu_name}}
@@ -28,7 +28,7 @@
           </div> -->
         </ion-item>
         <ion-item-options side="right">
-          <button ion-button color="primary">
+          <button ion-button color="primary" (click)="delete($event,shops.id)">
             <ion-icon name="mail"></ion-icon>
             删除
           </button>

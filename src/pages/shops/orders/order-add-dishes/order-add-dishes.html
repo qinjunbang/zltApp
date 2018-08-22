@@ -15,31 +15,51 @@
 
     <ion-grid>
         <ion-row>
-            <ion-col col-4 class="menu">
-                <div class="dish-menu active">分类</div>
+            <ion-col col-3 class="menu">
+                <div class="dish-menu {{menuId==i ? 'active':''}}" *ngFor="let menu of dishesList; let i=index" (click)="menuClick(i)">{{menu.menu_name}}</div>
             </ion-col>
-            <ion-col col-8 class="dishes">
-                <div class="dish-list">
-                    <img src="assets/imgs/1.jpg" class="list-img"/>
-                    <div class="list-con">
-                        <div class="list-title">汉堡</div>
-                        <div class="list-sale">月售：66</div>
-                        <div class="list-price">
-                            <span class="origin">¥20</span>
-                            <span class="discount">¥10</span>
-                        </div>
-                        <div class="handle">
-                            <div class="desc">-</div>
-                            <div class="num">1</div>
-                            <div class="add">+</div>
+            <ion-col col-9 class="dishes">
+                <div [style.display]="menuId==i ? 'block':'none'" *ngFor="let menu of dishesList; let i=index">
+                    <div class="dish-list" *ngFor="let dish of menu.shopdish">
+                        <img src="{{serveUrl}}{{dish.thumb}}" class="list-img"/>
+                        <div class="list-con">
+                            <div class="list-title">{{dish.dishes_name}}</div>
+                            <div class="list-sale">月售：{{dish.sales}}</div>
+                            <div class="list-price">
+                                <span class="discount">¥{{dish.discount_price}}</span>
+                                <span class="origin">¥{{dish.price}}</span>
+                            </div>
+                            <div class="handle">
+                                <div class="add" (click)="add(dish)">+</div>
+                                <div class="num" [style.display]="!dish.num || dish.num==0? 'none':'block'">{{dish.num}}</div>
+                                <div class="desc" (click)="desc(dish)" [style.display]="dish.num==0 || !dish.num ? 'none':'block'">-</div> 
+                            </div>
                         </div>
                     </div>
                 </div>
+                
             </ion-col>
         </ion-row>
     </ion-grid>
     <div class="dosome">
-        <div class="see-shop">查看已点</div>
-        <div class="buy">确认</div>
+        <div class="see-shop" (click)="seeCart()"><span class="see-text">查看已点</span><span class="dishes-num">{{dishNum}}</span></div>
+        <div class="buy" (click)="buy()">去下单({{allDishPrice}})元</div>
     </div>
+    <!-- 查看已点 -->
+    <div class="shop-cart-bg" [style.display]=" canSee ? 'block':'none'" (click)="seeCart()"></div>
+        <div class="cart-con" [style.display]=" canSee ? 'block':'none'">
+            <div class="cart-title">购物车</div>
+            <div class="cart">
+                <div class="cart-list" *ngFor="let dish of selectDish">
+                    <img src="{{serveUrl}}{{dish.thumb}}"  class="cart-list-img"/>
+                    <div class="cart-list-title">{{dish.dishes_name}}x{{dish.num}}</div>
+                    <div class="cart-list-price">¥{{(dish.discount_price * dish.num).toFixed(2)}}</div>
+                    <div class="handle">
+                        <div class="add" (click)="add(dish)">+</div>
+                        <div class="num" [style.display]="!dish.num || dish.num==0 ? 'none':'block'">{{dish.num}}</div>
+                        <div class="desc" (click)="desc(dish)" [style.display]="dish.num==0 || !dish.num ? 'none':'block'">-</div> 
+                    </div>
+                </div>
+            </div>
+        </div>
 </ion-content>

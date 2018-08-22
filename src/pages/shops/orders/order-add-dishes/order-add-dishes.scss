@@ -27,12 +27,14 @@ order-add-dishes{
                 
             }
             .dishes{
-                padding: 0 12px;
+                padding-left: 12px;
+                padding-right: 5px;
                 .dish-list{
                     height: 65px;
                     width: 100%;
                     display: flex;
                     margin-top: 12px;
+                    position: relative;
                     .list-img{
                         width: 65px;
                         height: 65px;
@@ -40,8 +42,8 @@ order-add-dishes{
                     .list-con{
                         padding-left: 10px;
                         flex: 1;
-                        position: relative;
                         .list-title{
+                            width: 100%;
                             font-size: 16px;
                             overflow: hidden;
                             text-overflow: ellipsis;
@@ -57,11 +59,11 @@ order-add-dishes{
                             .origin{
                                 font-size: 10px;
                                 color:#999;
+                                text-decoration:line-through
                             }
                             .discount{
-                                font-size: 15px;
+                                font-size: 14px;
                                 color:$redColor;
-                                margin-left: 5px;
                             }
                         }
                         .handle{
@@ -78,11 +80,11 @@ order-add-dishes{
                                 height: 20px;
                                 border: 1px solid #666;
                                 border-radius: 10px;
-                                float: left;
+                                float: right;
                                 overflow: hidden;
                             }
                             .num{
-                                float: left;
+                                float: right;
                                 width: 20px;
                             }
                             .add{
@@ -90,7 +92,7 @@ order-add-dishes{
                                 height: 20px;
                                 border: 1px solid $themeColor;
                                 border-radius: 10px;
-                                float: left;
+                                float: right;
                                 color:#fff;
                                 background: $themeColor;
                                 overflow: hidden;
@@ -107,21 +109,122 @@ order-add-dishes{
             bottom: 0;
             width: 100%;
             height: 50px;
-            line-height: 50px;
             text-align: center;
             font-size: 15px;
             border-top: 1px solid #eeeeee;
             .see-shop{
                 float: left;
                 width: 50%;
+                position: relative;
+                .see-text{
+                    display: inline-block;
+                    height: 50px;
+                    line-height: 50px;
+                }
+                .dishes-num{
+                    display: inline-block;
+                    width: 18px;
+                    height: 18px;
+                    line-height: 18px;
+                    border-radius: 50%;
+                    background: $redColor;
+                    text-align: center;
+                    color: #fff;
+                    margin-left: 5px;
+                    font-size: 12px;
+                    overflow: hidden;
+                }
             }
             .buy{
                 background: $themeColor;
                 float: left;
                 width: 50%;
                 color: #fff;
+                line-height: 50px;
             }
         }
+
+        .shop-cart-bg{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 90;
+        }
+
+
+        .cart-con{
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 50px;
+            background: #fff;
+            z-index: 99;
+            .cart-title{
+                background: #eeeeee;
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                font-size: 15px;
+                width: 100%;
+            }
+            .cart{
+                .cart-list{
+                    width: 100%;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content:space-between;
+                    padding: 0 10px;
+                    color: #3d4145;
+                    font-size: 15px;
+                    border-top: 1px solid #eee;
+                    .cart-list-img{
+                        width: 38px;
+                        height: 20px;
+                    }
+                    .cart-list-title{
+                        overflow: hidden;
+                    }
+                    .cart-list-price{
+
+                    }
+                    .handle{
+                        width: 60px;
+                        height: 20px;
+                        border-radius: 10px;
+                        text-align: center;
+                        line-height: 20px;
+                        .desc{
+                            width: 20px;
+                            height: 20px;
+                            border: 1px solid #666;
+                            border-radius: 10px;
+                            float: right;
+                            overflow: hidden;
+                        }
+                        .num{
+                            float: right;
+                            width: 20px;
+                        }
+                        .add{
+                            width: 20px;
+                            height: 20px;
+                            border: 1px solid $themeColor;
+                            border-radius: 10px;
+                            float: right;
+                            color:#fff;
+                            background: $themeColor;
+                            overflow: hidden;
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     
     

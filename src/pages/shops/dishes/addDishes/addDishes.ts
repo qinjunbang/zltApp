@@ -18,7 +18,8 @@ export class addDishesPage {
     public dishesList = '';
     public dishesListSelect = 0;
     public discount = 0.9;
-    public text = ''
+    public text = '';
+    public regularList = [];
     constructor(
         public http: HttpService,
         public navCtrl: NavController,
@@ -70,32 +71,101 @@ export class addDishesPage {
         console.log(e)
     }
     
+    //选择菜式规格
+    addRegular(){
+        let that = this;
+        console.log(that.shopId)
+        let alert = this.alertCtrl.create({
+          title: '添加菜式规格名称',
+          inputs: [
+            {
+              name: 'name',
+              placeholder: '菜式规格名称'
+            }
+          ],
+          buttons: [
+            {
+              text: '取消',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            },
+            {
+              text: '确定',
+              handler: (data) => {
+                  that.regularList.push(data)
+                  console.log(that.regularList);
+              }
+            }
+          ]
+        });
+        alert.present();
+      }
 
-    // selectList(e) {
-    //     let alert = this.alertCtrl.create();
-    //     alert.setTitle('请选择菜品分类');
-    //     console.log(this.dishesList)
-    //     for(let i=0;i<this.dishesList.length;i++){
-    //         console.log(this.dishesList[i].menu_name)
-    //         alert.addInput({
-    //             type: 'radio',
-    //             label: this.dishesList[i].menu_name,
-    //             value: this.dishesList[i].menu_name,
-    //             checked: i==0 ? true : false
-    //         });
-    //     }
+    //选择菜式详细规格
+    addRegularDetail(name){
+        let that = this;
+        console.log(that.shopId)
+        let alert = this.alertCtrl.create({
+            title: '添加菜式详细规格',
+            inputs: [
+            {
+                name: 'spec',
+                placeholder: '份量/口味'
+            },
+            {
+                name: 'price',
+                type: 'number',
+                placeholder: '价格'
+            },
+            ],
+            buttons: [
+            {
+                text: '取消',
+                handler: () => {
+                console.log('Cancel clicked');
+                }
+            },
+            {
+                text: '确定',
+                handler: (data) => {
+                    let specDetail = data.spec+' | '+data.price;
+                    that.regularList.forEach( res => {
+                        if(res.name == name){
+                            if(typeof(res['regu']) == 'undefined' ){
+                                res['regu'] = [];
+                           }
+                           res['regu'].push(specDetail);
+                        }
+                    })
+                    console.log(that.regularList);
+                }
+            }
+            ]
+        });
+        alert.present();
+    }
 
-    //     alert.addButton('取消');
-    //     alert.addButton({
-    //     text: '确定',
-    //     handler: (data: any) => {
-    //         console.log('Radio data:', data);
-    //         this.selectListVal = data;
-    //         this.testRadioOpen = false;
-    //     }
-    //     });
-    //     alert.present();
-    // }
+    //删除多规格详细
+    deleteRegularDetail(name) {
+        this.regularList.forEach( res => {
+            res.regu.forEach( (val,i) => {
+                if(val == name){
+                    res.regu.splice(i,1)
+                }
+            })
+            console.log(this.regularList)
+        })
+    }
+    //删除多规格
+    deleteRegular(name) {
+        this.regularList.forEach( (res,i) => {
+            if(res.name == name){
+                this.regularList.splice(i,1)
+            }  
+        })
+        console.log(this.regularList)
+    }
 
 
     // 从图库获取图片
