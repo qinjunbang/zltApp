@@ -6,7 +6,7 @@
 
 <ion-content class="con-bg">
   <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="刷新中..."></ion-refresher-content>
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中..."></ion-refresher-content>
   </ion-refresher>
 
   <ion-toolbar no-border-top>
@@ -36,7 +36,7 @@
       <div class="orders-con">
         <div class="list clearfix">
           <div class="list-left">菜式</div>
-          <div class="list-right">炒粉x1</div>
+          <div class="list-right" *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}</div>
         </div>
         <div class="list clearfix">
           <div class="list-left">付款金额</div>
@@ -62,7 +62,9 @@
       <div class="orders-con">
         <div class="list clearfix">
           <div class="list-left">菜式</div>
-          <div class="list-right">炒粉x1</div>
+          <div class="list-right">
+            <div  *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}</div>
+          </div>
         </div>
         <div class="list clearfix">
           <div class="list-left">付款金额</div>
@@ -84,8 +86,6 @@
           <div class="list-left">联系方式</div>
           <div class="list-right">{{orders.rorder.phone}}</div>
         </div>
-
-        <div class="add-dish" (click)="addDishes($event)">我要加菜</div>
       </div>
     </div>
     <!-- 排队列表 -->

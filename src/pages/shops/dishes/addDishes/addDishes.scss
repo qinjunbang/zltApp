@@ -4,6 +4,62 @@ add-dishes{
         .haosha{
             display: flex;
             justify-content: space-between;
+            .regular{
+                line-height: 20px;
+                .addClass{
+                    display: inline-block;
+                    padding: 3px 8px;
+                    background: $themeColor;
+                    color: #fff;
+                    font-size: 14px;
+                    border-radius: 5px;
+                }
+            }
+            .reg-class{
+                font-size: 14px;
+                margin-left: 10px;
+                margin-top: 5px;
+                div{
+                    vertical-align: center;
+                }
+                .reg-class-title{
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+                .reg-list{
+                    float: left;
+                    margin-left: 15px;
+                }
+                .reg-close{
+                    display: inline-block;
+                    width: 16px;
+                    height: 16px;
+                    background: $redColor;
+                    line-height: 17px;
+                    text-align: center;
+                    color: #fff;
+                    overflow: hidden;
+                    margin-bottom: -2px;
+                    border-radius: 50%;
+                    font-size: 13px;
+                    transform: rotate(45deg);
+                    margin-left: 5px;
+                }
+                .reg-add{
+                    display: inline-block;
+                    width: 16px;
+                    height: 16px;
+                    background: $themeColor;
+                    line-height: 17px;
+                    text-align: center;
+                    color: #fff;
+                    overflow: hidden;
+                    margin-bottom: -2px;
+                    border-radius: 50%;
+                    font-size: 13px;
+                    margin-left: 5px;
+                }
+            }
         }
         ion-textarea{
             font-size: 14px;

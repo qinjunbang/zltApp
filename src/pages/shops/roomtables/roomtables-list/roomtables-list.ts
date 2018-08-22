@@ -3,40 +3,51 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
-import { NavController , AlertController} from 'ionic-angular';
+import { NavController , AlertController , NavParams} from 'ionic-angular';
 import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
-
+import { editRoomTablesPage } from '../editRoomTables/editRoomTables';
+import { Config } from '../../../../providers/Config';
 
 @Component({
   selector: 'page-roomtables-list',
   templateUrl: 'roomtables-list.html'
 })
 export class RoomTablesListPage {
+  public shopId = '';
+  public token = Config.token;
+  public deviceId = Config.device_id;
+  public roomList = [];
   public shopsList = [
-    {id: 0,title:'包间'},
-    {id: 1,title:'大厅'},
-    {id: 2,title:'卡座'}
+    {id: 1,title:'房间'},
+    {id: 0,title:'桌子'}
   ]; // 店铺列表
-  public defaultTitle = '包间';
+  public defaultTitle = '房间';
   testRadioOpen = false;
   testRadioResult: any;
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public params: NavParams
   ) {
-
+    this.shopId = this.params.get('sid');
   }
-  ionViewDidLoad() {
-    // this.getShopsList();
+  ionViewWillEnter() {
+    this.getShopsList();
   }
 
   // 获取店铺列表
   public getShopsList () {
     console.log("我要获取数据");
-    this.http.post("/api/shop/all", {}).subscribe(res => {
+    this.http.post("/api/shop/showRoomTable", {'shop_id':this.shopId,'token':this.token,'deviceId':this.deviceId}).subscribe(res => {
       console.log("res", res);
+      this.roomList = res.data;
     })
+  }
+
+  //编辑房桌
+  editRoomTables(id) {
+    this.navCtrl.push(editRoomTablesPage,{'shopId':this.shopId,'id':id})
   }
 
   //点击列表
@@ -45,23 +56,19 @@ export class RoomTablesListPage {
   }
 
   addRoomTablesPage() {
-    this.navCtrl.push(addRoomTablesPage)
+    this.navCtrl.push(addRoomTablesPage,{'shopId':this.shopId})
   }
-  handleRoom() {
+  handleRoom(e) {
+    e.stopPropagation();
     let alert = this.alertCtrl.create();
     alert.setTitle('管理房桌');
 
-    alert.addInput({
-      type: 'radio',
-      label: '删除房桌信息',
-      value: '删除房桌信息',
-      checked: true
-    });
 
     alert.addInput({
       type: 'radio',
       label: '暂停使用',
-      value: '暂停使用'
+      value: '暂停使用',
+      checked: true
     });
 
     alert.addInput({

@@ -12,6 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
 import { OrderAddDishesPage } from '../pages/shops/orders/order-add-dishes/order-add-dishes';
+import { addDishesPage } from '../pages/shops/dishes/addDishes/addDishes';
 
 @Component({
   templateUrl: 'app.html'

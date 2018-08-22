@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-title text-center>添加房桌</ion-title>
+        <ion-title text-center>编辑房桌</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -8,7 +8,7 @@
     <ion-list>
         <ion-item>
           <ion-label >房间/桌号名</ion-label>
-          <ion-input type="text" [(ngModel)]="name"></ion-input>
+          <ion-input type="text" [(ngModel)]="name" value="{{name}}"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>类型</ion-label>
@@ -19,11 +19,11 @@
       
         <ion-item>
           <ion-label >容纳人数</ion-label>
-          <ion-input type="number" [(ngModel)]="hold"></ion-input>
+          <ion-input type="number" [(ngModel)]="hold" value="hold"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label >最低消费</ion-label>
-          <ion-input type="number" [(ngModel)]="min_consumption"></ion-input>
+          <ion-input type="number" [(ngModel)]="min_consumption" value="min_consumption"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label >是否开启二维码</ion-label>
@@ -39,8 +39,8 @@
             <div class="img-title">添加图片</div>
             <div class="images">
                 <div class="img-list clearfix">
-                    <div class="add-img">
-                        <img src="../../../../assets/imgs/no-shops.png" />
+                    <div class="add-img" >
+                        <img src="{{roomDetails.thumb}}" />
                     </div>
                     <div class="add-img" (click)="chooseImg()">
                         <div class="iconfont icon-app-add add-img-icon"></div>
@@ -50,5 +50,6 @@
         </ion-item>
       </ion-list>
 
-      <div class="add" (click)="edit()">确认添加</div>
+      <div class="add" (click)="edit()">确认修改</div>
+      <div class="delete" (click)="delete()">删除房桌</div>
 </ion-content>

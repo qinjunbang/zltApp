@@ -47,7 +47,7 @@ export class addCardPage {
         const actionSheet = this.actionSheetCtrl.create({
         buttons: [
             {
-            text: "删除设备",
+            text: "删除银行卡",
             handler: () => {
                 this.http.post("/api/app/delCard", {'token':this.token,'device_id': this.deviceId,'id':id}).subscribe(res => {
                     console.log("res", res);

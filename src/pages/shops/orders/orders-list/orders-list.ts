@@ -110,11 +110,6 @@ export class OrdersListPage {
     actionSheet.present();
   }
 
-  //加菜
-  addDishes(e) {
-    e.stopPropagation();
-    this.navCtrl.push(OrderAddDishesPage)
-  }
 
   //下拉刷新
   doRefresh(refresher) {

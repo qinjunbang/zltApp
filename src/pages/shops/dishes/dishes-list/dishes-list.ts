@@ -56,6 +56,11 @@ export class DishesListPage {
     this.navCtrl.push(editDishesPage,{'shopId':this.shopId,'id':id});
  }
 
+  //删除菜式
+  delete(e,id) {
+    e.stopPropagation();
+  }
+
   dishesClass() {
     this.navCtrl.push(dishesClassPage,{'shopId':this.shopId});
   }

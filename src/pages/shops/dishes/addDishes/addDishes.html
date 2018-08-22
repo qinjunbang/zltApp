@@ -17,17 +17,28 @@
         </ion-item>
         <ion-item>
             <ion-label>选择菜式分类：</ion-label>
-            <!-- <ion-input type="text" readonly (click)="selectList($event)" value="{{selectListVal}}"></ion-input> -->
             <ion-select [(ngModel)]="dishesListSelect" (ionChange)="getSelect($event)" okText="确认" cancelText="取消">
                 <ion-option *ngFor="let item of dishesList" value="{{item.id}}">{{item.menu_name}}</ion-option>
             </ion-select>
         </ion-item>
-        <!-- <ion-item class="haosha">
-            <ion-label>选择分类：</ion-label>
-            <ion-select [(ngModel)]="classSelect" (ionChange)="getClassSelect($event)" okText="确认" cancelText="取消">
-                <ion-option *ngFor="let item of dishesList" value="{{item.id}}">{{item.menu_name}}</ion-option>
-            </ion-select>
-        </ion-item> -->
+        <ion-item class="haosha">
+            <div class="regular">选择多规格：
+                <div class="addClass" (click)="addRegular()">添加</div>
+            </div>
+            <div *ngFor="let regu of regularList">
+                <div class="reg-class">
+                    <div class="reg-class-title">{{regu.name}}:</div>
+                    <div class="reg-close iconfont icon-weibiaoti--28" (click)="deleteRegular(regu.name)"></div>
+                    <div class="reg-add iconfont icon-weibiaoti--28" (click)="addRegularDetail(regu.name)"></div>
+                </div>
+                <div class="reg-class clearfix">
+                    <div class="reg-list" *ngFor="let list of regu.regu">
+                        {{list}}
+                        <div class="reg-close iconfont icon-weibiaoti--28" (click)="deleteRegularDetail(list)"></div>
+                    </div>
+                </div>
+            </div>
+        </ion-item>
         <ion-item>
             <ion-label>折扣：</ion-label>
             <ion-input type="number" value="{{discount}}" [(ngModel)]="discount"></ion-input>
