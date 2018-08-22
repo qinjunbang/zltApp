@@ -29,6 +29,10 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 ```
 如果遇到 build dev started，是因为有一个server再运行，把它关掉再 run就可以了
 
+**Logo 和启动图的创建**
+```ionic cordova resources android/ios
+```
+
 
 
 

@@ -10,6 +10,7 @@ import { DishesListPage } from '../dishes/dishes-list/dishes-list';
 import { RoomTablesListPage } from '../roomtables/roomtables-list/roomtables-list';
 import { EquipmentsListPage } from '../equipments/equipments-list/equipments-list';
 import { OrdersListPage } from '../orders/orders-list/orders-list';
+import { FinancialsCategoryPage } from '../financials/financials-category/financials-category';
 
 
 
@@ -56,7 +57,7 @@ export class ShopsManagePage {
       comment: OrdersListPage
     },{
       name: '财务管理',
-      comment: OrdersListPage
+      comment: FinancialsCategoryPage
     }];
   }
 
