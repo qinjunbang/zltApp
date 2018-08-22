@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content class="con-bg">
+  <div class="no-shops" *ngIf="dishesList.length < 1">
+    <img src="assets/imgs/no-shops.png" alt="">
+    <p>空空如也~</p>
+  </div>
   <ion-list *ngFor="let menu of dishesList" no-lines>
     <div>
       <ion-list-header >
