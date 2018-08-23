@@ -3,6 +3,7 @@ import { HttpService } from '../../../../providers/HttpService';
 import { NavController , AlertController , ActionSheetController , NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
+import { Config } from '../../../../providers/Config';
 
 
 
@@ -27,42 +28,19 @@ export class dishesClassPage {
     this.getDishesClass()
   }
 
-  //获取本地设备id和token
-  public getToken(){
-    return new Promise((resolve) => {
-      this.storage.get('token').then((val) => {
-          resolve(val)
-      });
-    })
-  }
-  public getDeviceId(){
-    return new Promise((resolve) => {
-      this.storage.get('device_id').then((val) => {
-          resolve(val)
-      });
-    })
-  }
-
   getDishesClass() {
-    let that = this
-    async function getDishesClass(){
-      let token = await that.getToken();
-      let deviceId = await that.getDeviceId();
-      that.http.post("/api/app/menuAll", {'token':token,'device_id': deviceId,'shop_id':that.shopId}).subscribe(res => {
-          console.log("res", res);
-          if(res.code == 200){
-            that.dishesList = res.data
-          }else {
-            that.native.alert('提示','',res.info)
-          }
-      })
-    }
-    getDishesClass()
+    this.http.post("/api/app/menuAll", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId}).subscribe(res => {
+      console.log("res", res);
+      if(res.code == 200){
+        this.dishesList = res.data
+      }else {
+        this.native.alert('提示','',res.info)
+      }
+    })
   }
 
 
   edit(id,name,sort){
-    let that = this;
     let alert = this.alertCtrl.create({
       title: '修改分类',
       inputs: [
@@ -87,20 +65,15 @@ export class dishesClassPage {
         {
           text: '确定',
           handler: (data) => {
-            async function editDishesClass(){
-              let token = await that.getToken();
-              let deviceId = await that.getDeviceId();
-              that.http.post("/api/app/menuEdit", {'token':token,'device_id': deviceId,'shop_id':that.shopId,'menu_name':data.name,'id':id}).subscribe(res => {
-                  console.log("res", res);
-                  if(res.code == 200){
-                    that.getDishesClass();
-                    that.native.alert('提示','',res.info);
-                  }else {
-                    that.native.alert('提示','',res.info)
-                  }
-              })
-            }
-            editDishesClass()
+            this.http.post("/api/app/menuEdit", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId,'menu_name': data.name,'id': id}).subscribe(res => {
+              console.log("res", res);
+              if(res.code == 200){
+                this.getDishesClass();
+                this.native.alert('提示','',res.info);
+              }else {
+                this.native.alert('提示','',res.info)
+              }
+            })
           }
         }
       ]
@@ -109,8 +82,7 @@ export class dishesClassPage {
   }
 
   add(){
-    let that = this;
-    console.log(that.shopId)
+
     let alert = this.alertCtrl.create({
       title: '添加分类',
       inputs: [
@@ -133,20 +105,19 @@ export class dishesClassPage {
         {
           text: '确定',
           handler: (data) => {
-            async function addDishesClass(){
-              let token = await that.getToken();
-              let deviceId = await that.getDeviceId();
-              that.http.post("/api/app/menuAdd", {'token':token,'device_id': deviceId,'shop_id':that.shopId,'menu_name':data.name,'menu_sort':data.sort}).subscribe(res => {
-                  console.log("res", res);
-                  if(res.code == 200){
-                    that.getDishesClass();
-                    that.native.alert('提示','',res.info);
-                  }else {
-                    that.native.alert('提示','',res.info)
-                  }
-              })
-            }
-            addDishesClass()
+            this.http.post("/api/app/menuAdd", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId,'menu_name': data.name,'menu_sort': data.sort}).subscribe(res => {
+              console.log("res", res);
+              if(res.code == 200){
+                alert.dismiss();
+                this.getDishesClass();
+                this.native.alert('提示','',res.info);
+              }else {
+
+                this.native.showToast(res.info);
+
+              }
+            });
+            return false;
           }
         }
       ]
@@ -155,26 +126,20 @@ export class dishesClassPage {
   }
 
   delete(id){
-    let that = this;
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
           {
             text: "确定删除",
             handler: () => {
-              async function addDishesClass(){
-                let token = await that.getToken();
-                let deviceId = await that.getDeviceId();
-                that.http.post("/api/app/menuDel", {'token':token,'device_id': deviceId,'shop_id':that.shopId,'id':id}).subscribe(res => {
-                    console.log("res", res);
-                    if(res.code == 200){
-                      that.getDishesClass();
-                      that.native.alert('提示','',res.info);
-                    }else {
-                      that.native.alert('提示','',res.info)
-                    }
-                })
-              }
-              addDishesClass()
+              this.http.post("/api/app/menuDel", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId,'id': id}).subscribe(res => {
+                console.log("res", res);
+                if(res.code == 200){
+                  this.getDishesClass();
+                  this.native.alert('提示','',res.info);
+                }else {
+                  this.native.alert('提示','',res.info)
+                }
+              })
             }
           },
           {
@@ -182,7 +147,7 @@ export class dishesClassPage {
             role: 'cancel'
           }
       ]
-      });
+    });
 
       actionSheet.present();
   }

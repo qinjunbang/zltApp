@@ -47,7 +47,10 @@
   font-size: 2.4rem;
   min-height: 3.2rem;
 }
-
+.no-shops {
+  text-align: center;
+  padding-top: 8.3rem;
+}
 // 页面适配
 // 根元素大小使用 vw 单位
 // $vm_fontsize: 37.5; // 是$vm_design 值得十分之一

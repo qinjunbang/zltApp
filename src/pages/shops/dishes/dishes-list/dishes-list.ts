@@ -6,6 +6,7 @@ import { HttpService } from '../../../../providers/HttpService';
 import { NavController , NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
+import { Config } from '../../../../providers/Config';
 
 import { addDishesPage } from '../addDishes/addDishes';
 import { editDishesPage } from '../editDishes/editDishes';
@@ -32,37 +33,18 @@ export class DishesListPage {
   ionViewWillEnter() {
     this.getDishesList();
   }
-  public getToken(){
-    return new Promise((resolve) => {
-      this.storage.get('token').then((val) => {
-          resolve(val)
-      });
-    })
-  }
-  public getDeviceId(){
-    return new Promise((resolve) => {
-      this.storage.get('device_id').then((val) => {
-          resolve(val)
-      });
-    })
-  }
+
 
   // 获取菜式列表
   public getDishesList () {
-    let that = this;
-    async function getDishes(){
-      let token = await that.getToken();
-      let deviceId = await that.getDeviceId();
-      that.http.post("/api/app/dishAllDesign", {'token':token,'device_id': deviceId,'shop_id':that.shopId}).subscribe(res => {
-          console.log("res", res);
-          if(res.code == 200){
-            that.dishesList = res.data;
-          }else {
-            that.native.alert('提示','',res.info);
-          }
-      })
-    }
-    getDishes()
+    this.http.post("/api/app/dishAllDesign", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId}).subscribe(res => {
+      console.log("res", res);
+      if(res.code == 200){
+        this.dishesList = res.data;
+      }else {
+        this.native.alert('提示','',res.info);
+      }
+    })
   }
 
   // 增加菜式
