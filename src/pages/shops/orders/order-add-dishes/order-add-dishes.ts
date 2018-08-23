@@ -72,8 +72,27 @@ export class OrderAddDishesPage {
   //去下单
   buy() {
     let cart = {};
+    let data = {};
+    let arr = [];
     cart['order_id'] = this.order_id;
-    cart['dish'] = this.selectDish;
+    cart['dish'] = [];
+    this.selectDish.forEach( res => {
+      data['dishes_id'] = res.id;
+      data['dishes_name'] = res.dishes_name;
+      data['goods_number'] = res.num;
+      data['price'] = res.price;
+      data['sell_price'] = res.discount_price;
+      data['is_attr'] = res.is_attr;
+      if(res.spec){
+        res.spec.forEach( res => {
+          arr.push(res.spec_name+"|"+res.spec_price)
+        })
+      }
+      data['spec'] = arr.join(',');
+      cart['dish'].push(data);
+      data = {}
+    })
+    console.log(cart);
     if(this.selectDish.length > 0){
       this.http.post("/api/app/reserveAddDishes", {'token':this.token,'device_id': this.device_id,'shop_id':this.shopId,'cart':cart,}).subscribe(res => {
           console.log("res", res);
