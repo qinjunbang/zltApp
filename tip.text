@@ -39,85 +39,116 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 **插件安装**
 
 1、安装拍照，打开设备图片库插件
-```ionic cordova plugin add cordova-plugin-camera
-   npm install --save @ionic-native/camera
+```
+  ionic cordova plugin add cordova-plugin-camera
+  npm install --save @ionic-native/camera
 
 ```
 
 2、拨打电话
-``` ionic cordova plugin add call-number
-    npm install --save @ionic-native/call-number
+```
+   ionic cordova plugin add call-number
+   npm install --save @ionic-native/call-number
 
 ```
 3、启动页面
-``` ionic cordova plugin add cordova-plugin-splashscreen
-    npm install --save @ionic-native/splash-screen
+```
+   ionic cordova plugin add cordova-plugin-splashscreen
+   npm install --save @ionic-native/splash-screen
 
 ```
 4、设备网络连接
-``` ionic cordova plugin add cordova-plugin-network-information
-    npm install --save @ionic-native/network
+```
+   ionic cordova plugin add cordova-plugin-network-information
+   npm install --save @ionic-native/network
 
 ```
 5、最小化APP
-```ionic cordova plugin add cordova-plugin-appminimize
-   npm install --save @ionic-native/app-minimize
+```
+  ionic cordova plugin add cordova-plugin-appminimize
+  npm install --save @ionic-native/app-minimize
 
 ```
 6、真机下的提示框
-```ionic cordova plugin add cordova-plugin-x-toast
-   npm install --save @ionic-native/toast
+```
+  ionic cordova plugin add cordova-plugin-x-toast
+  npm install --save @ionic-native/toast
 
 ```
 7、文件管理
-```ionic cordova plugin add cordova-plugin-file
-   npm install --save @ionic-native/file
+```
+  ionic cordova plugin add cordova-plugin-file
+  npm install --save @ionic-native/file
 
 ```
 8、多图选择
-```ionic cordova plugin add cordova-plugin-telerik-imagepicker --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="zlt"
-   npm install --save @ionic-native/image-picker
+```
+  ionic cordova plugin add cordova-plugin-telerik-imagepicker --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="zlt"
+  npm install --save @ionic-native/image-picker
 
 ```
 9、获取App版本号
-```ionic cordova plugin add cordova-plugin-app-version
-   npm install --save @ionic-native/app-version
+```
+  ionic cordova plugin add cordova-plugin-app-version
+  npm install --save @ionic-native/app-version
 
 ```
 10、播放声音
-```ionic cordova plugin add cordova-plugin-nativeaudio
-   npm install --save @ionic-native/native-audio
+```
+  ionic cordova plugin add cordova-plugin-nativeaudio
+  npm install --save @ionic-native/native-audio
 
 ```
 
 11、获取设备UUID
-```ionic cordova plugin add cordova-plugin-device
-   npm install --save @ionic-native/device
+```
+  ionic cordova plugin add cordova-plugin-device
+  npm install --save @ionic-native/device
 
 ```
 12、Android新权限检查机制，主要配合获取设备的UUID使用
-```ionic cordova plugin add cordova-plugin-android-permissions
-   npm install --save @ionic-native/android-permissions
+```
+  ionic cordova plugin add cordova-plugin-android-permissions
+  npm install --save @ionic-native/android-permissions
 
 ```
 13、多级联动插件
-```npm install ion-multi-picker --save
-   在app.module.ts中注册（imports）
+```
+  npm install ion-multi-picker --save
+  在app.module.ts中注册（imports）
 ```
 14、storage 本地缓存
-```ionic cordova plugin add cordova-sqlite-storage --save
-   npm install --save @ionic/storage
+```
+  ionic cordova plugin add cordova-sqlite-storage --save
+  npm install --save @ionic/storage
 ```
 15、极光推送 https://github.com/jpush/jpush-phonegap-plugin
-```ionic cordova plugin add jpush-phonegap-plugin --variable APP_KEY=443eca432eff14581d12c724
-   npm install --save @jiguang-ionic/jpush
+```
+  ionic cordova plugin add jpush-phonegap-plugin --variable APP_KEY=443eca432eff14581d12c724
+  npm install --save @jiguang-ionic/jpush
 ```
 16、安装讯飞语音插件
-```ionic cordova plugin add  E:\cordova-plugin-IFlyspeech-master
+```
+  ionic cordova plugin add  E:\cordova-plugin-IFlyspeech-master
 ```
 17、文件上传插件
-```ionic cordova plugin add cordova-plugin-file-transfer
-   npm install --save @ionic-native/file-transfer
+```
+  ionic cordova plugin add cordova-plugin-file-transfer
+  npm install --save @ionic-native/file-transfer
+```
+18、文件打开插件，可以用于安装apk
+```
+  ionic cordova plugin add cordova-plugin-file-opener2
+  npm install --save @ionic-native/file-opener
+```
+19、我也不知道这个插件有什么用，不装这个，只装cordova-plugin-file-opener2 build的时候会报错
+```
+  ionic cordova plugin add cordova-android-support-gradle-release --fetch
+```
+20、安装调用本机浏览器插件
+```
+  ionic cordova plugin add cordova-plugin-themeablebrowser
+  npm install --save @ionic-native/themeable-browser
 ```
 
 
