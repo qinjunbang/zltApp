@@ -34,6 +34,11 @@ export class OrderAddDishesPage {
   public allDishPrice = 0;  //所有菜式价格
   public selectDish = []  //自己所选的菜
   public canSee = false;  //查看购物车
+  public seeRegu = false; //查看多规格
+  public reguDish = []; //多规格菜式
+  public reguSpec = []; //多规格菜式分类
+  public reguPrice = 0; //多规格所选菜式价格;
+  public reguName = {}
 
   constructor(
     public http: HttpService,
@@ -43,7 +48,7 @@ export class OrderAddDishesPage {
     public native: NativeService,
     public params: NavParams
   ) {
-    this.shopId = this.params.get('shopId');
+    this.shopId = this.params.get('shop_id');
     this.order_id = this.params.get('order_id');
     this.order_type = this.params.get('order_type');
   }
@@ -54,7 +59,7 @@ export class OrderAddDishesPage {
 
   //获取菜式列表
   addDishes() {
-    this.http.post("/api/app/showOrderDishes", {'token':this.token,'device_id': this.device_id,'shop_id':4}).subscribe(res => {
+    this.http.post("/api/app/showOrderDishes", {'token':this.token,'device_id': this.device_id,'shop_id':this.shopId}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
           this.dishesList = res.data;
@@ -67,16 +72,37 @@ export class OrderAddDishesPage {
   //去下单
   buy() {
     let cart = {};
+    let data = {};
+    let arr = [];
     cart['order_id'] = this.order_id;
-    cart['dish'] = this.selectDish;
-    this.http.post("/api/app/reserveAddDishes", {'token':this.token,'device_id': this.device_id,'shop_id':4,'cart':cart,}).subscribe(res => {
-        console.log("res", res);
-        if(res.code == 200){
-          this.native.alert('提示','',res.info);
-        }else {
-          this.native.alert('提示','',res.info);
-        }
+    cart['dish'] = [];
+    this.selectDish.forEach( res => {
+      data['dishes_id'] = res.id;
+      data['dishes_name'] = res.dishes_name;
+      data['goods_number'] = res.num;
+      data['price'] = res.price;
+      data['sell_price'] = res.discount_price;
+      data['is_attr'] = res.is_attr;
+      if(res.spec){
+        res.spec.forEach( res => {
+          arr.push(res.spec_name+"|"+res.spec_price)
+        })
+      }
+      data['spec'] = arr.join(',');
+      cart['dish'].push(data);
+      data = {}
     })
+    console.log(cart);
+    if(this.selectDish.length > 0){
+      this.http.post("/api/app/reserveAddDishes", {'token':this.token,'device_id': this.device_id,'shop_id':this.shopId,'cart':cart,}).subscribe(res => {
+          console.log("res", res);
+          if(res.code == 200){
+            this.native.alert('提示','',res.info);
+          }else {
+            this.native.alert('提示','',res.info);
+          }
+      })
+    }
   }
 
   //点击分类
@@ -88,47 +114,81 @@ export class OrderAddDishesPage {
   //添加菜式
   add(dish) {
     let flag = true;
-    let allNum = 0;
-    let addPrice = 0;
+    let specFlag = true;
     if(!dish.num){
       dish.num = 1;
     }
-    this.selectDish.forEach( res => {
-      if(res.id == dish.id){
-        res.num++;
-        flag=false;
+    //是否多规格
+    if(dish.spec){
+      this.selectDish.forEach( res => {
+        if(res.id == dish.id){
+          res.spec.forEach( (val1,i) => {
+            specFlag = true;
+            dish['spec'].forEach( (val2,j) => {
+              if( i==j){
+                if(val1.spec_name != val2.spec_name){
+                  specFlag = false;
+                  return;
+                }
+              }
+            })
+          })
+          if(specFlag){
+            res.num++;
+          }
+        }
+      })
+    }else{
+      this.selectDish.forEach( res => {
+        if(res.id == dish.id){
+          res.num++;
+          flag=false;
+        }
+      })
+      if(flag){
+        this.selectDish.push(dish)
       }
-    })
-    if(flag){
-      this.selectDish.push(dish)
     }
-    this.selectDish.forEach( res => {
-      allNum += res.num;
-      addPrice += res.num*res.discount_price
-    })
-    this.dishNum = allNum;
-    this.allDishPrice = Math.floor(addPrice*100)/100;
     console.log(this.selectDish);
   }
 
   //删减菜式
   desc(dish) {
-    let allNum = 0;
-    let addPrice = 0;
-    this.selectDish.forEach( (res,i) => {
-      if(res.id == dish.id){
-        res.num--;
-      }
-      if(res.num == 0){
-        this.selectDish.splice(i,1)
-      }
-    })
-    this.selectDish.forEach( res => {
-      allNum += res.num;
-      addPrice += res.num*res.discount_price
-    })
-    this.dishNum = allNum;
-    this.allDishPrice = Math.floor(addPrice*100)/100;
+    let specFlag = true;
+    if(dish.spec){
+      this.selectDish.forEach( (res,i) => {
+        if(res.id == dish.id){
+          res.spec.forEach( (val1,i) => {
+            specFlag = true;
+            dish['spec'].forEach( (val2,j) => {
+              if( i==j){
+                if(val1.spec_name != val2.spec_name){
+                  specFlag = false;
+                  return;
+                }
+              }
+            })
+          })
+
+          if(specFlag){
+            res.num--;
+          }
+        }
+        if(res.num <= 0){
+          this.selectDish.splice(i,1)
+        }
+      })
+    }else{
+      this.selectDish.forEach( (res,i) => {
+        if(res.id == dish.id){
+          res.num--;
+        }
+        if(res.num <= 0){
+          this.selectDish.splice(i,1)
+        }
+      })
+    }
+    
     console.log(this.selectDish);
     if(this.selectDish.length == 0){
       this.canSee = false
@@ -140,8 +200,123 @@ export class OrderAddDishesPage {
     if(this.selectDish.length>0){
       this.canSee = !this.canSee
     }else{
-      this.canSee = false
+      this.canSee = false;
     }
   }
 
+  //点击多规格
+  chooseRegu(dish) {
+    this.seeRegu = !this.seeRegu;
+    this.reguDish = dish;
+  }
+  //选择多规格分类
+  selectSpec(spec,I) {
+    console.log(spec)
+    let price = 0;
+    this.reguSpec[I] = spec;
+    this.reguName[I] = spec.spec_name;
+    console.log(this.reguSpec)
+    this.reguSpec.forEach( res => {
+      price += Number(res.spec_price);
+    })
+    this.reguPrice = Number(this.reguDish['discount_price']) + Number(price);
+  }
+
+  //隐藏多规格
+  hiddenRegu() {
+    this.seeRegu = !this.seeRegu;
+    this.reguSpec = [];
+    this.reguName = [];
+    this.reguPrice = 0;
+  }
+
+  //多规格加入购物车
+  joinCart(reguDish) {
+    let flag = true;
+    let specFlag = true;
+    let regu = Object.assign({},reguDish);
+    if(this.reguSpec.length == 0){
+      return false;
+    }
+    if(!regu['num']){
+      regu['num'] = 1;
+    }
+    let arr = this.reguSpec;
+    regu['spec'] = arr;
+    console.log("this.reguSpec", this.reguSpec)
+
+    this.selectDish.forEach( res => {
+      if(res.id == regu['id']){
+        res.spec.forEach( (val1,i) => {
+          regu['spec'].forEach( (val2,j) => {
+            if( i==j){
+              if(val1.spec_name != val2.spec_name){
+                specFlag = false;
+              }
+            }
+          })
+        })
+        if(specFlag){
+          res.num++;
+          flag = false;
+        }
+      }
+    })
+      console.log("mydata", regu);
+   
+    if(flag){
+      //let a = regu
+      this.selectDish.push(regu);
+      this.reguSpec = [];
+      this.reguName = [];
+      this.reguPrice = 0;
+      this.native.showToast('已加入购物车!')
+    }
+    console.log(this.selectDish)
+  }
+
+  //字符串转化成数字
+  floor(val) {
+    return Math.floor(val*100)/100
+  }
+  //计算多规格价格
+  specPrice(dish) {
+    let price =0;
+    dish.spec.forEach( res => {
+      price += Number(res.spec_price)
+    })
+    return (this.floor(dish.discount_price) + this.floor(price)) * dish.num
+  }
+  //计算购物车总价格
+  allPrice() {
+    let price = 0 , allPrice = 0;
+    this.selectDish.forEach( res => {
+      if(res.spec){
+        res.spec.forEach( res => {
+          price += Number(res.spec_price)
+        })
+        allPrice += res.num*(Number(res.discount_price) + Number(price))
+      }else{
+        allPrice += res.num*res.discount_price
+      }
+    })
+    return allPrice.toFixed(2);
+  }
+
+  //计算总数量
+  allNum() {
+    let allNum = 0;
+    this.selectDish.forEach( res => {
+      allNum += res.num; 
+    })
+    return allNum;
+  }
+  //多规格名字显示
+  specName(spec) {
+    let arr = [];
+    spec.forEach( res => {
+      arr.push(res.spec_name+"|"+res.spec_price)
+    })
+    return arr.join(',');
+  }
 }
