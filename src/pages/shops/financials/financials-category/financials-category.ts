@@ -35,7 +35,25 @@ export class FinancialsCategoryPage {
   // 页面跳转
   goToPage (text) {
     console.log("text", text);
-    this.navCtrl.push(FinancialsFindPage, {'title': text, 'sid': this.sid});
+    let type = "";
+    switch (text) {
+      case "全部收入":
+        type = "";
+        break;
+      case "预定":
+        type = "1";
+        break;
+      case "扫码":
+        type = "3";
+        break;
+      case "排队":
+        type = "2";
+        break;
+      case "外卖":
+        type = "0";
+        break;
+    }
+    this.navCtrl.push(FinancialsFindPage, {'title': text, 'sid': this.sid, typeNum: type});
   }
 
 }
