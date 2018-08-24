@@ -263,6 +263,7 @@ export class NativeService {
 
     return Observable.create(observer => {
       this.camera.getPicture(ops).then((imgData: string) => {
+        console.log("我到这里了");
         if (ops.destinationType === this.camera.DestinationType.DATA_URL) {
           // 返回 base64 字符
           observer.next('data:image/jpg;base64,' + imgData);
@@ -271,6 +272,7 @@ export class NativeService {
           observer.next(imgData);
         }
       }).catch(err => {
+        console.log("获取照片失败，", err);
         if (err == 20) {
           this.alert("没有权限，请在设置中打开");
         } else if (String(err).indexOf('cancel') != -1) {
