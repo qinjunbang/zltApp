@@ -255,7 +255,7 @@ export class NativeService {
     const ops: CameraOptions = {
       sourceType: this.camera.PictureSourceType.CAMERA, // 图片来源，CAMERA: 拍照，PHOTOLIBRARY: 相册
       destinationType: this.camera.DestinationType.FILE_URI, // 默认返回图片路径 FILE_URL: 图片路径，DATA_URL: base64字符串
-      quality: 98, // 图像质量  范围 0 - 100
+      quality: 60, // 图像质量  范围 0 - 100
       allowEdit: false, // 选择图片前是否允许编辑
       encodingType: this.camera.EncodingType.JPEG,
       targetWidth: 1024, // 缩放图像的宽度（像素）
@@ -340,7 +340,7 @@ export class NativeService {
       maximumImagesCount: 6,
       width: 1024, // 缩放图像的宽度（像素）
       height: 1024, // 缩放图像的高度（像素）
-      quality: 98,
+      quality: 60,
       ...options
     };
 
