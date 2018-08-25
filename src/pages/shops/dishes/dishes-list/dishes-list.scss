@@ -1,71 +1,88 @@
 page-dishes-list {
-    .dish-class{
-        color: #fff;
-        font-size: 14px;
-        float: right;
-        z-index: 10;
-        margin-right: 10px;
-    }
-    .con-bg{
-        background: $bgColor;
-        .padding-bottom{
-            width: 100%;
-            height: 50px;
-        }
-        .dishes{
-            background: #fff;
-            padding: 4px;
-            border-radius: 3px;
-            img{
-                width: 100%;
-                height: 70px;
-            }
-            .dishes-title{
-                display: flex;
-                width: 100%;
-                font-size: 12px;
-                line-height: 20px;
-                align-items: center;
-                .dishes-name{
-                    flex: 1;
-                }
-                .dishes-price{
-                    color: red;
-                }
-            }
-        }
-        .discount-price{
-            font-size: 14px;
-            color: red;
-        }
-        .price{
-            font-size: 14px;
-            color: #999999;
-        }
-        .dishes-add{
-            background: #fff;
-            padding: 4px;
-            border-radius: 3px;
-            height: 120px;
-            line-height: 110px;
-            text-align: center;
-            .add-img{
-                font-size: 60px;
-                color: $themeColor
-            }
-        }
+  .no-shops {
+    padding-top: 5rem;
 
-        .addDishes{
-            width: 100%;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            color: #fff;
-            font-size: 16px;
-            background: $themeColor;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-        }
-    }
+  }
+  .no-shops img {
+    width: 8.2rem;
+    height: 7.4rem;
+  }
+  .dish-class{
+      color: #fff;
+      font-size: 14px;
+      float: right;
+      z-index: 10;
+      margin-right: 10px;
+  }
+  .content {
+    height: 100%;
+  }
+  .menu-content {
+    background-color: #f5f5f5;
+    height: 100%;
+    padding: 0;
+  }
+  .menu-list {
+    color: #666;
+    padding: 1.6rem 1.2rem;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-top: -1px;
+  }
+  .menu-list.active {
+    color: #333;
+    background-color: #fff;
+  }
+  .list-content {
+    padding-left: 5px;
+  }
+  .disheslist {
+    display: flex;
+    border-bottom: 0.55px solid #c8c7cc;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    padding-top: 10px;
+  }
+  .disheslist .img {
+    margin: 0 10px 8px 0;
+  }
+  .disheslist .img img {
+    width: 56px;
+    height: 56px;
+  }
+  .list-inner {
+    padding-right: 8px;
+    flex-grow: 2;
+  }
+  .list-inner h2 {
+    margin: 0 0 2px;
+    font-size: 1.7rem;
+    font-weight: normal;
+  }
+  .list-inner p {
+    overflow: inherit;
+    font-size: 1.4rem;
+    line-height: normal;
+    text-overflow: inherit;
+    color: #8e9093;
+    margin: 0 0 2px;
+  }
+  .buttons-list {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .buttons-list button {
+    padding: 0 1.3rem;
+    height: 28px;
+    font-size: 1.3rem;
+    background: none;
+    color: #3da2fa;
+    border: 1px solid;
+    border-radius: 4px;
+    margin: 10px 0 20px 16px;
+  }
+  .list-inner p.price {
+    color: #e16d3c;
+  }
 }

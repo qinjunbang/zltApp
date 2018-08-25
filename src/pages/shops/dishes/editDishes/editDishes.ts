@@ -42,7 +42,7 @@ export class editDishesPage {
 
     // 获取菜式列表
     public getDishesList () {
-      this.http.post("/api/app/dishAllDesign", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId}).subscribe(res => {
+      this.http.post("/api/app/menuAll", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
           this.dishesList = res.data;

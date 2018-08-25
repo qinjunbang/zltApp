@@ -8,39 +8,39 @@
 </ion-header>
 
 <ion-content class="con-bg">
-  <div class="no-shops" *ngIf="dishesList.length < 1">
-    <img src="assets/imgs/no-shops.png" alt="">
-    <p>空空如也~</p>
-  </div>
 
-  <ion-list *ngFor="let menu of dishesList; let i=index" no-lines>
-    <div>
-      <ion-list-header >
-        {{menu.menu_name}}
-      </ion-list-header>
-      <ion-item-sliding (click)="editDishes(shops.id)" *ngFor="let shops of menu.shopdish">
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="{{shops.thumb}}">
-          </ion-thumbnail>
-          <ion-label>
-              <h2>{{shops.dishes_name}}</h2>
-              <p class="discount-price">折后价：{{shops.discount_price}}元</p>
-              <p class="price">原价：{{shops.price}}元</p>
-          </ion-label>
-          <!-- <div class="use" item-end>
-            <ion-toggle  [(ngModel)]="shops.status" (ionChange)="toggleFun($event)"></ion-toggle>
-          </div> -->
-        </ion-item>
-        <ion-item-options side="right">
-          <button ion-button color="primary" (click)="delete($event,shops.id)">
-            <ion-icon name="mail"></ion-icon>
-            删除
-          </button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </div>
-  </ion-list>
-  <div class="padding-bottom"></div>
-  <div class="addDishes" (click)="addDishes()">添加菜式</div>
+  <ion-row class="content">
+    <ion-col col-3 class="menu-content">
+      <div class="menu-list"  *ngFor="let m of menuList;" (click)="changeMenu(m.id)" [class]="menuSelect == m.id ? 'menu-list active' : 'menu-list'">{{m.menu_name}}</div>
+    </ion-col>
+    <ion-col col-9>
+      <div class="no-shops" *ngIf="dishesList.length < 1">
+        <img src="assets/imgs/no-shops.png" alt="">
+        <p>空空如也~</p>
+      </div>
+
+      <ion-list class="list-content">
+        <div class="disheslist" *ngFor="let d of dishesList; let i = index;" (click)="editDishes(d.id)">
+          <div class="img">
+            <img src="{{d.thumb}}">
+          </div>
+          <div class="list-inner">
+            <h2>{{d.dishes_name}}</h2>
+            <p>{{d.description}}</p>
+            <p class="price">￥{{d.price}}</p>
+            <div class="buttons-list">
+              <button ion-button>下架</button>
+              <button ion-button (click)="deleteDishes($event, d.id)">删除</button>
+            </div>
+          </div>
+        </div>
+      </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title text-center (click)="addDishes()">新建菜品</ion-title>
+  </ion-toolbar>
+</ion-footer>
