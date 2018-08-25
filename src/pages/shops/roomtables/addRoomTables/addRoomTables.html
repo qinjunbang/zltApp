@@ -16,7 +16,7 @@
               <ion-option value="{{item.id}}" *ngFor="let item of shopsList">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
-      
+
         <ion-item>
           <ion-label >容纳人数</ion-label>
           <ion-input type="number" [(ngModel)]="hold"></ion-input>
@@ -39,10 +39,10 @@
             <div class="img-title">添加图片</div>
             <div class="images">
                 <div class="img-list clearfix">
-                    <div class="add-img">
-                        <img src="../../../../assets/imgs/no-shops.png" />
+                    <div class="add-img" *ngFor="let img of imgArr; let i = index;" (click)="chooseImg('update', i)" >
+                        <img src="{{img}}" />
                     </div>
-                    <div class="add-img" (click)="chooseImg()">
+                    <div class="add-img" (click)="chooseImg('add')">
                         <div class="iconfont icon-app-add add-img-icon"></div>
                     </div>
                 </div>
@@ -50,5 +50,5 @@
         </ion-item>
       </ion-list>
 
-      <div class="add" (click)="edit()">确认添加</div>
+      <div class="add" (click)="add()">确认添加</div>
 </ion-content>
