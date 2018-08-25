@@ -21,7 +21,7 @@
       <ion-item-sliding (click)="editDishes(shops.id)" *ngFor="let shops of menu.shopdish">
         <ion-item>
           <ion-thumbnail item-start>
-            <img src="{{serverUrl}}{{shops.thumb}}">
+            <img src="{{shops.thumb}}">
           </ion-thumbnail>
           <ion-label>
               <h2>{{shops.dishes_name}}</h2>

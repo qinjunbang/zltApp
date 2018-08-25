@@ -20,7 +20,6 @@ import { dishesClassPage } from '../dishesClass/dishesClass';
 export class DishesListPage {
   public dishesList = [];
   public shopId = '';
-  public serverUrl = 'https://r.zhanglitong.com'
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
@@ -40,7 +39,17 @@ export class DishesListPage {
     this.http.post("/api/app/dishAllDesign", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId}).subscribe(res => {
       console.log("res", res);
       if(res.code == 200){
-        this.dishesList = res.data;
+        let ldata = res.data;
+        for (let i = 0; i < ldata.length; i++) {
+          if (ldata[i].shopdish) {
+            for (let j = 0; j < ldata[i].shopdish.length; j++) {
+              let imgArr = ldata[i].shopdish[j].thumb.split(";");
+              ldata[i].shopdish[j].thumb = imgArr[0];
+            }
+          }
+        }
+        this.dishesList = ldata;
+        console.log("this.dishesList", this.dishesList);
       }else {
         this.native.alert('提示','',res.info);
       }

@@ -3,7 +3,7 @@
       <ion-title text-center>添加菜品</ion-title>
     </ion-navbar>
   </ion-header>
-  
+
   <ion-content class="con-bg">
       <ion-list>
           <ion-item>
@@ -29,22 +29,22 @@
               <ion-label>介绍：</ion-label>
               <ion-textarea type="text" value="{{text}}" [(ngModel)]="text" autoresize="100" placeholder="菜式介绍"></ion-textarea>
           </ion-item>
-  
+
           <ion-item>
               <div class="img-title">添加图片</div>
               <div class="images">
                   <div class="img-list clearfix">
-                      <div class="add-img">
-                          <img src="../../../../assets/imgs/no-shops.png" />
-                      </div>
-                      <div class="add-img" (click)="chooseImg()">
-                          <div class="iconfont icon-app-add add-img-icon"></div>
-                      </div>
+                    <div class="add-img"  *ngFor="let img of imgArr; let i = index"  (click)="chooseImg('update', i)">
+                      <img src="{{img}}" />
+                    </div>
+                    <div class="add-img" (click)="chooseImg('add')">
+                      <div class="iconfont icon-app-add add-img-icon"></div>
+                    </div>
                   </div>
               </div>
           </ion-item>
       </ion-list>
-  
+
       <div padding>
           <button ion-button block (click)="addDishes()">确认修改</button>
       </div>
