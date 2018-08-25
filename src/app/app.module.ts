@@ -56,6 +56,7 @@ import { AppMinimize } from '@ionic-native/app-minimize';
 import { Toast } from '@ionic-native/toast';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { FileOpener } from '@ionic-native/file-opener';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -66,6 +67,7 @@ import { SpeakingService } from '../providers/SpeakingService';
 import { JPushService } from '../providers/JPushService';
 import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { ThemeableBrowser } from '@ionic-native/themeable-browser';
 
 
 
@@ -199,6 +201,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     Device,
     AndroidPermissions,
     FileTransfer,
+    FileOpener,
+    ThemeableBrowser
   ]
 })
 export class AppModule {}

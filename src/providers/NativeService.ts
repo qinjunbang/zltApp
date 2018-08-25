@@ -18,6 +18,8 @@ import { Observable } from 'rxjs/Rx';
 import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileOpener } from '@ionic-native/file-opener';
+import { ThemeableBrowser, ThemeableBrowserOptions } from '@ionic-native/themeable-browser';
 import { Config } from './Config';
 import { Utils } from './Utils';
 
@@ -44,7 +46,9 @@ export class NativeService {
     private nativeAudio: NativeAudio, // 语音播放
     private device: Device, // 设备UUID组件
     private androidPermissions: AndroidPermissions, // 安卓手机权限获取，主要针对 26以上的版本
-    public transfer: FileTransfer, // 文件上传
+    private transfer: FileTransfer, // 文件上传
+    private fileOpener: FileOpener, // 文件打开
+    private themeableBrowser: ThemeableBrowser // 浏览器
 
   ) {
 
@@ -263,6 +267,7 @@ export class NativeService {
 
     return Observable.create(observer => {
       this.camera.getPicture(ops).then((imgData: string) => {
+        console.log("我到这里了");
         if (ops.destinationType === this.camera.DestinationType.DATA_URL) {
           // 返回 base64 字符
           observer.next('data:image/jpg;base64,' + imgData);
@@ -271,6 +276,7 @@ export class NativeService {
           observer.next(imgData);
         }
       }).catch(err => {
+        console.log("获取照片失败，", err);
         if (err == 20) {
           this.alert("没有权限，请在设置中打开");
         } else if (String(err).indexOf('cancel') != -1) {
@@ -611,31 +617,40 @@ export class NativeService {
   *
   * */
   downloadApp () {
-    // 显示一个下载进度条框
-    let alert = this.alertCtrl.create({
-      title: "下载进度： 0%",
-      buttons: ['后台下载']
-    });
-    alert.present();
+    // 安卓直接下载安装
+    if (this.isAndroid()) {
+      // 显示一个下载进度条框
+      let alert = this.alertCtrl.create({
+        title: "下载进度： 0%",
+        buttons: ['后台下载']
+      });
+      alert.present();
 
-    const fileTransfer: FileTransferObject = this.transfer.create(),
-          apkFileUrl = this.file.externalRootDirectory + 'zltshops.apk'; // apk保存目录
+      const fileTransfer: FileTransferObject = this.transfer.create(),
+        apkFileUrl = this.file.externalRootDirectory + 'zltshops.apk'; // apk保存目录
 
-    // 下载路径 保存路径
-    fileTransfer.download(Config.apkDownloadUrl, apkFileUrl).then(() => {
-      window['install'].install(apkFileUrl.replace('file://', ''));
-    });
+      // 下载路径 保存路径
+      fileTransfer.download(Config.apkDownloadUrl, apkFileUrl).then(() => {
+        // 下载完成，安装 （文件路径，文件格式）
+        this.fileOpener.open(apkFileUrl.replace('file://', ''), "application/vnd.android.package-archive");
+      });
 
-    // 监听下载进度
-    fileTransfer.onProgress((event: ProgressEvent) => {
-      let num = Math.floor(event.loaded / event.total * 100);
-      // 下载完成关闭进度提示框
-      if (num === 100)　{
-        alert.dismiss();
-      } else {
-        let title = document.getElementsByClassName("alert-title")[0];
-        title && (title.innerHTML = "下载进度：" + num + "%");
-      }
-    });
+      // 监听下载进度
+      fileTransfer.onProgress((event: ProgressEvent) => {
+        let num = Math.floor(event.loaded / event.total * 100);
+        // 下载完成关闭进度提示框
+        if (num === 100)　{
+          alert.dismiss();
+        } else {
+          let title = document.getElementsByClassName("alert-title")[0];
+          title && (title.innerHTML = "下载进度：" + num + "%");
+        }
+      });
+    } else if (this.isIos()) {
+      // 苹果安装
+
+      this.themeableBrowser.create(Config.ipaDownLoadUrl, '_blank', Config.options);
+    }
+
   }
 }
