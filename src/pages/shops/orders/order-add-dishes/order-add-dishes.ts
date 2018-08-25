@@ -88,13 +88,14 @@ export class OrderAddDishesPage {
           arr.push(res.spec_name+"|"+res.spec_price)
         })
       }
-      data['spec'] = arr.join(',');
+      data['spec'] = (arr.join(',')).replace(/\s*/g,"");
+      arr = [];
       cart['dish'].push(data);
       data = {}
     })
     console.log(cart);
     if(this.selectDish.length > 0){
-      this.http.post("/api/app/reserveAddDishes", {'token':this.token,'device_id': this.device_id,'shop_id':this.shopId,'cart':cart,}).subscribe(res => {
+      this.http.post("/api/app/reserveAddDishes", {'token':this.token,'device_id': this.device_id,'shop_id':this.shopId,'cart':cart}).subscribe(res => {
           console.log("res", res);
           if(res.code == 200){
             this.native.alert('提示','',res.info);
@@ -317,6 +318,6 @@ export class OrderAddDishesPage {
     spec.forEach( res => {
       arr.push(res.spec_name+"|"+res.spec_price)
     })
-    return arr.join(',');
+    return (arr.join(',')).replace(/\s*/g,"");
   }
 }
