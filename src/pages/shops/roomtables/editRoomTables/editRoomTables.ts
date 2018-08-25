@@ -91,6 +91,7 @@ export class editRoomTablesPage{
                 this.min_consumption = res.data.min_consumption;
                 this.imgArr = res.data.thumb.split(';');
                 this.note = res.data.note;
+                this.type = res.data.type;
             }else{
                 this.native.alert('提示','',res.info)
             }

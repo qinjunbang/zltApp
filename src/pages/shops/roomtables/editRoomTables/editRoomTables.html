@@ -13,7 +13,7 @@
         <ion-item>
             <ion-label>类型</ion-label>
             <ion-select [(ngModel)]="type" okText="确认" cancelText="取消">
-              <ion-option value="{{item.id}}" *ngFor="let item of shopsList">{{item.title}}</ion-option>
+              <ion-option value="{{item.id}}" *ngFor="let item of shopsList" [selected]="item.id == type ? 'selected' : ''">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
 
