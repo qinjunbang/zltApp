@@ -10,20 +10,22 @@
   </ion-refresher>
 
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="defaultType" (click)="seeOrders()">
+    <ion-segment [(ngModel)]="defaultType" (click)="seeOrders()" class="top-bar">
       <ion-segment-button *ngFor="let item of menuType" value="{{item.id}}">
         {{item.title}}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
-  <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="defaultList" (click)="seeOrders()">
-      <ion-segment-button *ngFor="let item of menuList" value="{{item.id}}">
-        {{item.title}}
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  <div padding class="padding">
+    <ion-toolbar no-border-top>
+        <ion-segment [(ngModel)]="defaultList" (click)="seeOrders()">
+          <ion-segment-button *ngFor="let item of menuList" value="{{item.id}}">
+            {{item.title}}
+          </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+  </div>
 
   <div class="orders" *ngFor="let orders of ordersList">
     <!-- 外卖列表 -->
@@ -48,7 +50,7 @@
         </div>
         <div class="list clearfix">
           <div class="list-left">联系方式</div>
-          <div class="list-right">{{orders.order_address.mobile}}</div>
+          <div class="list-right mobile" (click)="callNumber($event, orders.order_address.mobile)">{{orders.order_address.mobile}}</div>
         </div>
       </div>
     </div>
@@ -84,7 +86,7 @@
         </div>
         <div class="list clearfix" *ngIf="orders.rorder">
           <div class="list-left">联系方式</div>
-          <div class="list-right">{{orders.rorder.phone}}</div>
+          <div class="list-right mobile" (click)="callNumber($event, orders.rorder.phone)">{{orders.rorder.phone}}</div>
         </div>
       </div>
     </div>
