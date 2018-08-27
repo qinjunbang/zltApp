@@ -29,7 +29,8 @@
             <p>{{d.description}}</p>
             <p class="price">￥{{d.price}}</p>
             <div class="buttons-list">
-              <button ion-button (click)="soldOut($event, d.id)">下架</button>
+              <button ion-button *ngIf="d.status" (click)="soldOut($event, d.id, d.status, d.shop_id)">下架</button>
+              <button ion-button *ngIf="!d.status" (click)="soldOut($event, d.id, d.status, d.shop_id)">重新上架</button>
               <button ion-button (click)="deleteDishes($event, d.id)">删除</button>
             </div>
           </div>

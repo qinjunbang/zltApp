@@ -89,13 +89,41 @@ export class DishesListPage {
   deleteDishes(e, id) {
     e.stopPropagation(); // 阻止冒泡
     console.log("我要删除", id);
+    let data = {};
+    data['token'] = Config.token;
+    data['device_id'] = Config.device_id;
+    data['id'] = id;
+    this.http.post("/api/app/dishDel", data).subscribe(res => {
+      console.log("res", res);
+      this.native.showToast(res.info);
+      if (res.code == 200) {
+        this.getDishesList(this.menuSelect);
+      }
+    });
 
   }
 
   // 下架
-  soldOut(e, id) {
+  soldOut(e, id, status) {
     e.stopPropagation(); // 阻止冒泡
     console.log("我要下架", id);
+    let data = {};
+    data['token'] = Config.token;
+    data['device_id'] = Config.device_id;
+    data['id'] = id;
+    if (status) {
+      data['status'] = 0;
+    } else {
+      data['status'] = 1;
+    }
+
+    this.http.post("/api/app/dishStatus", data).subscribe(res => {
+      console.log("res", res);
+      this.native.showToast(res.info);
+      if (res.code == 200) {
+        this.getDishesList(this.menuSelect);
+      }
+    });
   }
 
   dishesClass() {
