@@ -65,16 +65,20 @@
         <div class="list clearfix">
           <div class="list-left">菜式</div>
           <div class="list-right">
-            <div  *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}</div>
+            <span  *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}、</span>
           </div>
         </div>
         <div class="list clearfix">
           <div class="list-left">付款金额</div>
           <div class="list-right">{{orders.order_amount}}</div>
         </div>
-        <div class="list clearfix" *ngIf="orders.rorder">
-          <div class="list-left">房间/桌号</div>
-          <div class="list-right">{{orders.rorder.show_table.name}}</div>
+        <div class="list clearfix" *ngIf="orders.rorder.desk_room">
+          <div class="list-left">房间</div>
+          <div class="list-right">{{orders.rorder.desk_room}}</div>
+        </div>
+        <div class="list clearfix" *ngIf="orders.rorder.show_table">
+          <div class="list-left">桌号</div>
+          <div class="list-right">{{orders.rorder.show_table}}</div>
         </div>
         <div class="list clearfix" *ngIf="orders.rorder">
           <div class="list-left">预定时间</div>
@@ -121,4 +125,10 @@
         </div>
       </div>
   </div>
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite($event))">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="正在加载">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

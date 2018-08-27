@@ -70,10 +70,14 @@
         <div class="list clearfix" *ngIf="ordersList.order_reserve">
             <div class="list-title">用餐时间</div>
             <div class="list-right">{{ordersList.order_reserve.arrive_time}}</div>
-        </div> 
+        </div>
         <div class="list clearfix" *ngIf="ordersList.order_reserve">
-            <div class="list-title">房间/桌号</div>
-            <div class="list-right">{{ordersList.order_reserve.show_table.name}}</div>
+            <div class="list-title">房间</div>
+            <div class="list-right">{{ordersList.order_reserve.desk_room}}</div>
+        </div>
+        <div class="list clearfix" *ngIf="ordersList.order_reserve">
+          <div class="list-title">桌号</div>
+          <div class="list-right">{{ordersList.order_reserve.show_table}}</div>
         </div>
         <div class="list clearfix" *ngIf="ordersList.order_reserve">
             <div class="list-title">下单人</div>
@@ -123,7 +127,7 @@
         <div class="list clearfix" *ngIf="ordersList.qorder">
             <div class="list-title">用餐人数</div>
             <div class="list-right">{{ordersList.qorder.people}}</div>
-        </div> 
+        </div>
         <div class="list clearfix" *ngIf="ordersList.qorder">
             <div class="list-title">用餐时间</div>
             <div class="list-right">{{ordersList.qorder.eat_time}}</div>
@@ -164,7 +168,7 @@
     <div class="list clearfix" *ngIf="ordersList.order_type == 1 && ordersList.order_reserve">
         <div class="list-title">用餐时间</div>
         <div class="list-right">{{ordersList.order_reserve.arrive_time}}</div>
-    </div> 
+    </div>
     <div class="list clearfix" *ngIf="ordersList.order_type == 1 && ordersList.order_reserve">
         <div class="list-title">房间/桌号</div>
         <div class="list-right">{{ordersList.order_reserve.show_table.name}}</div>
@@ -180,7 +184,7 @@
     <div class="list clearfix" *ngIf="order_type == 2 && ordersList.qorder">
         <div class="list-title">用餐人数</div>
         <div class="list-right">{{ordersList.qorder.people}}</div>
-    </div> 
+    </div>
     <div class="list clearfix" *ngIf="order_type == 2 && ordersList.qorder">
         <div class="list-title">用餐时间</div>
         <div class="list-right">{{ordersList.qorder.eat_time}}</div>
@@ -205,5 +209,5 @@
         <div class="list-title">备注</div>
         <div class="list-right">{{ordersList.note}}</div>
     </div> -->
-    
+
 </ion-content>

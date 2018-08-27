@@ -8,6 +8,7 @@ import { OrderDetailPage } from '../orderDetail/orderDetail';
 import { OrderAddDishesPage } from '../order-add-dishes/order-add-dishes';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
+import { Config } from '../../../../providers/Config';
 
 @Component({
   selector: 'page-orders-list',
@@ -30,7 +31,9 @@ export class OrdersListPage {
   public defaultList = '0';
   public defaultType= '9';
   public shopId = '';
-  public ordersList:any = []
+  public ordersList:any = [];
+  public total: number = 0;
+  public page: number = 1;
 
   constructor(
     public http: HttpService,
@@ -41,49 +44,36 @@ export class OrdersListPage {
     public params: NavParams
   ) {
     this.shopId = this.params.get('sid');
-    this.getOrders()
+    this.getOrders(1)
   }
   ionViewDidLoad() {
     // this.getShopsList();
   }
 
-  //获取本地设备id和token
-  public getToken(){
-    return new Promise((resolve) => {
-      this.storage.get('token').then((val) => {
-          resolve(val)
-      });
-    })
-  }
-  public getDeviceId(){
-    return new Promise((resolve) => {
-      this.storage.get('device_id').then((val) => {
-          resolve(val)
-      });
-    })
-  }
   //获取订单数据
-  public getOrders() {
-    let that = this
-    async function addEquip(){
-      let token = await that.getToken();
-      let deviceId = await that.getDeviceId();
-      that.http.post("/api/app/shopAllOrders", {'token':token,'device_id': deviceId,'shop_id':that.shopId,'type':that.defaultList,'status':that.defaultType}).subscribe(res => {
-          console.log("res", res);
-          if(res.code == 200){
-            that.ordersList = res.data.data
-          }else if(res.code == 201){
-            that.ordersList = []
-          }else {
-            that.native.alert('提示','',res.info)
-          }
-      })
-    }
-    addEquip()
+  public getOrders(page, resolve: any = null) {
+    this.http.post("/api/app/shopAllOrders", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId,'type': this.defaultList,'status': this.defaultType}).subscribe(res => {
+      console.log("res", res);
+      if(res.code == 200){
+        this.total = res.data.total;
+
+        this.ordersList = [];
+
+        let lists = res.data.data;
+        for (let key in lists) {
+          this.ordersList.push(lists[key]);
+        }
+
+      }else if(res.code == 201){
+        this.ordersList = []
+      }else {
+        this.native.alert('提示','',res.info)
+      }
+    })
   }
 
   seeOrders() {
-    this.getOrders();
+    this.getOrders(1);
   }
 
   //点击列表
@@ -119,6 +109,31 @@ export class OrdersListPage {
       console.log('Async operation has ended');
       refresher.complete();
     }, 2000);
+  }
+
+  //检查是否全部加载完成
+    check(total, data) {
+      let len = data.length;
+      if(len >= total && total !== 0) {
+        return true;
+      }
+      return false;
+    }
+  // 上拉加载
+  doInfinite(event): Promise<any> {
+    //判断是否全部加载完成
+    let flag = this.check(this.total, this.ordersList);
+    //请求数据
+    return new Promise((resolve) => {
+      if(flag == true) {
+        event && event.complete();
+        resolve()
+      } else {
+        this.page++;
+        this.getOrders(this.page, resolve);
+
+      }
+    })
   }
 
   // 拨打电话
