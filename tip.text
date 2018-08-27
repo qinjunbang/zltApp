@@ -150,5 +150,10 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
   ionic cordova plugin add cordova-plugin-themeablebrowser
   npm install --save @ionic-native/themeable-browser
 ```
+21、二维码生成插件
+```
+  ionic cordova plugin add cordova-plugin-qrcodejs
+  declare var cordova: any
+```
 
 

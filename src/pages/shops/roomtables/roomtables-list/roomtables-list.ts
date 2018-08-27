@@ -7,6 +7,7 @@ import { NavController , AlertController , NavParams} from 'ionic-angular';
 import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
 import { editRoomTablesPage } from '../editRoomTables/editRoomTables';
 import { Config } from '../../../../providers/Config';
+import { RoomTablesQrCodePage } from "../roomtables-qrCode/roomtables-qrCode";
 
 @Component({
   selector: 'page-roomtables-list',
@@ -104,6 +105,11 @@ export class RoomTablesListPage {
     });
 
     alert.present();
+  }
+
+  // 跳转到二维码页面
+  seeCode () {
+    this.navCtrl.push(RoomTablesQrCodePage, {'sid': this.shopId})
   }
 
 }
