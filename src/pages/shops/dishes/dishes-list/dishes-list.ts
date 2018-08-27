@@ -86,10 +86,16 @@ export class DishesListPage {
  }
 
   //删除菜式
-  deleteDishes(e,id) {
+  deleteDishes(e, id) {
     e.stopPropagation(); // 阻止冒泡
-    console.log("我要删除");
+    console.log("我要删除", id);
 
+  }
+
+  // 下架
+  soldOut(e, id) {
+    e.stopPropagation(); // 阻止冒泡
+    console.log("我要下架", id);
   }
 
   dishesClass() {

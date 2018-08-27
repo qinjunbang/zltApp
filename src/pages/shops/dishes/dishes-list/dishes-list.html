@@ -29,7 +29,7 @@
             <p>{{d.description}}</p>
             <p class="price">￥{{d.price}}</p>
             <div class="buttons-list">
-              <button ion-button>下架</button>
+              <button ion-button (click)="soldOut($event, d.id)">下架</button>
               <button ion-button (click)="deleteDishes($event, d.id)">删除</button>
             </div>
           </div>
