@@ -16,7 +16,7 @@ E:\web\app\zltShops\platforms\android\app\build\outputs\apk\release\app-release-
 ```
 
 **对apk包进行签名**
-jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\web\app\zltShops\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk zltkeystore
+jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\web\app\zltApp\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk zltkeystore
 
 密码：123456 6个空格
 

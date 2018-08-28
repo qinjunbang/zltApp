@@ -85,6 +85,7 @@ export class OrdersListPage {
   }
 
   seeOrders() {
+    this.ordersList = [];
     this.getOrders(1);
   }
 

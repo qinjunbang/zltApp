@@ -41,7 +41,7 @@ export class RoomTablesQrCodePage {
       if (res.code == 200 && data.length > 0 ) {
         for (let i = 0; i < data.length; i++) {
           if (data[i].lock_qrcode == 1) {
-            let obj = {title: data[i].name, value: Config.app_serve_url + "s?id=" + data[i].id}
+            let obj = {title: data[i].name, value: Config.app_serve_url + "/s?id=" + data[i].id}
             this.codeList.push(obj);
           }
         }
