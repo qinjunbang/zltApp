@@ -7,7 +7,7 @@
 
 <ion-content class="con-bg">
     <!-- 外卖详情 -->
-    <div *ngIf="order_type == 0" class="all-list">
+    <div *ngIf="ordersList.order_type == 0" class="all-list">
         <div class="list clearfix">
             <div class="list-title">订单号</div>
             <div class="list-right">{{ordersList.order_number}}</div>
@@ -44,13 +44,19 @@
             <div class="order-status-yes" (click)="receipt()">接单</div>
             <div class="order-status-no" (click)="reject()">拒单</div>
         </div>
+        <div *ngIf="ordersList.order_status == -3">
+          <div class="order-status-yes">订单关闭</div>
+        </div>
+        <div *ngIf="ordersList.order_status == 3">
+          <div class="order-status-yes">进行中</div>
+        </div>
         <div *ngIf="ordersList.order_status == -1">
             <div class="order-status-yes" (click)="refund()">同意退款</div>
         </div>
     </div>
 
     <!-- 预定详情 -->
-    <div *ngIf="order_type == 1" class="all-list">
+    <div *ngIf="ordersList.order_type == 1" class="all-list">
         <div class="list clearfix">
             <div class="list-title">订单号</div>
             <div class="list-right">{{ordersList.order_number}}</div>
@@ -111,7 +117,7 @@
     </div>
 
     <!-- 排队详情 -->
-    <div *ngIf="order_type == 2" class="all-list">
+    <div *ngIf="ordersList.order_type == 2" class="all-list">
         <div class="list clearfix">
             <div class="list-title">订单号</div>
             <div class="list-right">{{ordersList.order_number}}</div>

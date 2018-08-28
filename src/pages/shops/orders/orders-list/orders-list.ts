@@ -52,12 +52,24 @@ export class OrdersListPage {
 
   //获取订单数据
   public getOrders(page, resolve: any = null) {
-    this.http.post("/api/app/shopAllOrders", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId,'type': this.defaultList,'status': this.defaultType}).subscribe(res => {
+    let data = {
+      'token': Config.token,
+      'device_id': Config.device_id,
+      'shop_id': this.shopId,
+      'type': this.defaultList,
+      'status': this.defaultType,
+      'page': page
+    };
+    this.http.post("/api/app/shopAllOrders", data).subscribe(res => {
       console.log("res", res);
+
       if(res.code == 200){
+        if (resolve !== null) {
+          resolve();
+        }
         this.total = res.data.total;
 
-        this.ordersList = [];
+        // this.ordersList = [];
 
         let lists = res.data.data;
         for (let key in lists) {

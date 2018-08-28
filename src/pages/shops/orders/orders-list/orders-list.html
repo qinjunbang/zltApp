@@ -52,6 +52,16 @@
           <div class="list-left">联系方式</div>
           <div class="list-right mobile" (click)="callNumber($event, orders.order_address.mobile)">{{orders.order_address.mobile}}</div>
         </div>
+        <div class="status" [ngSwitch]="orders.order_status">
+            <p *ngSwitchCase="0">刚创建</p>
+            <p *ngSwitchCase="1">待支付</p>
+            <p *ngSwitchCase="2">待发货</p>
+            <p *ngSwitchCase="3">待收货</p>
+            <p *ngSwitchCase="4">已收货待评价</p>
+            <p *ngSwitchCase="-1">发起退单</p>
+            <p *ngSwitchCase="-2">同意退款</p>
+            <p *ngSwitchCase="-3">订单关闭</p>
+        </div>
       </div>
     </div>
     <!-- 预定列表 -->

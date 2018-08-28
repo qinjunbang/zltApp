@@ -26,9 +26,9 @@ page-orders-list {
             }
             .orders-con{
                 background: #fff;
-                padding: 0 5px;
                 border-top: 1px solid #eee;
                 padding: 0 10px 10px;
+                position: relative;
                 .list{
                     font-size: 14px;
                     line-height: 20px;
@@ -88,5 +88,11 @@ page-orders-list {
   }
   .mobile {
     color: #3da2fa;
+  }
+  .status {
+    color: #3da2fa;
+    position: absolute;
+    top: 3px;
+    right: 10px;
   }
 }
