@@ -22,6 +22,7 @@ import { FileOpener } from '@ionic-native/file-opener';
 import { ThemeableBrowser, ThemeableBrowserOptions } from '@ionic-native/themeable-browser';
 import { Config } from './Config';
 import { Utils } from './Utils';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 
 @Injectable()
@@ -48,7 +49,8 @@ export class NativeService {
     private androidPermissions: AndroidPermissions, // 安卓手机权限获取，主要针对 26以上的版本
     private transfer: FileTransfer, // 文件上传
     private fileOpener: FileOpener, // 文件打开
-    private themeableBrowser: ThemeableBrowser // 浏览器
+    private themeableBrowser: ThemeableBrowser, // 浏览器
+    private photoLibrary: PhotoLibrary // 图库管理
 
   ) {
 
@@ -652,5 +654,53 @@ export class NativeService {
       this.themeableBrowser.create(Config.ipaDownLoadUrl, '_blank', Config.options);
     }
 
+  }
+
+  /*
+   *
+   * 下载 base64 图片
+   * @param title 图片保存的名称
+   *
+   * */
+  downloadBase64Img(base64Url, title) {
+    const fileTransfer: FileTransferObject = this.transfer.create(),
+          imgFileUrl = this.file.externalRootDirectory  + title + '.jpg';
+
+    fileTransfer.download(base64Url, imgFileUrl).then((success) => {
+      this.saveToAlbum(imgFileUrl, title);
+    }, (err) => {
+      console.log("下载图片err：" + JSON.stringify(err));
+    });
+  }
+
+  /*
+   *
+   * 保存图片到相册
+   * @param title 图片保存的名称
+   *
+   * */
+  saveToAlbum(imgUrl, title, albumName="zlt") {
+    this.photoLibrary.requestAuthorization({read: true, write: true}).then(() => {
+      this.photoLibrary.getLibrary().subscribe({
+        error: () => {
+          this.showToast("无法读取相册，请授权“掌里通”使用您的相册功能。");
+        },
+        complete: () => {
+          this.photoLibrary.saveImage(imgUrl, albumName).then(() => {
+            this.showToast("成功保存图片到相册");
+            this.file.removeFile(this.file.externalRootDirectory, title + '.jpg');
+          }, err => {
+            console.log("保存图片到相册err：", JSON.stringify(err));
+          }).catch(() => {
+            if (this.isIos()) {
+              this.showToast("成功保存图片到相册");
+            } else {
+              this.showToast("无法读取相册，请授权“掌里通”使用您的相册功能。");
+            }
+          });
+
+        }
+      });
+    });
   }
 }

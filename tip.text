@@ -155,5 +155,10 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
   ionic cordova plugin add cordova-plugin-qrcodejs
   declare var cordova: any
 ```
+22、保存图片到相册
+```
+  ionic cordova plugin add cordova-plugin-photo-library --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="To choose photos"
+  npm install --save @ionic-native/photo-library
+```
 
 

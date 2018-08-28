@@ -52,8 +52,24 @@ export class RoomTablesQrCodePage {
   }
 
   // 点击图片下载
-  downCodeImg () {
-    console.log("我要下载");
+  downCodeImg (event, title) {
+    console.log("我要下载", event);
+    console.log("title", title);
+    let alert = this.alertCtrl.create({
+      title: "提示",
+      message: "是否下载该图片？",
+      buttons: [{
+        text: '取消'
+      },{
+        text: '确定',
+        handler: () => {
+          let base64 = event.target.currentSrc;
+          this.native.downloadBase64Img(base64, title);
+        }
+      }]
+
+    }).present();
+
   }
 
 }

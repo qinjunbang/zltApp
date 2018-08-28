@@ -70,6 +70,7 @@ import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ThemeableBrowser } from '@ionic-native/themeable-browser';
 import { QRCodeModule } from 'angular2-qrcode';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 
 
@@ -207,7 +208,8 @@ import { QRCodeModule } from 'angular2-qrcode';
     AndroidPermissions,
     FileTransfer,
     FileOpener,
-    ThemeableBrowser
+    ThemeableBrowser,
+    PhotoLibrary
   ]
 })
 export class AppModule {}
