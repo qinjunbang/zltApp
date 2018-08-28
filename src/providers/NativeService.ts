@@ -665,8 +665,8 @@ export class NativeService {
   downloadBase64Img(base64Url, title) {
     const fileTransfer: FileTransferObject = this.transfer.create(),
           imgFileUrl = this.file.externalRootDirectory  + title + '.jpg';
-
     fileTransfer.download(base64Url, imgFileUrl).then((success) => {
+      this.showLoading("正在保存图片");
       this.saveToAlbum(imgFileUrl, title);
     }, (err) => {
       console.log("下载图片err：" + JSON.stringify(err));
@@ -683,15 +683,18 @@ export class NativeService {
     this.photoLibrary.requestAuthorization({read: true, write: true}).then(() => {
       this.photoLibrary.getLibrary().subscribe({
         error: () => {
+          this.hideLoading();
           this.showToast("无法读取相册，请授权“掌里通”使用您的相册功能。");
         },
         complete: () => {
           this.photoLibrary.saveImage(imgUrl, albumName).then(() => {
-            this.showToast("成功保存图片到相册");
+            this.hideLoading();
+            this.alert("成功保存图片到相册");
             this.file.removeFile(this.file.externalRootDirectory, title + '.jpg');
           }, err => {
             console.log("保存图片到相册err：", JSON.stringify(err));
           }).catch(() => {
+            this.hideLoading();
             if (this.isIos()) {
               this.showToast("成功保存图片到相册");
             } else {

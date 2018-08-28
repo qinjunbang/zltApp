@@ -72,4 +72,35 @@ export class RoomTablesQrCodePage {
 
   }
 
+  // 批量下载
+  downAll() {
+    console.log("我要批量下载");
+    let alert = this.alertCtrl.create({
+      title: "提示",
+      message: "批量下载所有图片",
+      buttons: [
+        {
+          text: '取消'
+        },
+        {
+         text: "确定",
+          handler: () => {
+            let imgBox = document.getElementById("img-box"),
+                imgs = imgBox.querySelectorAll("img"),
+                ps = imgBox.querySelectorAll("p.room-title");
+            console.log("imgBox", imgs);
+            console.log("ps", ps);
+            if (imgs.length > 0) {
+              for (let i = 0; i < imgs.length; i++) {
+                let base64 = imgs[i].currentSrc,
+                    title = ps[i].textContent;
+                this.native.downloadBase64Img(base64, title)
+              }
+            }
+          }
+        }]
+    }).present();
+
+  }
+
 }
