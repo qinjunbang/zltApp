@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.zlt.shops" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.zlt.shops" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>掌里通</name>
     <description>掌里通商家后台app</description>
     <author email="hi@ionicframework" href="http://r.zhanglitong.com/">掌里通</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.0.110:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -110,11 +110,11 @@
     </plugin>
     <plugin name="cordova-plugin-themeablebrowser" spec="^0.2.17" />
     <plugin name="cordova-plugin-xunfeiListenSpeaking" spec="E:\cordova-plugin-IFlyspeech-master" />
-    <engine name="android" spec="~7.0.0" />
     <allow-navigation href="http://192.168.0.110:8100" />
     <plugin name="cordova-plugin-file" spec="^5.0.0" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="cordova-plugin-photo-library" spec="^2.1.1">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="To choose photos" />
     </plugin>
+    <engine name="android" spec="7.0.0" />
 </widget>

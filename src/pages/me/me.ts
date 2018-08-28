@@ -3,11 +3,12 @@ import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../providers/NativeService';
 import { HttpService } from '../../providers/HttpService';
+import { Config } from '../../providers/Config';
 import { PrivacyPage } from './privacy/privacy';
-import { WePage } from './we/we'
-import { WalletPage } from './wallet/wallet'
-import { LoginPage } from './login/login'
-import { JPushService } from '../../providers/JPushService'  //ceshi
+import { WePage } from './we/we';
+import { WalletPage } from './wallet/wallet';
+import { LoginPage } from './login/login';
+import { JPushService } from '../../providers/JPushService';
 
 @Component({
     selector: 'page-me',
@@ -63,6 +64,26 @@ export class MePage {
 
     // 检查app新版本
   checkAppVersion  () {
-      this.native.checkAppVersion('0.0.2');
+      let data = {};
+      data['device_id'] = Config.device_id;
+      data['token'] = Config.token;
+      if (this.native.isAndroid()) {
+        data['type'] = 'android';
+      } else if (this.native.isIos()) {
+        data['type'] = 'ios'
+      }
+      this.native.getVersionNumber().subscribe(val => {
+        data['version'] = val;
+        console.log("data", JSON.stringify(data));
+
+        this.http.post("/api/app/init", data).subscribe(res => {
+          console.log("res", JSON.stringify(res));
+          if (res.code == 200) {
+            Config.apkDownloadUrl = res.data.apk_url;
+            this.native.checkAppVersion(res.data.version_code);
+          }
+        });
+      });
+
   }
 }
