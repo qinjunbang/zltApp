@@ -3,7 +3,7 @@
     <name>掌里通</name>
     <description>掌里通商家后台app</description>
     <author email="hi@ionicframework" href="http://r.zhanglitong.com/">掌里通</author>
-    <content original-src="index.html" src="http://192.168.0.144:8100" />
+    <content original-src="index.html" src="http://10.0.0.2:8102" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -108,9 +108,12 @@
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="cordova-plugin-camera" spec="https://gitee.com/MBPSCD/cordova-plugin-camera.git" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.0.19" />
+    <allow-navigation href="http://10.0.0.2:8100" />
+    <allow-navigation href="http://10.0.0.2:8101" />
     <plugin name="cordova-android-support-gradle-release" spec="^1.4.4">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-themeablebrowser" spec="^0.2.17" />
+    <allow-navigation href="http://10.0.0.2:8102" />
     <engine name="android" spec="7.0.0" />
 </widget>
