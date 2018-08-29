@@ -3,11 +3,7 @@
     <name>掌里通</name>
     <description>掌里通商家后台app</description>
     <author email="hi@ionicframework" href="http://r.zhanglitong.com/">掌里通</author>
-<<<<<<< HEAD
-    <content original-src="index.html" src="http://10.0.0.2:8102" />
-=======
     <content src="index.html" />
->>>>>>> c98328c729af816b372c07a9d8298e937fbc9268
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

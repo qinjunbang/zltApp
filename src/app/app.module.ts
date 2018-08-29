@@ -6,10 +6,6 @@ import { MultiPickerModule  } from 'ion-multi-picker';
 import { IonicStorageModule  } from '@ionic/storage';
 import { JPush } from '@jiguang-ionic/jpush';
 
-
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { ShopsListPage } from '../pages/shops/shops-list/shops-list';
@@ -77,9 +73,6 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
     TabsPage,
     LoginPage,
     ShopsListPage,
@@ -147,9 +140,6 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
     TabsPage,
     LoginPage,
     ShopsListPage,
