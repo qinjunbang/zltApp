@@ -5,6 +5,7 @@ import { HttpService } from '../../../../providers/HttpService';
 import { NavController , NavParams , AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
+import { Config } from '../../../../providers/Config';
 
 @NgModule({
   imports: [
@@ -20,8 +21,8 @@ import { NativeService } from '../../../../providers/NativeService';
 export class addEquipmentsPage {
     public shopId = '';
     public eqName = '';
-    public machinecode = '4004556655';
-    public machinekey = '82qs8btsqtwz';
+    public machinecode = '';
+    public machinekey = '';
     constructor(
       public http: HttpService,
       public navCtrl: NavController,
@@ -49,21 +50,30 @@ export class addEquipmentsPage {
       })
     }
     public add() {
-      let that = this
-      async function addEquip(){
-        let token = await that.getToken();
-        let deviceId = await that.getDeviceId();
-        that.http.post("/api/app/printerAdd", {'token':token,'device_id': deviceId,'shop_id':that.shopId,'machinecode':that.machinecode,'machinekey':that.machinekey,'department':that.eqName}).subscribe(res => {
-            console.log("res", res);
-            if(res.code == 200){
-              that.native.alert('提示','',res.info)
-              that.navCtrl.pop()
-            }else {
-              that.native.alert('提示','',res.info)
-            }
-        })
+      let data = {
+        'token': Config.token,
+        'device_id': Config.device_id,
+        'shop_id': this.shopId,
+        'machinecode': this.machinecode,
+        'machinekey': this.machinekey,
+        'department': this.eqName
+      };
+      if (!data['department']) {
+        return this.native.showToast("请输入设备名称~");
+      } else if (!data['machinecode']) {
+        return this.native.showToast("请输入设备终端号~");
+      } else if (!data['machinekey']) {
+        return this.native.showToast("请输入设备密钥~");
       }
-      addEquip()
+      this.http.post("/api/app/printerAdd", data).subscribe(res => {
+        console.log("res", res);
+        if(res.code == 200){
+          this.native.alert('提示','',res.info)
+          this.navCtrl.pop()
+        }else {
+          this.native.alert('提示','',res.info)
+        }
+      });
     }
 
     getNum() {
