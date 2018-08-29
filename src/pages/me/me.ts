@@ -8,6 +8,7 @@ import { PrivacyPage } from './privacy/privacy';
 import { WePage } from './we/we';
 import { WalletPage } from './wallet/wallet';
 import { LoginPage } from './login/login';
+import { ContactPage } from './contact/contact';
 import { JPushService } from '../../providers/JPushService';
 
 @Component({
@@ -31,13 +32,16 @@ export class MePage {
         });
     }
     wallet() {
-        this.navCtrl.push(WalletPage)
+        this.navCtrl.push(WalletPage);
     }
     privacy() {
-        this.navCtrl.push(PrivacyPage)
+        this.navCtrl.push(PrivacyPage);
     }
     we() {
-        this.navCtrl.push(WePage)
+        this.navCtrl.push(WePage);
+    }
+    contact () {
+        this.navCtrl.push(ContactPage);
     }
     logout() {
         let data = {};
