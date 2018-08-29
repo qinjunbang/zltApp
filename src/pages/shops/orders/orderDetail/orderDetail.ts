@@ -142,4 +142,10 @@ export class OrderDetailPage {
         }
     })
   }
+
+  // 拨打电话
+  callNumber (e, num) {
+    e.stopPropagation();
+    this.native.callNumber(num);
+  }
 }

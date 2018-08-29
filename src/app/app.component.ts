@@ -105,7 +105,9 @@ export class MyApp {
     console.log("6666");
     if (this.backButtonPressed) {
       // 退出 App
-      this.platform.exitApp();
+      //this.platform.exitApp();
+      // 最小化app
+      this.native.minimize();
       // 关闭播放的声音
       this.speaking.stopSpeak();
     } else {

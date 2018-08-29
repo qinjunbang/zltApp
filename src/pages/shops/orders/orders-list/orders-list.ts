@@ -85,8 +85,9 @@ export class OrdersListPage {
   }
 
   seeOrders() {
+    this.page = 1;
     this.ordersList = [];
-    this.getOrders(1);
+    this.getOrders(this.page);
   }
 
   //点击列表

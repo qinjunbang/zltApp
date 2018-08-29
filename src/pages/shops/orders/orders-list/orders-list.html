@@ -39,7 +39,7 @@
         <div class="list clearfix">
           <div class="list-left">菜式</div>
           <div class="list-right">
-            <span *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}</span>
+            <span *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}、</span>
           </div>
         </div>
         <div class="list clearfix">
@@ -107,7 +107,7 @@
         <div class="status" [ngSwitch]="orders.order_status">
           <p *ngSwitchCase="0">刚创建</p>
           <p *ngSwitchCase="1">待支付</p>
-          <p *ngSwitchCase="2">客人已到店</p>
+          <p *ngSwitchCase="2">已支付</p>
           <p *ngSwitchCase="3">进行中</p>
           <p *ngSwitchCase="4">已完成待评价</p>
           <p *ngSwitchCase="5">已完成已评价</p>
