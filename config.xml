@@ -1,9 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.zlt.shops" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.zlt.shops" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>掌里通</name>
     <description>掌里通商家后台app</description>
     <author email="hi@ionicframework" href="http://r.zhanglitong.com/">掌里通</author>
+<<<<<<< HEAD
     <content original-src="index.html" src="http://10.0.0.2:8102" />
+=======
+    <content src="index.html" />
+>>>>>>> c98328c729af816b372c07a9d8298e937fbc9268
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -91,7 +95,6 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-appminimize" spec="^1.0.0" />
     <plugin name="cordova-plugin-x-toast" spec="^2.6.2" />
-    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-telerik-imagepicker" spec="^2.2.2">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="zlt" />
     </plugin>
@@ -104,8 +107,6 @@
     <plugin name="jpush-phonegap-plugin" spec="^3.4.3">
         <variable name="APP_KEY" value="443eca432eff14581d12c724" />
     </plugin>
-    <plugin name="cordova-plugin-xunfeiListenSpeaking" spec="0.0.1" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="cordova-plugin-camera" spec="https://gitee.com/MBPSCD/cordova-plugin-camera.git" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.0.19" />
     <allow-navigation href="http://10.0.0.2:8100" />
@@ -114,6 +115,12 @@
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-themeablebrowser" spec="^0.2.17" />
-    <allow-navigation href="http://10.0.0.2:8102" />
+    <plugin name="cordova-plugin-xunfeiListenSpeaking" spec="E:\cordova-plugin-IFlyspeech-master" />
+    <allow-navigation href="http://192.168.0.110:8100" />
+    <plugin name="cordova-plugin-file" spec="^5.0.0" />
+    <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
+    <plugin name="cordova-plugin-photo-library" spec="^2.1.1">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="To choose photos" />
+    </plugin>
     <engine name="android" spec="7.0.0" />
 </widget>

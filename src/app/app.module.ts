@@ -44,6 +44,7 @@ import { OrderAddDishesPage } from '../pages/shops/orders/order-add-dishes/order
 import { FinancialsCategoryPage } from '../pages/shops/financials/financials-category/financials-category';
 import { FinancialsFindPage } from '../pages/shops/financials/financials-find/financials-find';
 import { FinancialsListPage } from '../pages/shops/financials/financials-list/financials-list';
+import { RoomTablesQrCodePage } from '../pages/shops/roomtables/roomtables-qrCode/roomtables-qrCode';
 
 
 
@@ -68,6 +69,8 @@ import { JPushService } from '../providers/JPushService';
 import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { ThemeableBrowser } from '@ionic-native/themeable-browser';
+import { QRCodeModule } from 'angular2-qrcode';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 
 
@@ -110,7 +113,8 @@ import { ThemeableBrowser } from '@ionic-native/themeable-browser';
     OrderAddDishesPage,
     FinancialsCategoryPage,
     FinancialsFindPage,
-    FinancialsListPage
+    FinancialsListPage,
+    RoomTablesQrCodePage
   ],
   imports: [
     BrowserModule,
@@ -137,7 +141,8 @@ import { ThemeableBrowser } from '@ionic-native/themeable-browser';
       }
     }),
     HttpModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    QRCodeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -178,7 +183,8 @@ import { ThemeableBrowser } from '@ionic-native/themeable-browser';
     OrderAddDishesPage,
     FinancialsCategoryPage,
     FinancialsFindPage,
-    FinancialsListPage
+    FinancialsListPage,
+    RoomTablesQrCodePage
   ],
   providers: [
     StatusBar,
@@ -202,7 +208,8 @@ import { ThemeableBrowser } from '@ionic-native/themeable-browser';
     AndroidPermissions,
     FileTransfer,
     FileOpener,
-    ThemeableBrowser
+    ThemeableBrowser,
+    PhotoLibrary
   ]
 })
 export class AppModule {}

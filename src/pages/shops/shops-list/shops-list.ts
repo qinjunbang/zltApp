@@ -75,4 +75,22 @@ export class ShopsListPage {
     this.navCtrl.push(page, {sid: sid});
   }
 
+  // 店铺营业
+  shopOpen(id, status) {
+    console.log("我要惊变", status);
+    let data = {};
+    data['token'] = Config.token;
+    data['device_id'] = Config.device_id;
+    data['id'] = id;
+    if (status) {
+      data['is_open'] = 1;
+    } else {
+      data['is_open'] = 0;
+    }
+    this.http.post("/api/app/shopOpen", data).subscribe(res => {
+      console.log("res", res);
+      this.native.showToast(res.info);
+    });
+  }
+
 }

@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NavController , AlertController , ActionSheetController , NavParams} from 'ionic-angular';
 import { NativeService } from '../../../../providers/NativeService';
+import { Config } from '../../../../providers/Config';
 import { Storage } from '@ionic/storage';
-import { timestamp } from '../../../../../node_modules/rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class addDishesPage {
     public discount = 0.9;
     public text = '';
     public regularList = [];
+    public imgArr = [];
     constructor(
         public http: HttpService,
         public navCtrl: NavController,
@@ -34,43 +36,24 @@ export class addDishesPage {
         this.getDishesList();
     }
 
-    public getToken(){
-        return new Promise((resolve) => {
-            this.storage.get('token').then((val) => {
-                resolve(val)
-            });
-        })
-    }
-    public getDeviceId(){
-        return new Promise((resolve) => {
-            this.storage.get('device_id').then((val) => {
-                resolve(val)
-            });
-        })
-    }
+
 
     // 获取菜式分类
     public getDishesList () {
-        let that = this;
-        async function getDishes(){
-        let token = await that.getToken();
-        let deviceId = await that.getDeviceId();
-        that.http.post("/api/app/dishAllDesign", {'token':token,'device_id': deviceId,'shop_id':that.shopId}).subscribe(res => {
-            console.log("res", res);
-            if(res.code == 200){
-                that.dishesList = res.data;
-            }else {
-                that.native.alert('提示','',res.info);
-            }
-        })
+      this.http.post("/api/app/menuAll", {'token': Config.token,'device_id': Config.device_id,'shop_id': this.shopId}).subscribe(res => {
+        console.log("res", res);
+        if(res.code == 200){
+          this.dishesList = res.data;
+        }else {
+          this.native.alert('提示','',res.info);
         }
-        getDishes()
+      })
     }
 
     getSelect(e) {
         console.log(e)
     }
-    
+
     //选择菜式规格
     addRegular(){
         let that = this;
@@ -153,7 +136,7 @@ export class addDishesPage {
                 if(val == name){
                     res.regu.splice(i,1)
                 }
-            })
+            });
             console.log(this.regularList)
         })
     }
@@ -162,91 +145,120 @@ export class addDishesPage {
         this.regularList.forEach( (res,i) => {
             if(res.name == name){
                 this.regularList.splice(i,1)
-            }  
+            }
         })
         console.log(this.regularList)
     }
 
 
-    // 从图库获取图片
-    getPictureByLibrary () {
-        console.log("666");
-        this.native.getPictureByLibrary().subscribe(res => {
-        console.log("res", res);
-        }, err => {
-        console.log("err1", err);
-        });
-    }
 
-    // 拍照获取图片
-    getPictureByCamera () {
-        this.native.getPictureByCamera().subscribe(res => {
-        console.log("res", res);
-        }, err => {
-        console.log("err", err);
-        });
-    }
-    // 点击上传图片
-    chooseImg () {
-        const actionSheet = this.actionSheetCtrl.create({
-        title: "获取图片",
-        buttons: [
-            {
-            text: "从相册中获取",
-            handler: () => {
-                this.getPictureByLibrary();
+  // 点击上传图片
+  chooseImg (text, index) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: "获取图片",
+      buttons: [{
+        text: "从相册中获取",
+        handler: () => {
+          this.getPictureByLibrary().subscribe(res => {
+            if (text === 'add') {
+              // 如果是新增，插入一张图片
+              this.imgArr.push(Config.app_upload_serve_url + res);
+            } else {
+              // 如果是原图更新，则更换当前图片的src
+              this.imgArr[index] = Config.app_upload_serve_url + res;
             }
-            },
-            {
-            text: "拍照",
-            handler: () => {
-                this.getPictureByCamera();
-            }
-            },
-            {
-            text: '取消',
-            role: 'cancel'
-            }
-        ]
-        });
+          });
+        }
+      },
+        {
+          text: "拍照",
+          handler: () => {
+            this.getPictureByCamera();
+          }
+        },
+        {
+          text: '取消',
+          role: 'cancel'
+        }]
+    });
 
-        actionSheet.present();
-    }
+    actionSheet.present();
+  }
 
     addDishes() {
-        let that = this;
-        async function dishAdd(){
-            console.log(that.dishName)
-            let token = await that.getToken();
-            let deviceId = await that.getDeviceId();
-            let data={
-                'token':token,
-                'device_id': deviceId,
-                'shop_id':that.shopId,
-                'dishes_name':that.dishName,
-                'menu_id': that.dishesListSelect,
-                'price': that.dishPrice,
-                'discount': that.discount,
-                'is_attr':0,
-                'thumb':'../../../../assets/imgs1.jpg',
-                'description':that.text
-            }
-            that.http.post("/api/app/dishAdd", data).subscribe(res => {
-                console.log("res", res);
-                if(res.code == 200){
-                    that.dishesList = res.data;
-                    that.navCtrl.pop();
-                }else {
-                    that.native.alert('提示','',res.info);
-                }
-            })
+
+      if(this.dishName== '' || this.dishPrice=='' || !this.dishesListSelect || this.text==""){
+        return this.native.alert('提示','','请把信息补充完整')
+      } else if(this.discount<0 || this.discount>1){
+        return this.native.alert('提示','','折扣请填写0~1范围数字')
+      }
+
+      let data={
+        'token': Config.token,
+        'device_id': Config.device_id,
+        'shop_id': this.shopId,
+        'dishes_name': this.dishName,
+        'menu_id': this.dishesListSelect,
+        'price': this.dishPrice,
+        'discount': this.discount,
+        'is_attr':0,
+        'description':this.text
+      };
+      data['thumb'] = this.getStringImg(this.imgArr);
+      this.http.post("/api/app/dishAdd", data).subscribe(res => {
+        console.log("res", res);
+        if(res.code == 200){
+          this.dishesList = res.data;
+          this.navCtrl.pop();
+        }else {
+          this.native.alert('提示','',res.info);
         }
-        if(that.dishName== '' || that.dishPrice=='' || !that.dishesListSelect || that.text==""){
-            that.native.alert('提示','','请把信息补充完整')
-        } else if(that.discount<0 || that.discount>1){
-            that.native.alert('提示','','折扣请填写0~1范围数字')
-        } else{
-            dishAdd()
-        }
+      })
     }
+  // 获取图片字条串拼接
+  getStringImg (arr: any) {
+    let len = arr.length,
+      str: string = "";
+
+    for (let i = 0; i < len; i++) {
+      if (i < len -1) {
+        str += arr[i] + ';';
+      } else {
+        str += arr[i];
+      }
+    }
+
+    return str;
+  }
+  // 从图库获取图片
+  getPictureByLibrary ():Observable<string> {
+    return Observable.create(observer => {
+      // 以拿到图片原始url 方式拿图片 destinationType 1 ， 0 为base64
+      this.native.getPictureByLibrary({destinationType: 1}).subscribe(res => {
+        // 上传图片，拿到图片在服务器的url
+        this.native.uploadImages(res, 'api/app/shopUpload').subscribe(s => {
+          observer.next(s);
+        });
+      }, err => {
+        console.log("err1", err);
+      });
+    });
+
+  }
+
+  // 拍照获取图片
+  getPictureByCamera ():Observable<string> {
+    return Observable.create(observer => {
+      // 以拿到图片原始url 方式拿图片 destinationType 1 ， 0 为base64
+      this.native.getPictureByCamera({destinationType: 1}).subscribe(res => {
+        console.log("拍照图片res", res);
+        //  // 上传图片，拿到图片在服务器的url
+        this.native.uploadImages(res, 'api/app/shopUpload').subscribe(s => {
+          observer.next(s);
+        });
+      }, err => {
+        console.log("err", err);
+      });
+    });
+  }
 }

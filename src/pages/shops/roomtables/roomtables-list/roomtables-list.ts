@@ -7,6 +7,7 @@ import { NavController , AlertController , NavParams} from 'ionic-angular';
 import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
 import { editRoomTablesPage } from '../editRoomTables/editRoomTables';
 import { Config } from '../../../../providers/Config';
+import { RoomTablesQrCodePage } from "../roomtables-qrCode/roomtables-qrCode";
 
 @Component({
   selector: 'page-roomtables-list',
@@ -17,11 +18,12 @@ export class RoomTablesListPage {
   public token = Config.token;
   public deviceId = Config.device_id;
   public roomList = [];
-  public shopsList = [
-    {id: 1,title:'房间'},
-    {id: 0,title:'桌子'}
+  public tableList = [];
+  public titleList = [
+    {id: 1,title:'房间', value: 'room'},
+    {id: 0,title:'桌子', value: 'table'}
   ]; // 店铺列表
-  public defaultTitle = '房间';
+  public roomType = "room";
   testRadioOpen = false;
   testRadioResult: any;
   constructor(
@@ -33,16 +35,30 @@ export class RoomTablesListPage {
     this.shopId = this.params.get('sid');
   }
   ionViewWillEnter() {
-    this.getShopsList();
+    this.getRoomTableList();
   }
 
-  // 获取店铺列表
-  public getShopsList () {
+  // 获取房桌列表
+  public getRoomTableList () {
     console.log("我要获取数据");
     this.http.post("/api/shop/showRoomTable", {'shop_id':this.shopId,'token':this.token,'deviceId':this.deviceId}).subscribe(res => {
       console.log("res", res);
-      this.roomList = res.data;
-    })
+      this.roomList = [];
+      this.tableList = [];
+      if (res.code == 200) {
+        let len = res.data.length,
+            data = res.data;
+        if (len > 0 && len) {
+          for (let i = 0; i < len; i++) {
+            if (data[i].type == 1) {
+              this.roomList.push(data[i]);
+            } else {
+              this.tableList.push(data[i]);
+            }
+          }
+        }
+      }
+    });
   }
 
   //编辑房桌
@@ -89,6 +105,11 @@ export class RoomTablesListPage {
     });
 
     alert.present();
+  }
+
+  // 跳转到二维码页面
+  seeCode () {
+    this.navCtrl.push(RoomTablesQrCodePage, {'sid': this.shopId})
   }
 
 }

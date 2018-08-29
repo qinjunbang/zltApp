@@ -7,12 +7,11 @@ import { Config } from '../providers/Config';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
 import { JPushService } from '../providers/JPushService';
+import { SpeakingService } from '../providers/SpeakingService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
-import { OrderAddDishesPage } from '../pages/shops/orders/order-add-dishes/order-add-dishes';
-import { addDishesPage } from '../pages/shops/dishes/addDishes/addDishes';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,7 +34,8 @@ export class MyApp {
     private native: NativeService,
     private http: HttpService,
     private storage: Storage,
-    private jPush: JPushService
+    private jPush: JPushService,
+    private speaking: SpeakingService
   ) {
     // 检查登录状态
     this.refreshToken();
@@ -106,6 +106,8 @@ export class MyApp {
     if (this.backButtonPressed) {
       // 退出 App
       this.platform.exitApp();
+      // 关闭播放的声音
+      this.speaking.stopSpeak();
     } else {
       // 提示用户是否要关闭 app
       this.native.showToast("再按一次退出APP");
@@ -151,7 +153,7 @@ export class MyApp {
     this.events.subscribe("jpush.openNotification", (event) => {
       let order_id = event['extras']['order_id']
       if (order_id) {
-        this.nav.push(OrderDetailPage, {order_id: order_id});
+        this.nav.push(OrderDetailPage, {'order_id': order_id});
       }
     });
   }

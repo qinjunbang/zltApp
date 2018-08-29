@@ -13,7 +13,7 @@
         <ion-item>
             <ion-label>类型</ion-label>
             <ion-select [(ngModel)]="type" okText="确认" cancelText="取消">
-              <ion-option value="{{item.id}}" *ngFor="let item of shopsList">{{item.title}}</ion-option>
+              <ion-option value="{{item.id}}" *ngFor="let item of shopsList" [selected]="item.id == type ? 'selected' : ''">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
 
@@ -28,7 +28,7 @@
         <ion-item>
             <ion-label >是否开启二维码</ion-label>
             <ion-select [(ngModel)]="lock_qrcode" okText="确认" cancelText="取消">
-              <ion-option value="{{item.id}}" *ngFor="let item of codeList">{{item.title}}</ion-option>
+              <ion-option value="{{item.id}}" *ngFor="let item of codeList" [selected]="item.id == lock_qrcode ? 'selected' : ''">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item>

@@ -25,7 +25,7 @@ export class editRoomTablesPage{
     public name = '';   //房间名字
     public hold: Number;   //容纳人数;
     public min_consumption: Number; //最低消费
-    public lock_qrcode = '0'    //是否开启二维码,0否，1是
+    public lock_qrcode = '0';    //是否开启二维码,0否，1是
     public note = ''    //备注
     public shopId = '';
     public token = Config.token;
@@ -91,6 +91,8 @@ export class editRoomTablesPage{
                 this.min_consumption = res.data.min_consumption;
                 this.imgArr = res.data.thumb.split(';');
                 this.note = res.data.note;
+                this.type = res.data.type;
+                this.lock_qrcode = res.data.lock_qrcode;
             }else{
                 this.native.alert('提示','',res.info)
             }

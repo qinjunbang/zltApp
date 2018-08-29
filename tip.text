@@ -16,7 +16,7 @@ E:\web\app\zltShops\platforms\android\app\build\outputs\apk\release\app-release-
 ```
 
 **对apk包进行签名**
-jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\web\app\zltShops\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk zltkeystore
+jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\web\app\zltApp\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk zltkeystore
 
 密码：123456 6个空格
 
@@ -149,6 +149,16 @@ jarsigner -verbose -keystore zltkeystore.keystore -signedjar app-release.apk E:\
 ```
   ionic cordova plugin add cordova-plugin-themeablebrowser
   npm install --save @ionic-native/themeable-browser
+```
+21、二维码生成插件
+```
+  ionic cordova plugin add cordova-plugin-qrcodejs
+  declare var cordova: any
+```
+22、保存图片到相册
+```
+  ionic cordova plugin add cordova-plugin-photo-library --variable PHOTO_LIBRARY_USAGE_DESCRIPTION="To choose photos"
+  npm install --save @ionic-native/photo-library
 ```
 
 
