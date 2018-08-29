@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title text-center>店铺</ion-title>
-    <ion-buttons end class="add-menu-icon" >
+    <ion-buttons end class="add-menu-icon" *ngIf="role === -1">
       <button ion-button icon-only (click)="goToPage(ShopsAddPage)">
         <ion-icon  color="white" name="md-add"></ion-icon>
       </button>

@@ -23,6 +23,7 @@ export class ShopsManagePage {
   public menuList = [];
   public sid; // 店铺id
   public ShopsDetailPage: any = ShopsDetailPage; // 修改店铺资料页面
+  public role = Config.userInfo['role']; // 角色信息
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
@@ -73,10 +74,10 @@ export class ShopsManagePage {
       display: 'block'
     }];
 
-    let role = Config.userInfo['role'];
+
 
     // 权限分配
-    switch(role) {
+    switch(this.role) {
       case 0:
         // 财务
         data[0]['display'] = 'none';

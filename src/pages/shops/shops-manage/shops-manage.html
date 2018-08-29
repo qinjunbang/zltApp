@@ -2,7 +2,7 @@
   <ion-navbar color="primary">
     <ion-title text-center>店铺管理</ion-title>
     <ion-buttons end class="edit-menu-icon" >
-      <button ion-button icon-only (click)="goToPage(ShopsDetailPage)">
+      <button ion-button icon-only (click)="goToPage(ShopsDetailPage)" *ngIf="role === -1">
         修改资料
       </button>
     </ion-buttons>
