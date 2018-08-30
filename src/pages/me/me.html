@@ -9,7 +9,8 @@
     <ion-list no-lines class="list-mess">
         <ion-item class="list-header-img">
             <ion-thumbnail item-start>
-                <img src="{{serverUrl}}{{user.avatar}}">
+                <img src="{{serverUrl}}{{user.avatar}}" *ngIf="user.avatar" class="avatar">
+                <img src="assets/imgs/default.png" *ngIf="!user.avatar" class="avatar">
             </ion-thumbnail>
             <h2>{{user.name}}</h2>
         </ion-item>
