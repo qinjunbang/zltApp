@@ -8,6 +8,7 @@ import { HttpService } from '../../../providers/HttpService';
 import { NativeService } from '../../../providers/NativeService';
 import { Config } from '../../../providers/Config';
 import { Observable } from 'rxjs';
+import { AddressPage } from '../address/address';
 
 
 
@@ -22,6 +23,7 @@ export class ShopsAddPage {
    public shop_name: string = ''; // 店铺名称
    public type_id: number; // 店铺类型id
    public shop_address: string = ''; // 店铺地址
+   public address: string = ''; // 店铺地址
    public detail_address: string = ''; // 店铺详细地址
    public codeList = []; // 商圈列表
    public startTime:string = '08:00'; // 开始营业时间
@@ -71,6 +73,10 @@ export class ShopsAddPage {
     });
   }
 
+  // getAddress
+  getAddress () {
+    this.navCtrl.push(AddressPage, {"page": this});
+  }
   // 获得省份城市区域数据
   getCitiesData() {
     return Observable.create(observer => {
@@ -197,7 +203,7 @@ export class ShopsAddPage {
   savaData() {
     let data = {};
     data['shop_name'] = this.shop_name; // 店铺名称
-    data['shop_address'] = this.shop_address; // 店铺地址
+    data['shop_address'] = this.address; // 店铺地址
     data['detail_address'] = this.detail_address; // 店铺详细地址
     // data['startTime'] = this.startTime; // 开始营业时间
     // data['endTime'] = this.endTime; // 结束营业时间

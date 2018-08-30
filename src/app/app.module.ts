@@ -42,7 +42,7 @@ import { FinancialsFindPage } from '../pages/shops/financials/financials-find/fi
 import { FinancialsListPage } from '../pages/shops/financials/financials-list/financials-list';
 import { RoomTablesQrCodePage } from '../pages/shops/roomtables/roomtables-qrCode/roomtables-qrCode';
 import { ContactPage } from '../pages/me/contact/contact';
-
+import { AddressPage } from '../pages/shops/address/address';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -109,7 +109,8 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
     FinancialsFindPage,
     FinancialsListPage,
     RoomTablesQrCodePage,
-    ContactPage
+    ContactPage,
+    AddressPage
   ],
   imports: [
     BrowserModule,
@@ -177,7 +178,8 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
     FinancialsFindPage,
     FinancialsListPage,
     RoomTablesQrCodePage,
-    ContactPage
+    ContactPage,
+    AddressPage
   ],
   providers: [
     StatusBar,

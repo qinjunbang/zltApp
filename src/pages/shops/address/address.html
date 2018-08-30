@@ -1,0 +1,22 @@
+<ion-header class="header-light">
+    <ion-navbar color="primary">
+        <ion-title>获取地址</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-f6">
+  <div>
+    <ion-row>
+      <ion-col col-9>
+        <input  type="text" id="place" />
+      </ion-col>
+      <ion-col col-3 text-center>
+        <button ion-button (click)="checkSelect()">确定</button>
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+
+  <div id="map"></div>
+</ion-content>

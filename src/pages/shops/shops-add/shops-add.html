@@ -35,7 +35,7 @@
 
     <ion-item>
       <ion-label>店铺地址</ion-label>
-      <ion-multi-picker item-content (ionChange)="changeCitiesDate($event)" [cancelText]="'取消'" [doneText]="'确定'" [multiPickerColumns]="cities" placeholder="省-市-区（县）" ></ion-multi-picker>
+      <ion-input type="text" [(ngModel)]="address" disabled placeholder="请输入详细地址" (click)="getAddress()"></ion-input>
     </ion-item>
 
     <ion-item>
