@@ -8,6 +8,7 @@ import { HttpService } from '../../../providers/HttpService';
 import { NativeService } from '../../../providers/NativeService';
 import { Config } from '../../../providers/Config';
 import { Observable } from 'rxjs';
+import { AddressPage } from '../address/address';
 
 
 
@@ -72,6 +73,11 @@ export class ShopsDetailPage {
     this.getShopType();
   }
 
+  // getAddress
+  getAddress () {
+    this.navCtrl.push(AddressPage, {"page": this});
+  }
+
   // 获取店铺信息
   getShopOne() {
     let data = {};
@@ -93,8 +99,8 @@ export class ShopsDetailPage {
       this.shopInfo['shop_id'] = res.data.id; // 店铺id
       this.shopInfo['shop_name'] = res.data.shop_name; // 店铺名称
       this.shopInfo['type_id'] = res.data.type_id; // 店铺类型id
-      this.address = addressArr[0] + " " + addressArr[1]  + " " + addressArr[2];; // 店铺地址
-      this.shopInfo['detail_address'] = res.data.detail_address; // 店铺详细地址
+      this.address = addressArr[0]; // 店铺地址
+      this.shopInfo['detail_address'] =  addressArr[1]; // 店铺详细地址
       this.shopInfo['startTime'] = openTimeArr[0]; // 开始营业时间
       this.shopInfo['endTime'] = openTimeArr[1]; // 结束营业时间
       this.shopInfo['is_takeout'] = res.data.is_takeout; // 是否开启外卖
@@ -288,9 +294,8 @@ export class ShopsDetailPage {
     if (!data['note']) {
       return this.native.showToast("店铺介绍不能少于5个字");
     }
+
     // 拼接地址
-    data['shop_address'] = data['shop_address'] + " " +  data['detail_address'];
-    console.log("data", JSON.stringify(data));
     console.log("data", data);
 
     this.http.post("/api/app/shopEdit", data).subscribe(res => {

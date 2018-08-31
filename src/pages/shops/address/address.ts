@@ -35,12 +35,18 @@ export class AddressPage {
 
     this.map =  new qq.maps.Map(document.getElementById("map"), {
       center:  new qq.maps.LatLng(39.916527,116.397128),
-      zoom: 13
+      zoom: 16
     });
 
     //实例化自动完成
     let input = new qq.maps.place.Autocomplete(document.getElementById('place'));
-
+    // 地址逆解析
+    let geocoder = new qq.maps.Geocoder({
+      complete: function (res) {
+        console.log("info", res);
+      }
+    });
+    // geocoder.getAddress(pois[n].latLng);return;
 
     //获取城市列表接口设置中心点
     let citylocation = new qq.maps.CityService({
@@ -116,6 +122,7 @@ export class AddressPage {
   }
   // 选择完成
   checkSelect () {
+    console.log("this.address", this.address);
     if (!this.address) {
       return this.native.showToast("地址不能为空");
     }
