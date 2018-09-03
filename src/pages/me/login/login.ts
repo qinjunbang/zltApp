@@ -75,7 +75,7 @@ export class LoginPage {
        Config.device_id = res.data.shopclerk.device_id;
        this.jPush.setAlias();
        // 跳转到我的页面
-       this.navCtrl.push(TabsPage);
+       this.navCtrl.setRoot(TabsPage);
 
      } else {
        // 显示提示框

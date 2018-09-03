@@ -31,8 +31,8 @@
         <ion-card-content>
           <div class="order-info">
             <p>订单金额：￥ {{list.order_price}}</p>
-            <p>下单人：{{list.users.name}}</p>
-            <p>手机号：{{list.users.mobile}}</p>
+            <p *ngIf="list.users">下单人：{{list.users.name}}</p>
+            <p *ngIf="list.users">手机号：{{list.users.mobile}}</p>
           </div>
         </ion-card-content>
       </ion-card>
@@ -53,8 +53,8 @@
         <ion-card-content>
           <div class="order-info">
             <p>订单金额：￥ {{list.order_price}}</p>
-            <p>下单人：{{list.users.name}}</p>
-            <p>手机号：{{list.users.mobile}}</p>
+            <p *ngIf="list.users">下单人：{{list.users.name}}</p>
+            <p *ngIf="list.users">手机号：{{list.users.mobile}}</p>
           </div>
         </ion-card-content>
       </ion-card>
@@ -74,8 +74,8 @@
         <ion-card-content>
           <div class="order-info">
             <p>订单金额：￥ {{list.order_price}}</p>
-            <p>下单人：{{list.users.name}}</p>
-            <p>手机号：{{list.users.mobile}}</p>
+            <p *ngIf="list.users">下单人：{{list.users.name}}</p>
+            <p *ngIf="list.users">手机号：{{list.users.mobile}}</p>
           </div>
         </ion-card-content>
       </ion-card>

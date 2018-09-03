@@ -58,7 +58,7 @@ export class MePage {
                     that.storage.remove('token');
                     that.storage.remove('userInfo');
                     that.Jpush.deleteAlias();
-                    that.navCtrl.push(LoginPage);
+                    that.navCtrl.setRoot(LoginPage);
                 }else{
                     that.native.alert('提示',' ',res.info)
                 }

@@ -67,12 +67,13 @@ export class FinancialsListPage {
       }
       this.total = res.data.orders.total;
       this.sum = res.data.sum;
-      this.listData = [];
+      // this.listData = [];
 
       let lists = res.data.orders.data;
       for (let key in lists) {
         this.listData.push(lists[key]);
       }
+      console.log("this.listData", this.listData);
     });
   }
 
@@ -80,7 +81,8 @@ export class FinancialsListPage {
   selectedSegment (num) {
     console.log("this.listType", this.listType);
     this.listData = [];
-    this.getData(1, num);
+    this.page = 1;
+    this.getData(this.page, num);
   }
 
   // 上拉加载

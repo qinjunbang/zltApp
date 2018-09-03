@@ -94,10 +94,18 @@ export class MyApp {
         activePortal.dismiss();
         return;
       }
-
+      const childNav = this.nav.getActiveChildNav(); // 获取tabs导航,this.nav是总导航,tabs是子导航
+      if (!childNav) {
+        this.showExit();
+        return;
+      }
+      const tab = childNav.getSelected(); // 获取选中的tab
+      const activeVC = tab.getActive(); // 通过当前选中的tab获取ViewController
+      const activeNav = activeVC.getNav(); // 通过当前视图的ViewController获取的NavController
       // 如果不是首页，就返回上一页，如果是首页，显示关闭 App 提示框
-      return this.nav.canGoBack() ? this.nav.pop() : this.showExit();
-    });
+      return activeNav.canGoBack() ? activeNav.pop() : this.showExit();
+
+    }, 1);
   }
 
   // 显示关闭 App 提示框
