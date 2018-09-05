@@ -3,15 +3,15 @@
  */
 export class Config {
 
-  public static app_serve_url = 'https://r.zhanglitong.com'; // 打包
+  public static app_serve_url = 'https://www.zltgs.com'; // 打包
   // public static app_serve_url = 'http://localhost:8100/';  // web浏览器调试
   // public static app_serve_url = 'http://192.168.0.110:8100/'; // 真机调试
-  public static app_upload_serve_url = 'https://r.zhanglitong.com/'; // 上传图片服务器
+  public static app_upload_serve_url = 'https://www.zltgs.com/'; // 上传图片服务器
   public static token = ''; // token
   public static userInfo = []; // user info
   public static device_id = ''; // 设备id
-  public static apkDownloadUrl = 'https://r.zhanglitong.com/downloads/android/20180824/zhanglitong.apk'; // apk下载路径
-  public static ipaDownLoadUrl = 'https://r.zhanglitong.com/mobile/index'; // ios下载页面
+  public static apkDownloadUrl = 'https://www.zltgs.com/downloads/android/20180824/zhanglitong.apk'; // apk下载路径
+  public static ipaDownLoadUrl = 'https://www.zltgs.com/mobile/index'; // ios下载页面
 
   // 内置浏览器样式
   public static  options = {

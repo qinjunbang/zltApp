@@ -18,7 +18,7 @@ import { JPushService } from '../../providers/JPushService';
 
 export class MePage {
     public user = {};
-    public serverUrl = 'https://r.zhanglitong.com'
+    public serverUrl = 'https://www.zltgs.com'
     constructor(
         public native: NativeService,
         public navCtrl: NavController,

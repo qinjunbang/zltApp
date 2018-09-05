@@ -17,7 +17,7 @@ import { ShopsManagePage } from '../shops-manage/shops-manage';
 })
 export class ShopsListPage {
   public shopsList = []; // 店铺列表
-  public serverUrl = 'https://r.zhanglitong.com';
+  public serverUrl = 'https://www.zltgs.com';
   public ShopsAddPage = ShopsAddPage; // 添加店铺页面
   public ShopsManagePage = ShopsManagePage; // 店铺管理页面
   public role = Config.userInfo['role']; // 角色信息
