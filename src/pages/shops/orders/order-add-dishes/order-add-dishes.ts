@@ -13,13 +13,14 @@ import { Config } from '../../../../providers/Config'
   templateUrl: 'order-add-dishes.html'
 })
 export class OrderAddDishesPage {
-  public serveUrl = 'http://r.zhanglitong.com'
+  public serveUrl = Config.app_upload_serve_url;
   public defaultList = '0';
   public defaultType= '0';
   public shopId = '';
   public ordersList:any = {};
   public order_id = '';
   public order_type = '';
+  public room_id = '';
   public menuType = [
     {id: 0,title:'今日特价'},
     {id: 1,title:'店长推荐'},
@@ -51,6 +52,8 @@ export class OrderAddDishesPage {
     this.shopId = this.params.get('shop_id');
     this.order_id = this.params.get('order_id');
     this.order_type = this.params.get('order_type');
+
+    this.room_id = this.params.get('room_id');
   }
   ionViewDidLoad() {
      this.addDishes();
@@ -71,31 +74,57 @@ export class OrderAddDishesPage {
 
   //去下单
   buy() {
-    let cart = {};
-    let data = {};
-    let arr = [];
-    cart['order_id'] = this.order_id;
+    let cart = {},
+        data = {},
+        arr = [],
+        url = '';
+
     cart['dish'] = [];
+
+    // 菜的数据
+    let obj = {};
     this.selectDish.forEach( res => {
-      data['dishes_id'] = res.id;
-      data['dishes_name'] = res.dishes_name;
-      data['goods_number'] = res.num;
-      data['price'] = res.price;
-      data['sell_price'] = res.discount_price;
-      data['is_attr'] = res.is_attr;
+      obj['dishes_id'] = res.id;
+      obj['dishes_name'] = res.dishes_name;
+      obj['goods_number'] = res.num;
+      obj['price'] = res.price;
+      obj['sell_price'] = res.discount_price;
+      obj['is_attr'] = res.is_attr;
       if(res.spec){
         res.spec.forEach( res => {
           arr.push(res.spec_name+"|"+res.spec_price)
         })
       }
-      data['spec'] = (arr.join(',')).replace(/\s*/g,"");
+      obj['spec'] = (arr.join(',')).replace(/\s*/g,"");
       arr = [];
-      cart['dish'].push(data);
-      data = {}
-    })
+      cart['dish'].push(obj);
+      obj = {}
+    });
+
     console.log(cart);
+
+
+    if (this.order_id) {
+      cart['order_id'] = this.order_id;
+      data['token'] = this.token;
+      data['device_id'] = this.device_id;
+      data['shop_id'] = this.shopId;
+      data['cart'] = cart;
+      url = '/api/app/reserveAddDishes';
+
+    } else if (this.room_id) {
+      cart['room_desk_id'] = this.room_id;
+      cart['shop_id'] = this.shopId;
+      cart['top_price'] = this.allPrice();
+      cart['number'] = this.allNum();
+      data['cart'] = cart;
+      url = '/api/app/addOrder'
+    }
+
+
+
     if(this.selectDish.length > 0){
-      this.http.post("/api/app/reserveAddDishes", {'token':this.token,'device_id': this.device_id,'shop_id':this.shopId,'cart':cart}).subscribe(res => {
+      this.http.post(url, data).subscribe(res => {
           console.log("res", res);
           if(res.code == 200){
             this.native.alert('提示','',res.info);
@@ -189,7 +218,7 @@ export class OrderAddDishesPage {
         }
       })
     }
-    
+
     console.log(this.selectDish);
     if(this.selectDish.length == 0){
       this.canSee = false
@@ -264,7 +293,7 @@ export class OrderAddDishesPage {
       }
     })
       console.log("mydata", regu);
-   
+
     if(flag){
       //let a = regu
       this.selectDish.push(regu);
@@ -308,7 +337,7 @@ export class OrderAddDishesPage {
   allNum() {
     let allNum = 0;
     this.selectDish.forEach( res => {
-      allNum += res.num; 
+      allNum += res.num;
     })
     return allNum;
   }

@@ -12,6 +12,7 @@ import { EquipmentsListPage } from '../equipments/equipments-list/equipments-lis
 import { OrdersListPage } from '../orders/orders-list/orders-list';
 import { FinancialsCategoryPage } from '../financials/financials-category/financials-category';
 import { Config } from '../../../providers/Config';
+import { OrderAddDishesPage } from '../orders/order-add-dishes/order-add-dishes';
 
 
 
@@ -115,6 +116,11 @@ export class ShopsManagePage {
   goToPage (event) {
     console.log("event", event);
     this.navCtrl.push(event, {'sid': this.sid});
+  }
+
+  //服务员点菜
+  addDishes() {
+    this.navCtrl.push(OrderAddDishesPage,{'shop_id': this.sid})
   }
 
 }

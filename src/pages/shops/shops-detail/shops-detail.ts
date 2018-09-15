@@ -113,6 +113,11 @@ export class ShopsDetailPage {
       this.shopInfo['shop_avatar'] = res.data.shop_avatar; // 店铺头像
       this.shopInfo['shop_pic'] = res.data.shop_pic; // 店铺门面
       this.shopInfo['business_code'] = res.data.business_code; // 商圈
+      this.shopInfo['minimum'] = res.data.minimum; // 最低消费
+      this.shopInfo['spend_distance'] = res.data.spend_distance; //  配送范围
+      this.shopInfo['spend'] = res.data.spend; //  配送费
+      this.shopInfo['min_spend'] = res.data.min_spend; //  起送价
+      this.shopInfo['spendtime'] = res.data.spendtime; //  配送时间
 
       console.log(" this.shopInfo",  this.shopInfo);
       this.getCodeList(this.shopInfo['business_code']);

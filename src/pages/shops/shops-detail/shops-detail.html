@@ -43,6 +43,34 @@
       <ion-input type="text" [(ngModel)]="shopInfo.detail_address" placeholder="请输入详细地址"></ion-input>
     </ion-item>
 
+    <ion-item *ngIf="shopInfo.is_reserve">
+      <ion-label>最低消费</ion-label>
+      <ion-input type="number" [(ngModel)]="shopInfo.minimum" placeholder="默认0（单位元）"></ion-input>
+    </ion-item>
+
+    <div *ngIf="shopInfo.is_takeout">
+      <ion-item>
+        <ion-label>配送范围</ion-label>
+        <ion-input type="number" [(ngModel)]="shopInfo.spend_distance" placeholder="默认3（单位公里）"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>配送费</ion-label>
+        <ion-input type="number" [(ngModel)]="shopInfo.spend" placeholder="默认0（单位元）"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>起送价</ion-label>
+        <ion-input type="number" [(ngModel)]="shopInfo.min_spend" placeholder="12（单位元）"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>配送时间</ion-label>
+        <ion-input type="number" [(ngModel)]="shopInfo.spendtime" placeholder="默认30（单位分钟）"></ion-input>
+      </ion-item>
+
+    </div>
+
     <ion-item *ngIf="codeList.length > 0">
       <ion-label>商圈选择</ion-label>
       <ion-select placeholder="可以选择商圈" cancelText="取消" okText="确定" [(ngModel)]="shopInfo.business_code" >

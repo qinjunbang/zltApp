@@ -22,6 +22,7 @@ export class DishesListPage {
   public menuList = [];
   public shopId = '';
   public menuSelect = 0;
+  public serverUrl = Config.app_upload_serve_url;
   constructor(
     public http: HttpService,
     public navCtrl: NavController,

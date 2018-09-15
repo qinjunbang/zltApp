@@ -58,7 +58,10 @@ export class MePage {
                     that.storage.remove('token');
                     that.storage.remove('userInfo');
                     that.Jpush.deleteAlias();
-                    that.navCtrl.setRoot(LoginPage);
+                    Config.token = '';
+                    Config.userInfo = [];
+                    Config.device_id = '';
+                    that.navCtrl.push(LoginPage);
                 }else{
                     that.native.alert('提示',' ',res.info)
                 }

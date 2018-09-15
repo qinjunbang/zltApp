@@ -22,6 +22,7 @@ export class addDishesPage {
     public text = '';
     public regularList = [];
     public imgArr = [];
+    public serveUrl = Config.app_upload_serve_url;
     constructor(
         public http: HttpService,
         public navCtrl: NavController,
@@ -162,10 +163,10 @@ export class addDishesPage {
           this.getPictureByLibrary().subscribe(res => {
             if (text === 'add') {
               // 如果是新增，插入一张图片
-              this.imgArr.push(Config.app_upload_serve_url + res);
+              this.imgArr.push(res);
             } else {
               // 如果是原图更新，则更换当前图片的src
-              this.imgArr[index] = Config.app_upload_serve_url + res;
+              this.imgArr[index] = res;
             }
           });
         }

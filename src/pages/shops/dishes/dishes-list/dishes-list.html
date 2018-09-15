@@ -22,7 +22,7 @@
       <ion-list class="list-content">
         <div class="disheslist" *ngFor="let d of dishesList; let i = index;" (click)="editDishes(d.id)">
           <div class="img">
-            <img src="{{d.thumb}}">
+            <img src="{{serverUrl}}{{d.thumb}}">
           </div>
           <div class="list-inner">
             <h2>{{d.dishes_name}}</h2>

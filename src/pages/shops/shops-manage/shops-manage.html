@@ -5,6 +5,9 @@
       <button ion-button icon-only (click)="goToPage(ShopsDetailPage)" *ngIf="role === -1">
         修改资料
       </button>
+      <button ion-button icon-only (click)="addDishes()" *ngIf="role === 1">
+        点菜
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>

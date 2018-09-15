@@ -573,7 +573,7 @@ export class NativeService {
           res = JSON.parse(res.response);
         }
         if (res['code'] == 200) {
-          console.log("上传图片成功:", res);
+          console.log("上传图片成功:", JSON.stringify(res));
           this.showToast("上传图片成功");
           observer.next(res['data']);
         }

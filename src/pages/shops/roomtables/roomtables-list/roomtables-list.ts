@@ -8,6 +8,7 @@ import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
 import { editRoomTablesPage } from '../editRoomTables/editRoomTables';
 import { Config } from '../../../../providers/Config';
 import { RoomTablesQrCodePage } from "../roomtables-qrCode/roomtables-qrCode";
+import { OrderAddDishesPage } from '../../orders/order-add-dishes/order-add-dishes';
 
 @Component({
   selector: 'page-roomtables-list',
@@ -74,23 +75,28 @@ export class RoomTablesListPage {
   addRoomTablesPage() {
     this.navCtrl.push(addRoomTablesPage,{'shopId':this.shopId})
   }
-  handleRoom(e) {
+  handleRoom(e, id) {
     e.stopPropagation();
     let alert = this.alertCtrl.create();
     alert.setTitle('管理房桌');
 
-
     alert.addInput({
       type: 'radio',
-      label: '暂停使用',
-      value: '暂停使用',
+      label: '点菜',
+      value: '0',
       checked: true
     });
 
     alert.addInput({
       type: 'radio',
+      label: '暂停使用',
+      value: '1',
+    });
+
+    alert.addInput({
+      type: 'radio',
       label: '立即使用',
-      value: '立即使用'
+      value: '2'
     });
 
 
@@ -99,6 +105,14 @@ export class RoomTablesListPage {
       text: '确定',
       handler: (data: any) => {
         console.log('Radio data:', data);
+        // 0 去点菜
+        if (data == 0) {
+          this.addDishes(id);
+        }
+        // 1 暂停使用
+        // 2 立即使用
+
+
         this.testRadioOpen = false;
         this.testRadioResult = data;
       }
@@ -112,4 +126,9 @@ export class RoomTablesListPage {
     this.navCtrl.push(RoomTablesQrCodePage, {'sid': this.shopId})
   }
 
+
+  //服务员点菜
+  addDishes(id) {
+    this.navCtrl.push(OrderAddDishesPage,{'shop_id': this.shopId, 'room_id': id})
+  }
 }

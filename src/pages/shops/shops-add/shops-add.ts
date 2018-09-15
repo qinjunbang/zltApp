@@ -28,10 +28,15 @@ export class ShopsAddPage {
    public codeList = []; // 商圈列表
    public startTime:string = '08:00'; // 开始营业时间
    public endTime:string = '22:00'; // 结束营业时间
-   public is_takeout: number = 1; // 是否开启外卖
+   public is_takeout: number = 0; // 是否开启外卖
    public is_reserve: number = 0; // 是否开启预定
    public is_list: number = 0; // 是否开户排队
    public shopsType: any = []; // 店铺所有分类
+   public minimum; // 最低消费
+   public spend_distance; // 配送范围
+   public spend; // 配送费
+   public min_spend; // 起送价
+   public spendtime; // 配送时间
 
    public name: string = ''; // 店主姓名
    public shop_phone: string = ''; // 联系电话
@@ -219,8 +224,26 @@ export class ShopsAddPage {
     data['shop_avatar'] = this.shop_avatar; // 店铺头像
     data['shop_pic'] = this.shop_pic; // 店铺门面
     data['business_code'] = this.business_code; // 商圈
+    if (this.minimum) {
+      data['minimum'] = this.minimum; // 最低消费
+    }
+    if (this.spend_distance) {
+      data['spend_distance'] = this.spend_distance; // 配送范围
+    }
+    if (this.spend) {
+      data['spend'] = this.spend; // 配送费
+    }
+
+    if (this.min_spend) {
+      data['min_spend'] = this.min_spend; // 起送价
+    }
+
+    if (this.spendtime) {
+      data['spendtime'] = this.spendtime; // 配送时间
+    }
+
     data['token'] = Config.token;
-    data['device_id'] = Config.device_id
+    data['device_id'] = Config.device_id;
 
     // 简单的验证
     if (!data['shop_name']) {
@@ -228,6 +251,9 @@ export class ShopsAddPage {
     }
     if (!data['type_id']) {
       return this.native.showToast("请选择店铺分类");
+    }
+    if (!data['is_takeout'] && !data['is_reserve'] && !data['is_list']) {
+      return this.native.showToast("请选择经营模块");
     }
     if (!data['shop_address']) {
       return this.native.showToast("请选择店铺地址");
