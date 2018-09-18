@@ -19,7 +19,7 @@ export class addDishesPage {
     public dishesList = '';
     public dishesListSelect = 0;
     public recommend = 0;
-    public discount = 0.9;
+    public discount = 1;
     public text = '';
     public regularList = [];
     public imgArr = [];
@@ -162,7 +162,7 @@ export class addDishesPage {
         text: "从相册中获取",
         handler: () => {
           this.getPictureByLibrary().subscribe(res => {
-            if (text === 'add') {
+            if (text == 'add') {
               // 如果是新增，插入一张图片
               this.imgArr.push(res);
             } else {
@@ -175,7 +175,15 @@ export class addDishesPage {
         {
           text: "拍照",
           handler: () => {
-            this.getPictureByCamera();
+            this.getPictureByCamera().subscribe(res => {
+              if (text == 'add') {
+                // 如果是新增，插入一张图片
+                this.imgArr.push(res);
+              } else {
+                // 如果是原图更新，则更换当前图片的src
+                this.imgArr[index] = res;
+              }
+            });
           }
         },
         {
@@ -204,9 +212,16 @@ export class addDishesPage {
         'price': this.dishPrice,
         'discount': this.discount,
         'is_attr':0,
-        'description':this.text
+        'description': this.text
       };
       data['thumb'] = this.getStringImg(this.imgArr);
+      //简单验证
+      if (!data['dishes_name']) {
+        return this.native.showToast("请输入菜名！");
+      }
+      if (!data['price']) {
+        return this.native.showToast("请输入单价！");
+      }
       this.http.post("/api/app/dishAdd", data).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
@@ -223,6 +238,7 @@ export class addDishesPage {
       str: string = "";
 
     for (let i = 0; i < len; i++) {
+      arr[i] = arr[i].replace(Config.app_upload_serve_url, "");
       if (i < len -1) {
         str += arr[i] + ';';
       } else {
@@ -238,7 +254,7 @@ export class addDishesPage {
       // 以拿到图片原始url 方式拿图片 destinationType 1 ， 0 为base64
       this.native.getPictureByLibrary({destinationType: 1}).subscribe(res => {
         // 上传图片，拿到图片在服务器的url
-        this.native.uploadImages(res, 'api/app/shopUpload').subscribe(s => {
+        this.native.uploadImages(res, '/api/app/shopUpload').subscribe(s => {
           observer.next(s);
         });
       }, err => {
@@ -255,7 +271,7 @@ export class addDishesPage {
       this.native.getPictureByCamera({destinationType: 1}).subscribe(res => {
         console.log("拍照图片res", res);
         //  // 上传图片，拿到图片在服务器的url
-        this.native.uploadImages(res, 'api/app/shopUpload').subscribe(s => {
+        this.native.uploadImages(res, '/api/app/shopUpload').subscribe(s => {
           observer.next(s);
         });
       }, err => {

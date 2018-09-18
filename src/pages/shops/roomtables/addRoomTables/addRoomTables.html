@@ -40,7 +40,7 @@
             <div class="images">
                 <div class="img-list clearfix">
                     <div class="add-img" *ngFor="let img of imgArr; let i = index;" (click)="chooseImg('update', i)" >
-                        <img src="{{img}}" />
+                        <img src="{{serverUrl}}{{img}}" />
                     </div>
                     <div class="add-img" (click)="chooseImg('add')">
                         <div class="iconfont icon-app-add add-img-icon"></div>

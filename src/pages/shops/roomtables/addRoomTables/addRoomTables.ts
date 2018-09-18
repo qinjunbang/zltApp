@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 
 export class addRoomTablesPage{
+    public serverUrl = Config.app_upload_serve_url;
     public shopsList = [
         {id: 1,title:'房间'},
         {id: 0,title:'桌子'}
@@ -50,10 +51,10 @@ export class addRoomTablesPage{
           this.getPictureByLibrary().subscribe(res => {
             if (text === 'add') {
               // 如果是新增，插入一张图片
-              this.imgArr.push(Config.app_upload_serve_url + res);
+              this.imgArr.push(res);
             } else {
               // 如果是原图更新，则更换当前图片的src
-              this.imgArr[index] = Config.app_upload_serve_url + res;
+              this.imgArr[index] = res;
             }
           });
         }
@@ -61,7 +62,15 @@ export class addRoomTablesPage{
         {
           text: "拍照",
           handler: () => {
-            this.getPictureByCamera();
+            this.getPictureByCamera().subscribe(res => {
+              if (text === 'add') {
+                // 如果是新增，插入一张图片
+                this.imgArr.push(res);
+              } else {
+                // 如果是原图更新，则更换当前图片的src
+                this.imgArr[index] = res;
+              }
+            });
           }
         },
         {
@@ -89,6 +98,17 @@ export class addRoomTablesPage{
       };
       data['thumb'] =  this.getStringImg(this.imgArr);
 
+      // 简单验证
+      if (!data['name']) {
+        return this.native.showToast("房间或桌号不能为空！");
+      }
+      if (!data['hold']) {
+        return this.native.showToast("请输入容纳人数！");
+      }
+      if (!data['min_consumption']) {
+        return this.native.showToast("请输入最低消费！");
+      }
+
       this.http.post("/api/app/createRoomTable", data).subscribe(res => {
           console.log(res);
           if(res.code == 200){
@@ -96,7 +116,7 @@ export class addRoomTablesPage{
           }else{
               this.native.alert('提示','',res.info)
           }
-      })
+      });
   }
 
   // 获取图片字条串拼接
@@ -105,6 +125,7 @@ export class addRoomTablesPage{
           str: string = "";
 
       for (let i = 0; i < len; i++) {
+        arr[i] = arr[i].replace(Config.app_upload_serve_url, "");
         if (i < len -1) {
           str += arr[i] + ';';
         } else {

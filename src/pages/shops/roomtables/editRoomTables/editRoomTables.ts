@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 
 export class editRoomTablesPage{
+    public serverUrl = Config.app_upload_serve_url;
     public roomDetails = [];
     public shopsList = [
         {id: 1,title:'房间'},

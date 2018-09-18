@@ -18,7 +18,7 @@ import { AddressPage } from '../address/address';
 })
 export class ShopsAddPage {
 
-   public local = 'https://www.zltgs.com/'; // 服务器url
+   public local = Config.app_upload_serve_url; // 服务器url
    public cities = []; // 城市JSON数据
    public shop_name: string = ''; // 店铺名称
    public type_id: number; // 店铺类型id

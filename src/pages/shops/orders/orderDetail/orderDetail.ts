@@ -94,7 +94,7 @@ export class OrderDetailPage {
     })
   }
 
-  //预定部分：
+
   //预定到店
   arrive() {
     this.http.post("/api/app/arriveShop", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
@@ -116,7 +116,9 @@ export class OrderDetailPage {
     this.http.post("/api/app/reserveCashBalance", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id,}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert(res.info, "", "", () => {
+            this.getOrders();
+          });
         }else {
           this.native.alert('提示','',res.info)
         }
@@ -127,7 +129,9 @@ export class OrderDetailPage {
     this.http.post("/api/app/reserveEditMenu", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert(res.info, "", "", () => {
+            this.getOrders();
+          });
         }else {
           this.native.alert('提示','',res.info)
         }
@@ -138,7 +142,9 @@ export class OrderDetailPage {
     this.http.post("/api/app/sureForRefund", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert(res.info, "", "", () => {
+            this.getOrders();
+          });
         }else {
           this.native.alert('提示','',res.info)
         }

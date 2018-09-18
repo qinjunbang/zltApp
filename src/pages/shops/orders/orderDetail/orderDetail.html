@@ -136,6 +136,9 @@
         <div *ngIf="ordersList.order_status == -1">
             <div class="order-status-yes" (click)="refund()">同意退款</div>
         </div>
+      <div *ngIf="ordersList.order_status == 4">
+        <div class="order-status-yes">已完成</div>
+      </div>
     </div>
 
     <!-- 排队详情 -->

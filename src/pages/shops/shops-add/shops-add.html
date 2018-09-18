@@ -47,6 +47,13 @@
       <ion-label>最低消费</ion-label>
       <ion-input type="number" [(ngModel)]="minimum" placeholder="默认0（单位元）"></ion-input>
     </ion-item>
+    <ion-item *ngIf="is_reserve">
+      <ion-label>是否有wifi</ion-label>
+      <ion-select cancelText="取消" okText="确定" [(ngModel)]="is_wifi">
+        <ion-option value="0">否</ion-option>
+        <ion-option value="1" selected>是</ion-option>
+      </ion-select>
+    </ion-item>
 
     <div *ngIf="is_takeout">
       <ion-item>
