@@ -25,7 +25,7 @@
               <p>{{shops.note}}</p>
             </ion-label>
             <p item-end *ngIf="shops.is_check == 0">审核中</p>
-            <ion-toggle *ngIf="shops.is_check == 1" [(ngModel)]="shops.is_open" (ionChange)="shopOpen(shops.id, shops.is_open)"></ion-toggle>
+            <ion-toggle *ngIf="shops.is_check == 1"  [(ngModel)]="shops.is_open" (ionChange)="shopOpen(shops.id, shops.is_open)"></ion-toggle>
 
           </ion-item>
           <ion-item-options side="right" (click)="deleteShop(shops.id)">

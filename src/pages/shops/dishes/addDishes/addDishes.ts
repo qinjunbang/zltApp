@@ -18,6 +18,7 @@ export class addDishesPage {
     public shopId = '';
     public dishesList = '';
     public dishesListSelect = 0;
+    public recommend = 0;
     public discount = 0.9;
     public text = '';
     public regularList = [];

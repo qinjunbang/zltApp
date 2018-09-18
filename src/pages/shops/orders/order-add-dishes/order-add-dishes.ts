@@ -7,6 +7,7 @@ import { NavController , ActionSheetController , NavParams} from 'ionic-angular'
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
 import { Config } from '../../../../providers/Config'
+import { OrderDetailPage } from "../orderDetail/orderDetail";
 
 @Component({
   selector: 'order-add-dishes',
@@ -15,19 +16,20 @@ import { Config } from '../../../../providers/Config'
 export class OrderAddDishesPage {
   public serveUrl = Config.app_upload_serve_url;
   public defaultList = '0';
-  public defaultType= '0';
+  public defaultType= '';
   public shopId = '';
   public ordersList:any = {};
   public order_id = '';
   public order_type = '';
   public room_id = '';
   public menuType = [
-    {id: 0,title:'今日特价'},
-    {id: 1,title:'店长推荐'},
-    {id: 2,title:'特色热卖'}
+    {id: 1,title:'今日特价'},
+    {id: 2,title:'店长推荐'},
+    {id: 3,title:'特色热卖'}
   ]; // 订单列表
   public token = Config.token;
   public device_id = Config.device_id;
+  public dishesMenu = [];
   public dishesList = []; //菜式列表
   public menuId = 0 //分类id
 
@@ -56,21 +58,43 @@ export class OrderAddDishesPage {
     this.room_id = this.params.get('room_id');
   }
   ionViewDidLoad() {
-     this.addDishes();
+
+    this.getDishesMenu();
   }
 
 
-  //获取菜式列表
-  addDishes() {
-    this.http.post("/api/app/showOrderDishes", {'token':this.token,'device_id': this.device_id,'shop_id':this.shopId}).subscribe(res => {
-        console.log("res", res);
-        if(res.code == 200){
-          this.dishesList = res.data;
-        }else {
-          this.native.alert('提示','',res.info);
-        }
-    })
+  // 获取菜的分类
+  getDishesMenu () {
+    let data = {
+      token: this.token,
+      device_id: this.device_id,
+      shop_id: this.shopId
+    };
+    this.http.post("/api/app/getMenus", data).subscribe(res => {
+      console.log("res", res);
+      if (res.code == 200) {
+        this.dishesMenu = res.data;
+        // 以第一个分类去拿菜
+        this.getDishesList(res.data[0].id);
+      } else {
+        this.native.showToast(res.info);
+      }
+
+    });
   }
+
+  // 获取分类对应的菜
+  getDishesList (id) {
+    this.http.post("/api/app/getDishesByMenuId", {menu_id: id}).subscribe( res => {
+      console.log("res", res);
+      if (res.code == 200) {
+        this.dishesList = res.data;
+      } else {
+        this.native.showToast(res.info);
+      }
+    });
+  }
+
 
   //去下单
   buy() {
@@ -117,6 +141,8 @@ export class OrderAddDishesPage {
       cart['shop_id'] = this.shopId;
       cart['top_price'] = this.allPrice();
       cart['number'] = this.allNum();
+      data['token'] = this.token;
+      data['device_id'] = this.device_id;
       data['cart'] = cart;
       url = '/api/app/addOrder'
     }
@@ -127,7 +153,13 @@ export class OrderAddDishesPage {
       this.http.post(url, data).subscribe(res => {
           console.log("res", res);
           if(res.code == 200){
-            this.native.alert('提示','',res.info);
+            this.native.showToast(res.info);
+            if (this.order_id) {
+              this.navCtrl.push(OrderDetailPage, {'order_id': this.order_id, 'shopId': this.shopId });
+            } else if (this.room_id) {
+              this.navCtrl.push(OrderDetailPage, {'order_id': res.data.order_id, 'shopId': this.shopId });
+            }
+
           }else {
             this.native.alert('提示','',res.info);
           }
@@ -135,10 +167,31 @@ export class OrderAddDishesPage {
     }
   }
 
+  // 点击推荐、热卖
+  changeDishList (type) {
+    console.log("别点了");
+    let data = {};
+    data['type'] = type;
+    data['id'] = this.shopId;
+    this.http.get("/api/app/getRecommendDishes", data).subscribe(res => {
+      console.log("res", res);
+      if (res.code == 200) {
+        this.dishesList = [];
+        this.menuId = -1;
+        this.dishesList = res.data;
+
+        console.log("this.dishesList", this.dishesList);
+        console.log("this.menuId", this.menuId);
+      } else {
+        this.native.showToast(res.info);
+      }
+    });
+  }
   //点击分类
   menuClick(id) {
     console.log(id);
     this.menuId = id;
+    this.getDishesList(id);
   }
 
   //添加菜式

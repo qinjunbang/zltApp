@@ -26,6 +26,13 @@
               <ion-input type="number" value="{{discount}}" [(ngModel)]="discount"></ion-input>
           </ion-item>
           <ion-item>
+            <ion-label>是否推荐：</ion-label>
+            <ion-select [(ngModel)]="recommend" cancelText="取消" okText="确定">
+              <ion-option value="0">否</ion-option>
+              <ion-option value="1">是</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
               <ion-label>介绍：</ion-label>
               <ion-textarea type="text" value="{{text}}" [(ngModel)]="text" autoresize="100" placeholder="菜式介绍"></ion-textarea>
           </ion-item>
@@ -35,7 +42,7 @@
               <div class="images">
                   <div class="img-list clearfix">
                     <div class="add-img"  *ngFor="let img of imgArr; let i = index"  (click)="chooseImg('update', i)">
-                      <img src="{{img}}" />
+                      <img src="{{serverUrl}}{{img}}" />
                     </div>
                     <div class="add-img" (click)="chooseImg('add')">
                       <div class="iconfont icon-app-add add-img-icon"></div>

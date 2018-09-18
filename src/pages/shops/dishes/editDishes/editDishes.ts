@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
   templateUrl: 'editDishes.html'
 })
 export class editDishesPage {
+    public serverUrl = Config.app_upload_serve_url;
     public testRadioOpen = false;
     public dishName = '';
     public dishPrice = '';
@@ -24,6 +25,7 @@ export class editDishesPage {
     public dishesMess = '';
     public img = '';
     public imgArr = [];
+    public recommend = 0;
     constructor(
         public http: HttpService,
         public navCtrl: NavController,
@@ -63,6 +65,7 @@ export class editDishesPage {
           this.dishesListSelect = res.data.menu_id;
           this.discount = res.data.discount;
           this.text = res.data.description;
+          this.recommend = res.data.recommend;
           this.imgArr = res.data.thumb.split(";");
         }else {
           this.native.alert('提示','',res.info);
@@ -86,7 +89,8 @@ export class editDishesPage {
       'discount': this.discount,
       'is_attr':0,
       'description':this.text,
-      'id':this.id
+      'id':this.id,
+      'recommend' : this.recommend
     };
     data['thumb'] = this.getStringImg(this.imgArr);
     this.http.post("/api/app/dishEdit", data).subscribe(res => {

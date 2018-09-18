@@ -7,7 +7,7 @@
 <ion-content class="con-bg">
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="defaultType" >
-      <ion-segment-button *ngFor="let item of menuType" value="{{item.id}}">
+      <ion-segment-button *ngFor="let item of menuType" value="{{item.id}}" (click)="changeDishList(item.id)">
         {{item.title}}
       </ion-segment-button>
     </ion-segment>
@@ -16,28 +16,27 @@
     <ion-grid>
         <ion-row>
             <ion-col col-3 class="menu">
-                <div class="dish-menu {{menuId==i ? 'active':''}}" *ngFor="let menu of dishesList; let i=index" (click)="menuClick(i)">{{menu.menu_name}}</div>
+                <div class="dish-menu {{menuId== menu.id ? 'active':''}}" *ngFor="let menu of dishesMenu; let i=index" (click)="menuClick(menu.id)">{{menu.menu_name}}</div>
             </ion-col>
             <ion-col col-9 class="dishes">
-                <div [style.display]="menuId==i ? 'block':'none'" *ngFor="let menu of dishesList; let i=index">
-                    <div class="dish-list" *ngFor="let dish of menu.shopdish">
-                        <img src="{{serveUrl}}{{dish.thumb}}" class="list-img"/>
-                        <div class="list-con">
-                            <div class="list-title">{{dish.dishes_name}}</div>
-                            <div class="list-sale">月售：{{dish.sales}}</div>
-                            <div class="list-price">
-                                <span class="discount">¥{{dish.discount_price}}</span>
-                                <span class="origin">¥{{dish.price}}</span>
-                            </div>
-                            <div class="handle" *ngIf="dish.is_attr == 0">
-                                <div class="add" (click)="add(dish)">+</div>
-                                <div class="num" [style.display]="!dish.num || dish.num==0? 'none':'block'">{{dish.num}}</div>
-                                <div class="desc" (click)="desc(dish)" [style.display]="dish.num==0 || !dish.num ? 'none':'block'">-</div> 
-                            </div>
-                            <div class="regu1" (click)="chooseRegu(dish)" *ngIf="dish.is_attr == 1">选规格</div>
-                        </div>
-                    </div>
-                </div>
+              <div class="dish-list" *ngFor="let dish of dishesList">
+                  <img src="{{serveUrl}}{{dish.thumb}}" class="list-img"/>
+                  <div class="list-con">
+                      <div class="list-title">{{dish.dishes_name}}</div>
+                      <div class="list-sale">月售：{{dish.sales}}</div>
+                      <div class="list-price">
+                          <span class="discount">¥{{dish.discount_price}}</span>
+                          <span class="origin">¥{{dish.price}}</span>
+                      </div>
+                      <div class="handle" *ngIf="dish.is_attr == 0">
+                          <div class="add" (click)="add(dish)">+</div>
+                          <div class="num" [style.display]="!dish.num || dish.num==0? 'none':'block'">{{dish.num}}</div>
+                          <div class="desc" (click)="desc(dish)" [style.display]="dish.num==0 || !dish.num ? 'none':'block'">-</div>
+                      </div>
+                      <div class="regu1" (click)="chooseRegu(dish)" *ngIf="dish.is_attr == 1">选规格</div>
+                  </div>
+              </div>
+
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -81,7 +80,7 @@
                     <div class="handle">
                         <div class="add" (click)="add(dish)">+</div>
                         <div class="num" [style.display]="!dish.num || dish.num==0 ? 'none':'block'">{{dish.num}}</div>
-                        <div class="desc" (click)="desc(dish)" [style.display]="dish.num==0 || !dish.num ? 'none':'block'">-</div> 
+                        <div class="desc" (click)="desc(dish)" [style.display]="dish.num==0 || !dish.num ? 'none':'block'">-</div>
                     </div>
                 </div>
             </div>

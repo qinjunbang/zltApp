@@ -65,7 +65,9 @@ export class OrderDetailPage {
   //接单
   receipt() {
     // 关闭播放的声音
-    this.speaking.stopSpeak();
+    if (this.native.isMobile()) {
+      this.speaking.stopSpeak();
+    }
 
     this.http.post("/api/app/sureOrder", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
         console.log("res", res);
