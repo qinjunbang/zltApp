@@ -37,6 +37,7 @@ export class ShopsAddPage {
    public spend; // 配送费
    public min_spend; // 起送价
    public spendtime; // 配送时间
+   public is_wifi: number = 0; // 是否有wifi
 
    public name: string = ''; // 店主姓名
    public shop_phone: string = ''; // 联系电话
@@ -224,6 +225,7 @@ export class ShopsAddPage {
     data['shop_avatar'] = this.shop_avatar; // 店铺头像
     data['shop_pic'] = this.shop_pic; // 店铺门面
     data['business_code'] = this.business_code; // 商圈
+    data['is_wifi'] = this.is_wifi; // 是否有wifi
     if (this.minimum) {
       data['minimum'] = this.minimum; // 最低消费
     }
