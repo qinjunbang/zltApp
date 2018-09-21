@@ -3,6 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
+import { NativeService } from '../../../../providers/NativeService';
 import { NavController , AlertController , NavParams} from 'ionic-angular';
 import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
 import { editRoomTablesPage } from '../editRoomTables/editRoomTables';
@@ -31,7 +32,8 @@ export class RoomTablesListPage {
     public http: HttpService,
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public params: NavParams
+    public params: NavParams,
+    public native: NativeService
   ) {
     this.shopId = this.params.get('sid');
   }
@@ -59,6 +61,10 @@ export class RoomTablesListPage {
           }
         }
       }
+
+      setTimeout(() => {
+        this.getRoomTableList();
+      }, 300000)
     });
   }
 
@@ -99,19 +105,37 @@ export class RoomTablesListPage {
       value: '2'
     });
 
+    alert.addInput({
+      type: 'radio',
+      label: '修改资料',
+      value: '3'
+    });
+
 
     alert.addButton('取消');
     alert.addButton({
       text: '确定',
       handler: (data: any) => {
         console.log('Radio data:', data);
-        // 0 去点菜
-        if (data == 0) {
-          this.addDishes(id);
-        }
-        // 1 暂停使用
-        // 2 立即使用
 
+
+        switch (data) {
+          // 0 去点菜
+          case '0':
+              this.addDishes(id);
+            break;
+          // 1 暂停使用
+          case '1':
+
+          // 2 立即使用
+          case '2':
+            this.notUseRoomTable(id, data);
+            break;
+          // 3 去详情页面
+          case '3':
+            this.editRoomTables(id);
+            break;
+        }
 
         this.testRadioOpen = false;
         this.testRadioResult = data;
@@ -131,4 +155,28 @@ export class RoomTablesListPage {
   addDishes(id) {
     this.navCtrl.push(OrderAddDishesPage,{'shop_id': this.shopId, 'room_id': id})
   }
+
+  // 暂停使用
+  notUseRoomTable (id, type) {
+    let url:string = '';
+
+    if (type == '1') {
+      url = "/api/app/notUseRoomTable";
+    } else if (type == '2') {
+      url = "/api/app/useRoomTable"
+    }
+    let data = {
+      id: id,
+      token: this.token,
+      device_id: this.deviceId
+    };
+    this.http.post(url, data).subscribe(res => {
+       this.native.alert(res.info);
+       if (res.code == 200) {
+         this.getRoomTableList();
+       }
+    });
+  }
+
+
 }

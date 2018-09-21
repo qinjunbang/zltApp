@@ -10,46 +10,46 @@
 </ion-header>
 
 <ion-content class="con-bg">
-    <ion-toolbar no-border-top>
-      <ion-segment [(ngModel)]="roomType">
-        <ion-segment-button *ngFor="let item of titleList" value="{{item.value}}">
-          {{item.title}}
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
+  <div class="room-info" padding text-center>
+    <div class="info">
+      <ion-badge class="success">·</ion-badge><b>空的</b>
+    </div>
+    <div class="info">
+      <ion-badge class="danger">·</ion-badge><b>占用中</b>
+    </div>
+    <div class="info">
+      <ion-badge class="warning">·</ion-badge><b>预定中</b>
+    </div>
+  </div>
 
-  <div [ngSwitch]="roomType">
-
-    <ion-list *ngSwitchCase="'room'">
-      <!-- 没有房间 -->
-      <div class="no-shops" *ngIf="roomList.length < 1">
-        <img src="assets/imgs/no-shops.png" alt="">
-        <p>空空如也~</p>
-      </div>
-
-      <!-- 有房间 -->
-      <ion-item *ngFor="let room of roomList" (click)="editRoomTables(room.id)">
-        {{room.name}}
-        <span item-end class="use">使用中</span>
-        <div item-end class="iconfont icon-app-menu list-icon" (click)="handleRoom($event, room.id)"></div>
-      </ion-item>
+  <ion-grid>
+    <ion-list>
+      <ion-list-header class="header">包间</ion-list-header>
     </ion-list>
 
-      <ion-list *ngSwitchCase="'table'">
-        <!-- 没有房间 -->
-        <div class="no-shops" *ngIf="tableList.length < 1">
-          <img src="assets/imgs/no-shops.png" alt="">
-          <p>空空如也~</p>
+    <ion-row>
+      <ion-col col-4 *ngFor="let item of roomList" (click)="handleRoom($event, item.id)">
+        <div class="box" [class.success]="item.is_use == 0" [class.danger]="item.is_use == 1" [class.warning]="item.is_use == 2">
+          <span>{{item.name}}</span>
         </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-        <!-- 有房间 -->
-        <ion-item *ngFor="let table of tableList" (click)="editRoomTables(table.id)">
-          {{table.name}}
-          <span item-end class="use">使用中</span>
-          <div item-end class="iconfont icon-app-menu list-icon" (click)="handleRoom($event)"></div>
-        </ion-item>
-      </ion-list>
-  </div>
+  <ion-grid class="mt-10">
+    <ion-list>
+      <ion-list-header class="header">桌子</ion-list-header>
+    </ion-list>
+
+    <ion-row>
+      <ion-col col-4 *ngFor="let item of tableList" (click)="handleRoom($event, item.id)">
+        <div class="box round" [class.success]="item.is_use == 0" [class.danger]="item.is_use == 1" [class.warning]="item.is_use == 2">
+          <span>{{item.name}}</span>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>
 
