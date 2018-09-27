@@ -16,7 +16,9 @@
               <ion-option value="{{item.id}}" *ngFor="let item of shopsList" [selected]="item.id == type ? 'selected' : ''">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
-
+        <ion-item class="business-item" *ngIf="introduce.length > 0">
+          <span *ngFor="let item of introduce;let i = index;" class="business-btn" [class.active]="item.className" (click)="changeIntroduce(i)">{{item.text}}</span>
+        </ion-item>
         <ion-item>
           <ion-label >容纳人数</ion-label>
           <ion-input type="number" [(ngModel)]="hold" value="hold"></ion-input>

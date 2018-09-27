@@ -4,6 +4,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NativeService } from '../../../../providers/NativeService';
+import { Utils } from '../../../../providers/Utils';
 import { NavController , AlertController , NavParams} from 'ionic-angular';
 import { addRoomTablesPage } from '../addRoomTables/addRoomTables';
 import { editRoomTablesPage } from '../editRoomTables/editRoomTables';
@@ -26,8 +27,8 @@ export class RoomTablesListPage {
     {id: 0,title:'桌子', value: 'table'}
   ]; // 店铺列表
   public roomType = "room";
-  testRadioOpen = false;
-  testRadioResult: any;
+  public nowDate: any = Utils.dateFormat(new Date(), "YYYY-MM-DDTHH:mmZ");
+  public timeStarts: any =  Utils.dateFormat(new Date(), "YYYY-MM-DDTHH:mmZ");
   constructor(
     public http: HttpService,
     public navCtrl: NavController,
@@ -36,15 +37,30 @@ export class RoomTablesListPage {
     public native: NativeService
   ) {
     this.shopId = this.params.get('sid');
+
+    console.log("this.timeStarts", this.timeStarts);
   }
+
   ionViewWillEnter() {
     this.getRoomTableList();
   }
 
+  // 刷新当前时间
+  refreshTime () {
+    this.timeStarts = Utils.dateFormat(new Date(), "YYYY-MM-DDTHH:mmZ");
+    this.getRoomTableList();
+  }
   // 获取房桌列表
   public getRoomTableList () {
-    console.log("我要获取数据");
-    this.http.post("/api/shop/showRoomTable", {'shop_id':this.shopId,'token':this.token,'deviceId':this.deviceId}).subscribe(res => {
+
+    let data = {
+      'shop_id':this.shopId,
+      'token':this.token,
+      'device_id':this.deviceId,
+      'time': Utils.dateFormat(new Date(this.timeStarts), "YYYY-MM-DD HH:mm")
+    };
+
+    this.http.post("/api/app/showRoomTable", data).subscribe(res => {
       console.log("res", res);
       this.roomList = [];
       this.tableList = [];
@@ -62,9 +78,6 @@ export class RoomTablesListPage {
         }
       }
 
-      setTimeout(() => {
-        this.getRoomTableList();
-      }, 300000)
     });
   }
 
@@ -137,8 +150,6 @@ export class RoomTablesListPage {
             break;
         }
 
-        this.testRadioOpen = false;
-        this.testRadioResult = data;
       }
     });
 

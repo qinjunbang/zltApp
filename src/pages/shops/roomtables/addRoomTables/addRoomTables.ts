@@ -30,6 +30,13 @@ export class addRoomTablesPage{
     public token = Config.token;
     public deviceId = Config.device_id;
     public imgArr = []; // 图片
+    public introduce = [
+      {text: "麻将桌", className: ""},
+      {text: "卫生间", className: ""},
+      {text: "沙发", className: ""},
+      {text: "空调", className: ""},
+      {text: "wifi", className: ""},
+    ];
     constructor(
         public navCtrl: NavController,
         public actionSheetCtrl: ActionSheetController,
@@ -40,7 +47,11 @@ export class addRoomTablesPage{
         this.shopId = this.params.get('shopId');
     }
 
-
+  // 房间introduce
+  changeIntroduce (index) {
+     console.log("index", index);
+     this.introduce[index]['className'] == '' ? this.introduce[index]['className'] = 'active' : this.introduce[index]['className'] = '';
+  }
   // 点击上传图片
   chooseImg (text, index) {
     const actionSheet = this.actionSheetCtrl.create({
@@ -96,6 +107,7 @@ export class addRoomTablesPage{
           'lock_qrcode': this.lock_qrcode,
           'note': this.note
       };
+
       data['thumb'] =  this.getStringImg(this.imgArr);
 
       // 简单验证
@@ -108,6 +120,19 @@ export class addRoomTablesPage{
       if (!data['min_consumption']) {
         return this.native.showToast("请输入最低消费！");
       }
+      if (!data['thumb']) {
+        return this.native.showToast("至少要上传一张图片");
+      }
+
+      data['introduce'] = '';
+
+    // 处理
+      for (let i = 0; i < this.introduce.length; i++) {
+        if (this.introduce[i]['className']) {
+          data['introduce'] += this.introduce[i]['text'] + ';';
+        }
+      }
+      console.log("data", data);
 
       this.http.post("/api/app/createRoomTable", data).subscribe(res => {
           console.log(res);

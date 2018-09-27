@@ -39,7 +39,7 @@
         <div class="list clearfix">
           <div class="list-left">菜式</div>
           <div class="list-right">
-            <span *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}、</span>
+            <div *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}</div>
           </div>
         </div>
         <div class="list clearfix">
@@ -77,7 +77,7 @@
         <div class="list clearfix">
           <div class="list-left">菜式</div>
           <div class="list-right">
-            <span  *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}、</span>
+            <div  *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}</div>
           </div>
         </div>
         <div class="list clearfix">
@@ -129,7 +129,7 @@
           <div class="list clearfix">
             <div class="list-left">菜式</div>
             <div class="list-right">
-              <span  *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}、</span>
+              <div  *ngFor="let dish of orders.order_detail">{{dish.dishes_name}}x{{dish.goods_number}}</div>
             </div>
           </div>
           <div class="list clearfix">
@@ -178,7 +178,7 @@
         <div class="list clearfix">
           <div class="list-left">菜式</div>
           <div class="list-right">
-            <span *ngFor="let food of orders.order_detail">{{food.dishes_name}}x{{food.goods_number}}、</span>
+            <div *ngFor="let food of orders.order_detail">{{food.dishes_name}}x{{food.goods_number}}、</div>
           </div>
         </div>
         <div class="status" [ngSwitch]="orders.order_status">

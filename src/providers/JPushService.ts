@@ -47,7 +47,7 @@ export class JPushService {
     // 点击通知进入应用
     document.addEventListener('jpush.openNotification', event => {
       // 进入应用，停止播放话音
-      //this.speaking.stopSpeak();
+      this.speaking.stopSpeak();
       // 把应用提示角标清0
       this.setIosIconBadgeNumber(0);
 

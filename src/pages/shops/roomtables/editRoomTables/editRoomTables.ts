@@ -32,6 +32,13 @@ export class editRoomTablesPage{
     public token = Config.token;
     public deviceId = Config.device_id;
     public imgArr = [];
+    public introduce = [
+      {text: "麻将桌", className: ""},
+      {text: "卫生间", className: ""},
+      {text: "沙发", className: ""},
+      {text: "空调", className: ""},
+      {text: "wifi", className: ""},
+    ];
     constructor(
         public navCtrl: NavController,
         public actionSheetCtrl: ActionSheetController,
@@ -46,6 +53,11 @@ export class editRoomTablesPage{
         this.getRoomDetails();
     }
 
+    // 房间introduce
+    changeIntroduce (index) {
+      console.log("index", index);
+      this.introduce[index]['className'] == '' ? this.introduce[index]['className'] = 'active' : this.introduce[index]['className'] = '';
+    }
 
     // 点击上传图片
     chooseImg (text, index) {
@@ -57,10 +69,10 @@ export class editRoomTablesPage{
                 this.getPictureByLibrary().subscribe(res => {
                   if (text === 'add') {
                     // 如果是新增，插入一张图片
-                    this.imgArr.push(Config.app_upload_serve_url + res);
+                    this.imgArr.push(res);
                   } else {
                     // 如果是原图更新，则更换当前图片的src
-                    this.imgArr[index] = Config.app_upload_serve_url + res;
+                    this.imgArr[index] = res;
                   }
                 });
             }
@@ -68,7 +80,15 @@ export class editRoomTablesPage{
           {
             text: "拍照",
             handler: () => {
-                this.getPictureByCamera();
+              this.getPictureByCamera().subscribe(res => {
+                if (text === 'add') {
+                  // 如果是新增，插入一张图片
+                  this.imgArr.push(res);
+                } else {
+                  // 如果是原图更新，则更换当前图片的src
+                  this.imgArr[index] = res;
+                }
+              });
             }
           },
           {
@@ -94,12 +114,28 @@ export class editRoomTablesPage{
                 this.note = res.data.note;
                 this.type = res.data.type;
                 this.lock_qrcode = res.data.lock_qrcode;
+                this.createIntroduceClassName(res.data.introduce);
             }else{
                 this.native.alert('提示','',res.info)
             }
         })
     }
+    // 处理房间内的
+    createIntroduceClassName (arr: any) {
 
+          if (arr.length < 1) {
+            return;
+          }
+
+          for (let i = 0; i < arr.length; i++) {
+            for (let j = 0; j < this.introduce.length; j++) {
+              if (arr[i] == this.introduce[j]['text']) {
+                this.introduce[j]['className'] = 'active';
+              }
+            }
+          }
+
+    }
     //确认修改
     edit() {
         let data = {
@@ -115,6 +151,14 @@ export class editRoomTablesPage{
             'note': this.note
         };
         data['thumb'] = this.getStringImg(this.imgArr);
+
+        data['introduce'] = '';
+        // 处理
+        for (let i = 0; i < this.introduce.length; i++) {
+          if (this.introduce[i]['className']) {
+            data['introduce'] += this.introduce[i]['text'] + ';';
+          }
+        }
         this.http.post("/api/app/updateRoomTable", data).subscribe(res => {
             console.log(res)
             if(res.code == 200){

@@ -44,4 +44,20 @@ add-room-tables{
             font-size: 16px;
         }
     }
+  .business-item ion-label {
+    white-space: normal;
+  }
+  .business-btn {
+    display: inline-block;
+    border: 1px solid;
+    padding: .3rem 1rem .3rem;
+    border-radius: 4px;
+    color: #ddd;
+    margin: .4rem;
+  }
+  .business-btn.active {
+    background-color: #3da2fa;
+    color: #fff;
+    border-color: #3da2fa;
+  }
 }

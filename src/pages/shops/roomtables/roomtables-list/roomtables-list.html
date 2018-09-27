@@ -10,9 +10,20 @@
 </ion-header>
 
 <ion-content class="con-bg">
+  <ion-row>
+    <ion-col col-9 text-right>
+      <ion-datetime cancelText="取消" doneText="确定" displayFormat="YYYY-MM-DD HH:mm" pickerFormat="MM DD HH mm" min="{{nowDate}}" [(ngModel)]="timeStarts" (ngModelChange)="getRoomTableList(timeStarts)"></ion-datetime>
+    </ion-col>
+    <ion-col col-3>
+      <button ion-button small clear class="refresh-btn" (click)="refreshTime()">
+        <ion-icon name="ios-refresh" class="refresh-icon"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+
   <div class="room-info" padding text-center>
     <div class="info">
-      <ion-badge class="success">·</ion-badge><b>空的</b>
+      <ion-badge class="success">·</ion-badge><b>空闲中</b>
     </div>
     <div class="info">
       <ion-badge class="danger">·</ion-badge><b>占用中</b>

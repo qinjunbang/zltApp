@@ -115,10 +115,10 @@ export class editDishesPage {
           this.getPictureByLibrary().subscribe(res => {
             if (text === 'add') {
               // 如果是新增，插入一张图片
-              this.imgArr.push(Config.app_upload_serve_url + res);
+              this.imgArr.push(res);
             } else {
               // 如果是原图更新，则更换当前图片的src
-              this.imgArr[index] = Config.app_upload_serve_url + res;
+              this.imgArr[index] = res;
             }
           });
         }
@@ -126,7 +126,15 @@ export class editDishesPage {
         {
           text: "拍照",
           handler: () => {
-            this.getPictureByCamera();
+            this.getPictureByCamera().subscribe(res => {
+              if (text === 'add') {
+                // 如果是新增,插入一张图片
+                this.imgArr.push(res);
+              } else {
+                // 如果是原图更新，则更换当前的图片src
+                this.imgArr[index] = res;
+              }
+            });
           }
         },
         {
