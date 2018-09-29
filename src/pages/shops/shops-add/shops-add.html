@@ -13,14 +13,6 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>店铺类型</ion-label>
-      <ion-select placeholder="请选择店铺类型" cancelText="取消" okText="确定" [(ngModel)]="type_id" >
-
-        <ion-option  *ngFor="let st of shopsType" value="{{st.id}}">{{st.catname}}</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
       <ion-label>经营模块</ion-label>
       <ion-label>
         <span class="business-btn" [class.active]="is_takeout" (click)="isTakeout()">外卖</span>
@@ -31,6 +23,20 @@
       <ion-label>
         <span class="business-btn" [class.active]="is_list" (click)="isList()">排队</span>
       </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="is_takeout">
+      <ion-label>店铺类型</ion-label>
+      <ion-select placeholder="请选择店铺类型" multiple="true" cancelText="取消" okText="确定" [(ngModel)]="type_id" >
+        <ion-option  *ngFor="let st of shopsType" value="{{st.id}}">{{st.catname}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="is_reserve">
+      <ion-label>菜系</ion-label>
+      <ion-select placeholder="请选择菜系" multiple="true" cancelText="取消" okText="确定" [(ngModel)]="type_rid" >
+        <ion-option  *ngFor="let res of reserveType" value="{{res.id}}">{{res.catname}}</ion-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>

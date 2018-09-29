@@ -21,7 +21,8 @@ export class ShopsAddPage {
    public local = Config.app_upload_serve_url; // 服务器url
    public cities = []; // 城市JSON数据
    public shop_name: string = ''; // 店铺名称
-   public type_id: number; // 店铺类型id
+   public type_id: any = []; // 店铺类型id
+   public type_rid: any = []; //菜系
    public shop_address: string = ''; // 店铺地址
    public address: string = ''; // 店铺地址
    public detail_address: string = ''; // 店铺详细地址
@@ -32,6 +33,7 @@ export class ShopsAddPage {
    public is_reserve: number = 0; // 是否开启预定
    public is_list: number = 0; // 是否开户排队
    public shopsType: any = []; // 店铺所有分类
+   public reserveType: any = []; // 预定分类
    public minimum; // 最低消费
    public spend_distance; // 配送范围
    public spend; // 配送费
@@ -67,6 +69,7 @@ export class ShopsAddPage {
 
     // 获取店铺分类
     this.getShopType();
+    this.getReserveType();
   }
 
   // 获取店铺分类
@@ -75,6 +78,16 @@ export class ShopsAddPage {
       console.log("res", res);
       if (res.code == 200) {
         this.shopsType = res.data;
+      }
+    });
+  }
+
+  // 获取预定分类
+  getReserveType () {
+    this.http.get("/api/typeReserveData").subscribe(res => {
+      console.log("res", res);
+      if (res.code == 200) {
+        this.reserveType = res.data;
       }
     });
   }
@@ -217,7 +230,8 @@ export class ShopsAddPage {
     data['is_takeout'] = this.is_takeout; // 是否开启外卖
     data['is_reserve'] = this.is_reserve; // 是否开启预定
     data['is_list'] = this.is_list; // 是否开户排队
-    data['type_id'] = this.type_id; // 店铺类型id
+    data['type_id'] = this.type_id.join(","); // 店铺类型id
+    data['type_rid'] = this.type_rid.join(","); // 菜系
     data['name'] = this.name; // 店主姓名
     data['shop_phone'] = this.shop_phone; // 联系电话
     data['note'] = this.note; // 店铺介绍
@@ -246,6 +260,8 @@ export class ShopsAddPage {
 
     data['token'] = Config.token;
     data['device_id'] = Config.device_id;
+
+    console.log("data", data);
 
     // 简单的验证
     if (!data['shop_name']) {

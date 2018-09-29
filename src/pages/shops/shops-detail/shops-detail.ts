@@ -23,13 +23,15 @@ export class ShopsDetailPage {
    public cities: any = []; // 城市JSON数据
    public codeList: any = []; // 商圈
    public shopsType: any = [];
+   public reserveType: any = [];
    public address: string = '';
 
 
    public shopInfo = {
     id: '', // 店铺id
     shop_name: '', // 店铺名称
-    type_id: 0, // 店铺类型id
+    type_id: [], // 店铺类型id
+    type_rid: [],
     shop_address: '', // 店铺地址
     detail_address: '', // 店铺详细地址
     startTime: '', // 开始营业时间
@@ -71,13 +73,19 @@ export class ShopsDetailPage {
 
     // 获取店铺分类
     this.getShopType();
+    this.getReserveType();
   }
 
   // getAddress
   getAddress () {
     this.navCtrl.push(AddressPage, {"page": this});
   }
-
+  // 默认值
+  compareFn(option1: any, option2: any) {
+    console.log("option1", option1);
+    console.log("option2", option2);
+    return option1 == option2;
+  }
   // 获取店铺信息
   getShopOne() {
     let data = {};
@@ -98,7 +106,8 @@ export class ShopsDetailPage {
 
       this.shopInfo['shop_id'] = res.data.id; // 店铺id
       this.shopInfo['shop_name'] = res.data.shop_name; // 店铺名称
-      this.shopInfo['type_id'] = res.data.type_id; // 店铺类型id
+      this.shopInfo['type_id'] = res.data.type_id.split(","); // 店铺类型id
+      this.shopInfo['type_rid'] = res.data.type_rid.split(",");
       this.address = addressArr[0]; // 店铺地址
       this.shopInfo['detail_address'] =  addressArr[1]; // 店铺详细地址
       this.shopInfo['startTime'] = openTimeArr[0]; // 开始营业时间
@@ -130,6 +139,16 @@ export class ShopsDetailPage {
       console.log("res", res);
       if (res.code == 200) {
         this.shopsType = res.data;
+      }
+    });
+  }
+
+  // 获取预定分类
+  getReserveType () {
+    this.http.get("/api/typeReserveData").subscribe(res => {
+      console.log("res", res);
+      if (res.code == 200) {
+        this.reserveType = res.data;
       }
     });
   }
@@ -259,7 +278,27 @@ export class ShopsDetailPage {
 
   // 添加店铺
   savaData() {
-    let data = this.shopInfo;
+    let data = {};
+    data['shop_id'] = this.shopInfo['shop_id']; // 店铺id
+    data['shop_name'] = this.shopInfo['shop_name']; // 店铺名称
+    data['type_id'] = this.shopInfo['type_id'].join(','); // 店铺类型id
+    data['type_rid'] = this.shopInfo['type_rid'].join(',');
+    data['is_takeout'] = this.shopInfo['is_takeout']; // 是否开启外卖
+    data['is_reserve'] = this.shopInfo['is_reserve']; // 是否开启预定
+    data['is_list'] = this.shopInfo['is_list']; // 是否开户排队
+    data['name'] = this.shopInfo['name']; // 店主姓名
+    data['shop_phone'] = this.shopInfo['shop_phone']; // 联系电话
+    data['note'] = this.shopInfo['note']; // 店铺介绍
+    data['lience_pic'] = this.shopInfo['lience_pic']; // 营业执照
+    data['shop_avatar'] = this.shopInfo['shop_avatar']; // 店铺头像
+    data['shop_pic'] = this.shopInfo['shop_pic']; // 店铺门面
+    data['business_code'] = this.shopInfo['business_code']; // 商圈
+    data['minimum'] = this.shopInfo['minimum']; // 最低消费
+    data['spend_distance'] = this.shopInfo['spend_distance']; //  配送范围
+    data['spend'] = this.shopInfo['spend']; //  配送费
+    data['min_spend'] = this.shopInfo['min_spend']; //  起送价
+    data['spendtime'] = this.shopInfo['spendtime']; //  配送时间
+    data['detail_address'] = this.shopInfo['detail_address'];
     data['opentime'] = this.shopInfo['startTime'] + "--" + this.shopInfo['endTime'];
     data['shop_address'] = this.address + " " + this.shopInfo['detail_address'];
     data['token'] = Config.token;
