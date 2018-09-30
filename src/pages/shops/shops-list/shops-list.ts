@@ -17,10 +17,10 @@ import { ShopsManagePage } from '../shops-manage/shops-manage';
 })
 export class ShopsListPage {
   public shopsList = []; // 店铺列表
-  public serverUrl = 'https://r.zhanglitong.com'
-
+  public serverUrl = 'https://www.zltgs.com';
   public ShopsAddPage = ShopsAddPage; // 添加店铺页面
   public ShopsManagePage = ShopsManagePage; // 店铺管理页面
+  public role = Config.userInfo['role']; // 角色信息
 
   constructor(
     public http: HttpService,
@@ -73,6 +73,24 @@ export class ShopsListPage {
   public goToPage (page, sid= '') {
     console.log('6666');
     this.navCtrl.push(page, {sid: sid});
+  }
+
+  // 店铺营业
+  shopOpen(id, status) {
+    console.log("我要惊变", status);
+    let data = {};
+    data['token'] = Config.token;
+    data['device_id'] = Config.device_id;
+    data['id'] = id;
+    if (status) {
+      data['is_open'] = 1;
+    } else {
+      data['is_open'] = 0;
+    }
+    this.http.post("/api/app/shopOpen", data).subscribe(res => {
+      console.log("res", res);
+      this.native.showToast(res.info);
+    });
   }
 
 }

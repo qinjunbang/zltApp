@@ -13,10 +13,12 @@
         <ion-item>
             <ion-label>类型</ion-label>
             <ion-select [(ngModel)]="type" okText="确认" cancelText="取消">
-              <ion-option value="{{item.id}}" *ngFor="let item of shopsList">{{item.title}}</ion-option>
+              <ion-option value="{{item.id}}" *ngFor="let item of shopsList" [selected]="item.id == type ? 'selected' : ''">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
-      
+        <ion-item class="business-item" *ngIf="introduce.length > 0">
+          <span *ngFor="let item of introduce;let i = index;" class="business-btn" [class.active]="item.className" (click)="changeIntroduce(i)">{{item.text}}</span>
+        </ion-item>
         <ion-item>
           <ion-label >容纳人数</ion-label>
           <ion-input type="number" [(ngModel)]="hold" value="hold"></ion-input>
@@ -28,7 +30,7 @@
         <ion-item>
             <ion-label >是否开启二维码</ion-label>
             <ion-select [(ngModel)]="lock_qrcode" okText="确认" cancelText="取消">
-              <ion-option value="{{item.id}}" *ngFor="let item of codeList">{{item.title}}</ion-option>
+              <ion-option value="{{item.id}}" *ngFor="let item of codeList" [selected]="item.id == lock_qrcode ? 'selected' : ''">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item>
@@ -39,10 +41,10 @@
             <div class="img-title">添加图片</div>
             <div class="images">
                 <div class="img-list clearfix">
-                    <div class="add-img" >
-                        <img src="{{roomDetails.thumb}}" />
+                    <div class="add-img"  *ngFor="let img of imgArr; let i = index"  (click)="chooseImg('update', i)">
+                        <img src="{{serverUrl}}{{img}}" />
                     </div>
-                    <div class="add-img" (click)="chooseImg()">
+                    <div class="add-img" (click)="chooseImg('add')">
                         <div class="iconfont icon-app-add add-img-icon"></div>
                     </div>
                 </div>
@@ -51,5 +53,5 @@
       </ion-list>
 
       <div class="add" (click)="edit()">确认修改</div>
-      <div class="delete" (click)="delete()">删除房桌</div>
+      <div class="delete" (click)="deleteTable()">删除房桌</div>
 </ion-content>

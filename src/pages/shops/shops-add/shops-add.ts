@@ -8,6 +8,7 @@ import { HttpService } from '../../../providers/HttpService';
 import { NativeService } from '../../../providers/NativeService';
 import { Config } from '../../../providers/Config';
 import { Observable } from 'rxjs';
+import { AddressPage } from '../address/address';
 
 
 
@@ -17,19 +18,28 @@ import { Observable } from 'rxjs';
 })
 export class ShopsAddPage {
 
-   public local = 'https://r.zhanglitong.com/'; // 服务器url
+   public local = Config.app_upload_serve_url; // 服务器url
    public cities = []; // 城市JSON数据
    public shop_name: string = ''; // 店铺名称
-   public type_id: number; // 店铺类型id
+   public type_id: any = []; // 店铺类型id
+   public type_rid: any = []; //菜系
    public shop_address: string = ''; // 店铺地址
+   public address: string = ''; // 店铺地址
    public detail_address: string = ''; // 店铺详细地址
    public codeList = []; // 商圈列表
    public startTime:string = '08:00'; // 开始营业时间
    public endTime:string = '22:00'; // 结束营业时间
-   public is_takeout: number = 1; // 是否开启外卖
+   public is_takeout: number = 0; // 是否开启外卖
    public is_reserve: number = 0; // 是否开启预定
    public is_list: number = 0; // 是否开户排队
    public shopsType: any = []; // 店铺所有分类
+   public reserveType: any = []; // 预定分类
+   public minimum; // 最低消费
+   public spend_distance; // 配送范围
+   public spend; // 配送费
+   public min_spend; // 起送价
+   public spendtime; // 配送时间
+   public is_wifi: number = 0; // 是否有wifi
 
    public name: string = ''; // 店主姓名
    public shop_phone: string = ''; // 联系电话
@@ -59,6 +69,7 @@ export class ShopsAddPage {
 
     // 获取店铺分类
     this.getShopType();
+    this.getReserveType();
   }
 
   // 获取店铺分类
@@ -71,6 +82,20 @@ export class ShopsAddPage {
     });
   }
 
+  // 获取预定分类
+  getReserveType () {
+    this.http.get("/api/typeReserveData").subscribe(res => {
+      console.log("res", res);
+      if (res.code == 200) {
+        this.reserveType = res.data;
+      }
+    });
+  }
+
+  // getAddress
+  getAddress () {
+    this.navCtrl.push(AddressPage, {"page": this});
+  }
   // 获得省份城市区域数据
   getCitiesData() {
     return Observable.create(observer => {
@@ -197,7 +222,7 @@ export class ShopsAddPage {
   savaData() {
     let data = {};
     data['shop_name'] = this.shop_name; // 店铺名称
-    data['shop_address'] = this.shop_address; // 店铺地址
+    data['shop_address'] = this.address; // 店铺地址
     data['detail_address'] = this.detail_address; // 店铺详细地址
     // data['startTime'] = this.startTime; // 开始营业时间
     // data['endTime'] = this.endTime; // 结束营业时间
@@ -205,7 +230,8 @@ export class ShopsAddPage {
     data['is_takeout'] = this.is_takeout; // 是否开启外卖
     data['is_reserve'] = this.is_reserve; // 是否开启预定
     data['is_list'] = this.is_list; // 是否开户排队
-    data['type_id'] = this.type_id; // 店铺类型id
+    data['type_id'] = this.type_id.join(","); // 店铺类型id
+    data['type_rid'] = this.type_rid.join(","); // 菜系
     data['name'] = this.name; // 店主姓名
     data['shop_phone'] = this.shop_phone; // 联系电话
     data['note'] = this.note; // 店铺介绍
@@ -213,8 +239,29 @@ export class ShopsAddPage {
     data['shop_avatar'] = this.shop_avatar; // 店铺头像
     data['shop_pic'] = this.shop_pic; // 店铺门面
     data['business_code'] = this.business_code; // 商圈
+    data['is_wifi'] = this.is_wifi; // 是否有wifi
+    if (this.minimum) {
+      data['minimum'] = this.minimum; // 最低消费
+    }
+    if (this.spend_distance) {
+      data['spend_distance'] = this.spend_distance; // 配送范围
+    }
+    if (this.spend) {
+      data['spend'] = this.spend; // 配送费
+    }
+
+    if (this.min_spend) {
+      data['min_spend'] = this.min_spend; // 起送价
+    }
+
+    if (this.spendtime) {
+      data['spendtime'] = this.spendtime; // 配送时间
+    }
+
     data['token'] = Config.token;
-    data['device_id'] = Config.device_id
+    data['device_id'] = Config.device_id;
+
+    console.log("data", data);
 
     // 简单的验证
     if (!data['shop_name']) {
@@ -222,6 +269,9 @@ export class ShopsAddPage {
     }
     if (!data['type_id']) {
       return this.native.showToast("请选择店铺分类");
+    }
+    if (!data['is_takeout'] && !data['is_reserve'] && !data['is_list']) {
+      return this.native.showToast("请选择经营模块");
     }
     if (!data['shop_address']) {
       return this.native.showToast("请选择店铺地址");

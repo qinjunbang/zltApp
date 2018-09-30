@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
 import { NavController , ActionSheetController , NavParams } from 'ionic-angular';
 import { NativeService } from '../../../../providers/NativeService';
 import { Config } from '../../../../providers/Config';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'edit-room-tables',
@@ -10,6 +11,7 @@ import { Config } from '../../../../providers/Config';
 })
 
 export class editRoomTablesPage{
+    public serverUrl = Config.app_upload_serve_url;
     public roomDetails = [];
     public shopsList = [
         {id: 1,title:'房间'},
@@ -24,68 +26,80 @@ export class editRoomTablesPage{
     public name = '';   //房间名字
     public hold: Number;   //容纳人数;
     public min_consumption: Number; //最低消费
-    public lock_qrcode = '0'    //是否开启二维码,0否，1是
+    public lock_qrcode = '0';    //是否开启二维码,0否，1是
     public note = ''    //备注
-    public thumb = 'http://p3.music.126.net/1xERpbcRGZamJ4Nvm8M2Ew==/1367792474456202.jpg?param=30y30'   //图片
     public shopId = '';
     public token = Config.token;
     public deviceId = Config.device_id;
+    public imgArr = [];
+    public introduce = [
+      {text: "麻将桌", className: ""},
+      {text: "卫生间", className: ""},
+      {text: "沙发", className: ""},
+      {text: "空调", className: ""},
+      {text: "wifi", className: ""},
+    ];
     constructor(
         public navCtrl: NavController,
         public actionSheetCtrl: ActionSheetController,
         public native: NativeService,
         public http: HttpService,
-        public params: NavParams
+        public params: NavParams,
+        public renderer: Renderer2,
+        public elementRef: ElementRef
     ){
         this.shopId = this.params.get('shopId');
         this.id = this.params.get('id');
         this.getRoomDetails();
     }
 
-    // 从图库获取图片
-    getPictureByLibrary () {
-        console.log("666");
-        this.native.getPictureByLibrary().subscribe(res => {
-        console.log("res", res);
-        }, err => {
-        console.log("err1", err);
-        });
+    // 房间introduce
+    changeIntroduce (index) {
+      console.log("index", index);
+      this.introduce[index]['className'] == '' ? this.introduce[index]['className'] = 'active' : this.introduce[index]['className'] = '';
     }
 
-    // 拍照获取图片
-    getPictureByCamera () {
-        this.native.getPictureByCamera().subscribe(res => {
-        console.log("res", res);
-        }, err => {
-        console.log("err", err);
-        });
-    }
     // 点击上传图片
-    chooseImg () {
-        const actionSheet = this.actionSheetCtrl.create({
+    chooseImg (text, index) {
+      const actionSheet = this.actionSheetCtrl.create({
         title: "获取图片",
-        buttons: [
-            {
+        buttons: [{
             text: "从相册中获取",
             handler: () => {
-                this.getPictureByLibrary();
+                this.getPictureByLibrary().subscribe(res => {
+                  if (text === 'add') {
+                    // 如果是新增，插入一张图片
+                    this.imgArr.push(res);
+                  } else {
+                    // 如果是原图更新，则更换当前图片的src
+                    this.imgArr[index] = res;
+                  }
+                });
             }
-            },
-            {
+          },
+          {
             text: "拍照",
             handler: () => {
-                this.getPictureByCamera();
+              this.getPictureByCamera().subscribe(res => {
+                if (text === 'add') {
+                  // 如果是新增，插入一张图片
+                  this.imgArr.push(res);
+                } else {
+                  // 如果是原图更新，则更换当前图片的src
+                  this.imgArr[index] = res;
+                }
+              });
             }
-            },
-            {
+          },
+          {
             text: '取消',
             role: 'cancel'
-            }
-        ]
-        });
+          }]
+      });
 
         actionSheet.present();
     }
+
 
     //获取房桌详细信息
     getRoomDetails() {
@@ -96,14 +110,32 @@ export class editRoomTablesPage{
                 this.name = res.data.name;
                 this.hold = res.data.hold;
                 this.min_consumption = res.data.min_consumption;
-                this.thumb = res.data.thumb;
+                this.imgArr = res.data.thumb.split(';');
                 this.note = res.data.note;
+                this.type = res.data.type;
+                this.lock_qrcode = res.data.lock_qrcode;
+                this.createIntroduceClassName(res.data.introduce);
             }else{
                 this.native.alert('提示','',res.info)
             }
         })
     }
+    // 处理房间内的
+    createIntroduceClassName (arr: any) {
 
+          if (arr.length < 1) {
+            return;
+          }
+
+          for (let i = 0; i < arr.length; i++) {
+            for (let j = 0; j < this.introduce.length; j++) {
+              if (arr[i] == this.introduce[j]['text']) {
+                this.introduce[j]['className'] = 'active';
+              }
+            }
+          }
+
+    }
     //确认修改
     edit() {
         let data = {
@@ -116,8 +148,16 @@ export class editRoomTablesPage{
             'hold': this.hold,
             'min_consumption': this.min_consumption,
             'lock_qrcode': this.lock_qrcode,
-            'thumb': this.thumb,
             'note': this.note
+        };
+        data['thumb'] = this.getStringImg(this.imgArr);
+
+        data['introduce'] = '';
+        // 处理
+        for (let i = 0; i < this.introduce.length; i++) {
+          if (this.introduce[i]['className']) {
+            data['introduce'] += this.introduce[i]['text'] + ';';
+          }
         }
         this.http.post("/api/app/updateRoomTable", data).subscribe(res => {
             console.log(res)
@@ -128,10 +168,28 @@ export class editRoomTablesPage{
             }
         })
     }
+  // 获取图片字条串拼接
+    getStringImg (arr: any) {
+      let len = arr.length,
+        str: string = "";
 
+      for (let i = 0; i < len; i++) {
+        if (i < len -1) {
+          str += arr[i] + ';';
+        } else {
+          str += arr[i];
+        }
+      }
+
+      return str;
+    }
     //删除房桌
-    delete() {
-        this.http.post("/api/app/deleteRoomTable", {'id':this.id}).subscribe(res => {
+    deleteTable() {
+        let data = {};
+        data['id'] = this.id;
+        data['token'] = this.token;
+        data['device_id'] = this.deviceId;
+        this.http.post("/api/app/deleteRoomTable", data).subscribe(res => {
             console.log(res)
             if(res.code == 200){
                 this.navCtrl.pop()
@@ -140,4 +198,36 @@ export class editRoomTablesPage{
             }
         })
     }
+
+  // 从图库获取图片
+  getPictureByLibrary ():Observable<string> {
+    return Observable.create(observer => {
+      // 以拿到图片原始url 方式拿图片 destinationType 1 ， 0 为base64
+      this.native.getPictureByLibrary({destinationType: 1}).subscribe(res => {
+        // 上传图片，拿到图片在服务器的url
+        this.native.uploadImages(res, 'api/app/shopUpload').subscribe(s => {
+          observer.next(s);
+        });
+      }, err => {
+        console.log("err1", err);
+      });
+    });
+
+  }
+
+  // 拍照获取图片
+  getPictureByCamera ():Observable<string> {
+    return Observable.create(observer => {
+      // 以拿到图片原始url 方式拿图片 destinationType 1 ， 0 为base64
+      this.native.getPictureByCamera({destinationType: 1}).subscribe(res => {
+        console.log("拍照图片res", res);
+        //  // 上传图片，拿到图片在服务器的url
+        this.native.uploadImages(res, 'api/app/shopUpload').subscribe(s => {
+          observer.next(s);
+        });
+      }, err => {
+        console.log("err", err);
+      });
+    });
+  }
 }

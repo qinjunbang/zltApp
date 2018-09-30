@@ -18,8 +18,11 @@ import { Observable } from 'rxjs/Rx';
 import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileOpener } from '@ionic-native/file-opener';
+import { ThemeableBrowser, ThemeableBrowserOptions } from '@ionic-native/themeable-browser';
 import { Config } from './Config';
 import { Utils } from './Utils';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 
 @Injectable()
@@ -44,7 +47,10 @@ export class NativeService {
     private nativeAudio: NativeAudio, // 语音播放
     private device: Device, // 设备UUID组件
     private androidPermissions: AndroidPermissions, // 安卓手机权限获取，主要针对 26以上的版本
-    public transfer: FileTransfer, // 文件上传
+    private transfer: FileTransfer, // 文件上传
+    private fileOpener: FileOpener, // 文件打开
+    private themeableBrowser: ThemeableBrowser, // 浏览器
+    private photoLibrary: PhotoLibrary // 图库管理
 
   ) {
 
@@ -251,7 +257,7 @@ export class NativeService {
     const ops: CameraOptions = {
       sourceType: this.camera.PictureSourceType.CAMERA, // 图片来源，CAMERA: 拍照，PHOTOLIBRARY: 相册
       destinationType: this.camera.DestinationType.FILE_URI, // 默认返回图片路径 FILE_URL: 图片路径，DATA_URL: base64字符串
-      quality: 98, // 图像质量  范围 0 - 100
+      quality: 60, // 图像质量  范围 0 - 100
       allowEdit: false, // 选择图片前是否允许编辑
       encodingType: this.camera.EncodingType.JPEG,
       targetWidth: 1024, // 缩放图像的宽度（像素）
@@ -263,6 +269,7 @@ export class NativeService {
 
     return Observable.create(observer => {
       this.camera.getPicture(ops).then((imgData: string) => {
+        console.log("我到这里了");
         if (ops.destinationType === this.camera.DestinationType.DATA_URL) {
           // 返回 base64 字符
           observer.next('data:image/jpg;base64,' + imgData);
@@ -271,6 +278,7 @@ export class NativeService {
           observer.next(imgData);
         }
       }).catch(err => {
+        console.log("获取照片失败，", err);
         if (err == 20) {
           this.alert("没有权限，请在设置中打开");
         } else if (String(err).indexOf('cancel') != -1) {
@@ -334,7 +342,7 @@ export class NativeService {
       maximumImagesCount: 6,
       width: 1024, // 缩放图像的宽度（像素）
       height: 1024, // 缩放图像的高度（像素）
-      quality: 98,
+      quality: 60,
       ...options
     };
 
@@ -565,7 +573,7 @@ export class NativeService {
           res = JSON.parse(res.response);
         }
         if (res['code'] == 200) {
-          console.log("上传图片成功:", res);
+          console.log("上传图片成功:", JSON.stringify(res));
           this.showToast("上传图片成功");
           observer.next(res['data']);
         }
@@ -611,31 +619,91 @@ export class NativeService {
   *
   * */
   downloadApp () {
-    // 显示一个下载进度条框
-    let alert = this.alertCtrl.create({
-      title: "下载进度： 0%",
-      buttons: ['后台下载']
-    });
-    alert.present();
+    // 安卓直接下载安装
+    if (this.isAndroid()) {
+      // 显示一个下载进度条框
+      let alert = this.alertCtrl.create({
+        title: "下载进度： 0%",
+        buttons: ['后台下载']
+      });
+      alert.present();
 
+      const fileTransfer: FileTransferObject = this.transfer.create(),
+        apkFileUrl = this.file.externalRootDirectory + 'zltshops.apk'; // apk保存目录
+
+      // 下载路径 保存路径
+      fileTransfer.download(Config.apkDownloadUrl, apkFileUrl).then(() => {
+        // 下载完成，安装 （文件路径，文件格式）
+        this.fileOpener.open(apkFileUrl.replace('file://', ''), "application/vnd.android.package-archive");
+      });
+
+      // 监听下载进度
+      fileTransfer.onProgress((event: ProgressEvent) => {
+        let num = Math.floor(event.loaded / event.total * 100);
+        // 下载完成关闭进度提示框
+        if (num === 100)　{
+          alert.dismiss();
+        } else {
+          let title = document.getElementsByClassName("alert-title")[0];
+          title && (title.innerHTML = "下载进度：" + num + "%");
+        }
+      });
+    } else if (this.isIos()) {
+      // 苹果安装
+
+      this.themeableBrowser.create(Config.ipaDownLoadUrl, '_blank', Config.options);
+    }
+
+  }
+
+  /*
+   *
+   * 下载 base64 图片
+   * @param title 图片保存的名称
+   *
+   * */
+  downloadBase64Img(base64Url, title) {
     const fileTransfer: FileTransferObject = this.transfer.create(),
-          apkFileUrl = this.file.externalRootDirectory + 'zltshops.apk'; // apk保存目录
-
-    // 下载路径 保存路径
-    fileTransfer.download(Config.apkDownloadUrl, apkFileUrl).then(() => {
-      window['install'].install(apkFileUrl.replace('file://', ''));
+          imgFileUrl = this.file.externalRootDirectory  + title + '.jpg';
+    fileTransfer.download(base64Url, imgFileUrl).then((success) => {
+      this.showLoading("正在保存图片");
+      this.saveToAlbum(imgFileUrl, title);
+    }, (err) => {
+      console.log("下载图片err：" + JSON.stringify(err));
     });
+  }
 
-    // 监听下载进度
-    fileTransfer.onProgress((event: ProgressEvent) => {
-      let num = Math.floor(event.loaded / event.total * 100);
-      // 下载完成关闭进度提示框
-      if (num === 100)　{
-        alert.dismiss();
-      } else {
-        let title = document.getElementsByClassName("alert-title")[0];
-        title && (title.innerHTML = "下载进度：" + num + "%");
-      }
+  /*
+   *
+   * 保存图片到相册
+   * @param title 图片保存的名称
+   *
+   * */
+  saveToAlbum(imgUrl, title, albumName="zlt") {
+    this.photoLibrary.requestAuthorization({read: true, write: true}).then(() => {
+      this.photoLibrary.getLibrary().subscribe({
+        error: () => {
+          this.hideLoading();
+          this.showToast("无法读取相册，请授权“掌里通”使用您的相册功能。");
+        },
+        complete: () => {
+          this.photoLibrary.saveImage(imgUrl, albumName).then(() => {
+            this.hideLoading();
+            this.alert("成功保存图片到相册");
+            this.file.removeFile(this.file.externalRootDirectory, title + '.jpg');
+          }, err => {
+            console.log("保存图片到相册err：", JSON.stringify(err));
+          }).catch(() => {
+            this.hideLoading();
+            if (this.isIos()) {
+              this.showToast("成功保存图片到相册");
+            } else {
+              this.showToast("无法读取相册，请授权“掌里通”使用您的相册功能。");
+            }
+          });
+
+        }
+      });
     });
   }
 }

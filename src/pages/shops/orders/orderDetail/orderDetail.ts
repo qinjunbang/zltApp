@@ -6,6 +6,7 @@ import { HttpService } from '../../../../providers/HttpService';
 import { NavController , ActionSheetController , NavParams} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
+import { SpeakingService } from '../../../../providers/SpeakingService';
 import { Config } from '../../../../providers/Config';
 import { OrderAddDishesPage } from '../order-add-dishes/order-add-dishes';
 
@@ -29,59 +30,50 @@ export class OrderDetailPage {
     public actionSheetCtrl: ActionSheetController,
     public storage: Storage,
     public native: NativeService,
-    public params: NavParams
+    public params: NavParams,
+    public speaking: SpeakingService
   ) {
     this.shopId = this.params.get('shopId');
     this.order_id = this.params.get('order_id');
-    this.order_type = this.params.get('order_type');
     this.getOrders()
   }
   ionViewDidLoad() {
     // this.getShopsList();
   }
 
-  //获取本地设备id和token
-  public getToken(){
-    return new Promise((resolve) => {
-      this.storage.get('token').then((val) => {
-          resolve(val)
-      });
-    })
-  }
-  public getDeviceId(){
-    return new Promise((resolve) => {
-      this.storage.get('device_id').then((val) => {
-          resolve(val)
-      });
-    })
-  }
+
   //获取订单数据
   public getOrders() {
-    let that = this
-    async function addEquip(){
-      let token = await that.getToken();
-      let deviceId = await that.getDeviceId();
-      that.http.post("/api/app/shopOneOrder", {'token':token,'device_id': deviceId,'shop_id':that.shopId,'order_id':that.order_id}).subscribe(res => {
-          console.log("res", res);
-          if(res.code == 200){
-            that.ordersList = res.data;
-            console.log(that.ordersList)
-          }else {
-            that.native.alert('提示','',res.info)
-          }
-      })
-    }
-    addEquip()
+    let data ={
+      'token': this.token,
+      'device_id': this.device_id,
+      'order_id': this.order_id
+    };
+    this.http.post("/api/app/shopOneOrder", data).subscribe(res => {
+      console.log("res", JSON.stringify(res));
+      if(res.code == 200){
+        this.ordersList = res.data;
+        console.log(this.ordersList)
+      }else {
+        this.native.alert('提示','',res.info)
+      }
+    })
   }
 
 
   //外卖部分：
   //接单
   receipt() {
+    // 关闭播放的声音
+    if (this.native.isMobile()) {
+      this.speaking.stopSpeak();
+    }
+
     this.http.post("/api/app/sureOrder", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert('提示','',res.info);
+          this.getOrders();
         }else {
           this.native.alert('提示','',res.info)
         }
@@ -89,17 +81,20 @@ export class OrderDetailPage {
   }
   //拒单
   reject() {
+    // 关闭播放的声音
+    this.speaking.stopSpeak();
     this.http.post("/api/app/rejectOrder", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert('提示','',res.info);
+          this.getOrders();
         }else {
           this.native.alert('提示','',res.info)
         }
     })
   }
 
-  //预定部分：
+
   //预定到店
   arrive() {
     this.http.post("/api/app/arriveShop", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
@@ -121,7 +116,9 @@ export class OrderDetailPage {
     this.http.post("/api/app/reserveCashBalance", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id,}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert(res.info, "", "", () => {
+            this.getOrders();
+          });
         }else {
           this.native.alert('提示','',res.info)
         }
@@ -132,7 +129,9 @@ export class OrderDetailPage {
     this.http.post("/api/app/reserveEditMenu", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert(res.info, "", "", () => {
+            this.getOrders();
+          });
         }else {
           this.native.alert('提示','',res.info)
         }
@@ -143,10 +142,18 @@ export class OrderDetailPage {
     this.http.post("/api/app/sureForRefund", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
         console.log("res", res);
         if(res.code == 200){
-          this.native.alert('提示','',res.info)
+          this.native.alert(res.info, "", "", () => {
+            this.getOrders();
+          });
         }else {
           this.native.alert('提示','',res.info)
         }
     })
+  }
+
+  // 拨打电话
+  callNumber (e, num) {
+    e.stopPropagation();
+    this.native.callNumber(num);
   }
 }

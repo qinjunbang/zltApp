@@ -6,10 +6,6 @@ import { MultiPickerModule  } from 'ion-multi-picker';
 import { IonicStorageModule  } from '@ionic/storage';
 import { JPush } from '@jiguang-ionic/jpush';
 
-
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { ShopsListPage } from '../pages/shops/shops-list/shops-list';
@@ -44,7 +40,9 @@ import { OrderAddDishesPage } from '../pages/shops/orders/order-add-dishes/order
 import { FinancialsCategoryPage } from '../pages/shops/financials/financials-category/financials-category';
 import { FinancialsFindPage } from '../pages/shops/financials/financials-find/financials-find';
 import { FinancialsListPage } from '../pages/shops/financials/financials-list/financials-list';
-
+import { RoomTablesQrCodePage } from '../pages/shops/roomtables/roomtables-qrCode/roomtables-qrCode';
+import { ContactPage } from '../pages/me/contact/contact';
+import { AddressPage } from '../pages/shops/address/address';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -56,6 +54,7 @@ import { AppMinimize } from '@ionic-native/app-minimize';
 import { Toast } from '@ionic-native/toast';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { FileOpener } from '@ionic-native/file-opener';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -66,15 +65,15 @@ import { SpeakingService } from '../providers/SpeakingService';
 import { JPushService } from '../providers/JPushService';
 import { Device } from '@ionic-native/device';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { ThemeableBrowser } from '@ionic-native/themeable-browser';
+import { QRCodeModule } from 'angular2-qrcode';
+import { PhotoLibrary } from '@ionic-native/photo-library';
 
 
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
     TabsPage,
     LoginPage,
     ShopsListPage,
@@ -108,7 +107,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     OrderAddDishesPage,
     FinancialsCategoryPage,
     FinancialsFindPage,
-    FinancialsListPage
+    FinancialsListPage,
+    RoomTablesQrCodePage,
+    ContactPage,
+    AddressPage
   ],
   imports: [
     BrowserModule,
@@ -135,14 +137,12 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
       }
     }),
     HttpModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    QRCodeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
     TabsPage,
     LoginPage,
     ShopsListPage,
@@ -176,7 +176,10 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     OrderAddDishesPage,
     FinancialsCategoryPage,
     FinancialsFindPage,
-    FinancialsListPage
+    FinancialsListPage,
+    RoomTablesQrCodePage,
+    ContactPage,
+    AddressPage
   ],
   providers: [
     StatusBar,
@@ -199,6 +202,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
     Device,
     AndroidPermissions,
     FileTransfer,
+    FileOpener,
+    ThemeableBrowser,
+    PhotoLibrary
   ]
 })
 export class AppModule {}

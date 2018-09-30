@@ -63,7 +63,9 @@ export class JPushService {
       const content = event['extras']['sound'];
       console.log("jpush收到内容", JSON.stringify(event));
       console.log("jpush收到内容", content);
-      this.speaking.startSpeak(content, 1);
+      if (content) {
+        this.speaking.startSpeak(content, 1);
+      }
     }, false);
 
     // 收到自定义消息
@@ -78,12 +80,12 @@ export class JPushService {
     if (!this.native.isMobile()) {
       return;
     }
-    if (Config.userInfo['role'] == -1) {
-      Config.userInfo['role'] = 0;
-    } else {
-      Config.userInfo['role'] = 1;
+    let role = 0;
+    if (Config.userInfo['role'] != -1) {
+      role = 1;
     }
-    this.jPush.setAlias({sequence: 1, alias:  Config.userInfo['role'] + "_" + Config.userInfo['id']}).then(result => {
+
+    this.jPush.setAlias({sequence: 1, alias:  role + "_" + Config.userInfo['id']}).then(result => {
       console.log("jpush-设置别名成功");
       console.log(JSON.stringify(result));
     }, error => {

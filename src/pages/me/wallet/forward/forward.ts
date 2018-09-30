@@ -15,7 +15,7 @@ export class forwardPage {
     public deviceId = Config.device_id;
     public cardsList:any=[];
     public cardId = 0;
-    public money = 100;
+    public money;
     constructor(
         public navCtrl: NavController,
         public http: HttpService,
@@ -51,7 +51,7 @@ export class forwardPage {
                 }
             })
         }
-        
+
     }
 
     return() {

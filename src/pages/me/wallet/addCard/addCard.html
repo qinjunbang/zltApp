@@ -8,16 +8,16 @@
     <div class="cart">
         <div class="cart-list cart-js" *ngFor="let cards of cardsList" (click)="delCards(cards.id)">
             <div class="cart-logo" [ngSwitch]="cards.bank_type">
-                <div class="iconfont icon--39 cart-logo-icon" *ngSwitchCase="1"></div>
-                <div class="iconfont icon--40 cart-logo-icon" *ngSwitchCase="2"></div>
-                <div class="iconfont icon--35 cart-logo-icon" *ngSwitchCase="3"></div>
-                <div class="iconfont icon--36 cart-logo-icon" *ngSwitchCase="4"></div>
-                <div class="iconfont icon--38 cart-logo-icon" *ngSwitchCase="5"></div>
-                <div class="iconfont icon--37 cart-logo-icon" *ngSwitchCase="6"></div>
+                <div class="iconfont icon--39 cart-logo-icon" *ngSwitchCase="0"></div>
+                <div class="iconfont icon--40 cart-logo-icon" *ngSwitchCase="1"></div>
+                <div class="iconfont icon--35 cart-logo-icon" *ngSwitchCase="2"></div>
+                <div class="iconfont icon--36 cart-logo-icon" *ngSwitchCase="3"></div>
+                <div class="iconfont icon--38 cart-logo-icon" *ngSwitchCase="4"></div>
+                <div class="iconfont icon--37 cart-logo-icon" *ngSwitchCase="5"></div>
             </div>
             <div class="cart-con">
                 <div class="con-title">{{cards.bank}}</div>
-                <div class="con-subtitle">储蓄卡</div>
+                <div class="con-subtitle">{{cards.bank_name}}(储蓄卡)</div>
                 <div class="cart-number">{{(cards.account_number).substring(0,6)+'********'+cards.account_number.substr(cards.account_number.length-4)}}</div>
             </div>
         </div>

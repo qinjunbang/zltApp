@@ -11,6 +11,7 @@ edit-room-tables{
                     height: 80px;
                     float: left;
                     margin-right: 10px;
+                    margin-top: 5px;
                     border: 1px solid #d2d2d2;
                     line-height: 75px;
                     text-align: center;
@@ -44,4 +45,20 @@ edit-room-tables{
             font-size: 16px;
         }
     }
+  .business-item ion-label {
+    white-space: normal;
+  }
+  .business-btn {
+    display: inline-block;
+    border: 1px solid;
+    padding: .3rem 1rem .3rem;
+    border-radius: 4px;
+    color: #ddd;
+    margin: .4rem;
+  }
+  .business-btn.active {
+    background-color: #3da2fa;
+    color: #fff;
+    border-color: #3da2fa;
+  }
 }

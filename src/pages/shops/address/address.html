@@ -1,0 +1,23 @@
+<ion-header class="header-light">
+    <ion-navbar color="primary">
+        <ion-title>获取地址</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-f6">
+  <div>
+    <p class="text-info">输入完成后，请先点击键盘上的“前往”，再点击确定按钮或点击地图上的标注返回上一页</p>
+
+    <ion-row>
+      <ion-col col-9>
+        <input  type="text" id="place" placeholder="输入地址后请点击键盘上的前往按钮"/>
+      </ion-col>
+      <ion-col col-3 text-center>
+        <button ion-button (click)="checkSelect()">确定</button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+  <div id="map"></div>
+</ion-content>

@@ -7,7 +7,7 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "https://r.zhanglitong.com/api"
+      "proxyUrl": "https://www.zltgs.com/api"
     }
   ]
 }

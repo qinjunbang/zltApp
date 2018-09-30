@@ -72,8 +72,28 @@ export class Utils {
       .replace(/s/ig, String(time.Second))
       .replace(/fff/ig, String(time.Millisecond));
   }
+  /**
+   * 获取当前日期的前几个月,后几个月分
+   * 如: 获取当前日期的前三个月
+   * @param num
+   * @returns {string}
+   */
+  static getMonthDate(num: number) {
+    let date = new Date(); // 当前日期
+    date.setMonth(date.getMonth() + num); // 把时间设置为对应的月份日期
+    let year = date.getFullYear(), // 获得设置对应月份后的年份
+        month = (date.getMonth() + 1).toString(),  // 因为 getMonth() 返回 0-11 对应 1-12 月份,所以 +1
+        day = date.getDate().toString();
 
+    if (month < '10') {
+      month = '0' + month;
+    }
 
+    if (day < '10') {
+      day = '0' + day;
+    }
+    return year + '-' + month + '-' + day;
+  }
   /**
    * 把url中的双斜杠替换为单斜杠
    * 如:http://localhost:8080//api//demo.替换后http://localhost:8080/api/demo

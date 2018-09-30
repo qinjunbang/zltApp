@@ -7,12 +7,11 @@ import { Config } from '../providers/Config';
 import { NativeService } from '../providers/NativeService';
 import { HttpService } from '../providers/HttpService';
 import { JPushService } from '../providers/JPushService';
+import { SpeakingService } from '../providers/SpeakingService';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/me/login/login';
 import { OrderDetailPage } from '../pages/shops/orders/orderDetail/orderDetail';
-import { OrderAddDishesPage } from '../pages/shops/orders/order-add-dishes/order-add-dishes';
-import { addDishesPage } from '../pages/shops/dishes/addDishes/addDishes';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,7 +34,8 @@ export class MyApp {
     private native: NativeService,
     private http: HttpService,
     private storage: Storage,
-    private jPush: JPushService
+    private jPush: JPushService,
+    private speaking: SpeakingService
   ) {
     // 检查登录状态
     this.refreshToken();
@@ -94,10 +94,18 @@ export class MyApp {
         activePortal.dismiss();
         return;
       }
-
+      const childNav = this.nav.getActiveChildNav(); // 获取tabs导航,this.nav是总导航,tabs是子导航
+      if (!childNav) {
+        this.showExit();
+        return;
+      }
+      const tab = childNav.getSelected(); // 获取选中的tab
+      const activeVC = tab.getActive(); // 通过当前选中的tab获取ViewController
+      const activeNav = activeVC.getNav(); // 通过当前视图的ViewController获取的NavController
       // 如果不是首页，就返回上一页，如果是首页，显示关闭 App 提示框
-      return this.nav.canGoBack() ? this.nav.pop() : this.showExit();
-    });
+      return activeNav.canGoBack() ? activeNav.pop() : this.showExit();
+
+    }, 1);
   }
 
   // 显示关闭 App 提示框
@@ -105,7 +113,11 @@ export class MyApp {
     console.log("6666");
     if (this.backButtonPressed) {
       // 退出 App
-      this.platform.exitApp();
+      //this.platform.exitApp();
+      // 最小化app
+      this.native.minimize();
+      // 关闭播放的声音
+      this.speaking.stopSpeak();
     } else {
       // 提示用户是否要关闭 app
       this.native.showToast("再按一次退出APP");
@@ -151,7 +163,7 @@ export class MyApp {
     this.events.subscribe("jpush.openNotification", (event) => {
       let order_id = event['extras']['order_id']
       if (order_id) {
-        this.nav.push(OrderDetailPage, {order_id: order_id});
+        this.nav.push(OrderDetailPage, {'order_id': order_id});
       }
     });
   }
