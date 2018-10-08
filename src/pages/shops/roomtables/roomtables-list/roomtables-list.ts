@@ -52,12 +52,15 @@ export class RoomTablesListPage {
   }
   // 获取房桌列表
   public getRoomTableList () {
-
+    this.timeStarts = this.timeStarts.replace(/T/g,' ');
+    this.timeStarts = this.timeStarts.replace(/Z/g,' ');
+    this.timeStarts  = this.timeStarts.replace(/-/g,'/');
+    console.log("new Date(this.timeStarts)", this.timeStarts);
     let data = {
       'shop_id':this.shopId,
       'token':this.token,
       'device_id':this.deviceId,
-      'time': Utils.dateFormat(new Date(this.timeStarts), "YYYY-MM-DD HH:mm")
+      'time': this.timeStarts
     };
 
     this.http.post("/api/app/showRoomTable", data).subscribe(res => {
