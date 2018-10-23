@@ -8,6 +8,7 @@ declare var xunfeiListenSpeaking: any;
 @Injectable()
 
 export class SpeakingService {
+  public number = 0;
   constructor () {
 
   }
@@ -19,12 +20,23 @@ export class SpeakingService {
   *
   * */
 
-  startSpeak(str: string = '', loop: number = 0) {
-    console.log("xunfeiListenSpeaking", xunfeiListenSpeaking);
+  startSpeak(str: string = '', loop: string = '') {
     xunfeiListenSpeaking.startSpeak(success => {
-      console.log("success");
-      if (loop == 1) {
-        this.startSpeak(str, loop);
+      console.log("xunfeiListenSpeaking success");
+      switch (loop) {
+        case 'on':
+          this.startSpeak(str, loop);
+          break;
+        case 'off':
+          break;
+        default:
+          this.number++;
+          if (this.number < parseInt(loop)) {
+            this.startSpeak(str, loop);
+          } else {
+            this.number = 0;
+          }
+
       }
     }, err => {
       console.log("err");

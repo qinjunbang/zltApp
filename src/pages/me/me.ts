@@ -10,6 +10,7 @@ import { WalletPage } from './wallet/wallet';
 import { LoginPage } from './login/login';
 import { ContactPage } from './contact/contact';
 import { JPushService } from '../../providers/JPushService';
+import { SpeakingService } from '../../providers/SpeakingService';
 
 @Component({
     selector: 'page-me',
@@ -25,6 +26,7 @@ export class MePage {
         public storage: Storage,
         public http: HttpService,
         public Jpush: JPushService,
+        public speaking: SpeakingService
     ) {
         this.storage.get('userInfo').then((val) => {
             console.log(val)
@@ -58,6 +60,7 @@ export class MePage {
                     that.storage.remove('token');
                     that.storage.remove('userInfo');
                     that.Jpush.deleteAlias();
+                    that.speaking.stopSpeak();
                     Config.token = '';
                     Config.userInfo = [];
                     Config.device_id = '';

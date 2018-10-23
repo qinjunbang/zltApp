@@ -109,17 +109,17 @@ export class RoomTablesListPage {
       checked: true
     });
 
-    alert.addInput({
-      type: 'radio',
-      label: '暂停使用',
-      value: '1',
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: '立即使用',
-      value: '2'
-    });
+    // alert.addInput({
+    //   type: 'radio',
+    //   label: '暂停使用',
+    //   value: '1',
+    // });
+    //
+    // alert.addInput({
+    //   type: 'radio',
+    //   label: '立即使用',
+    //   value: '2'
+    // });
 
     alert.addInput({
       type: 'radio',

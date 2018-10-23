@@ -61,10 +61,11 @@ export class JPushService {
       // 收到通知，停止播放
       this.speaking.stopSpeak();
       const content = event['extras']['sound'];
+      let loop = event['extras']['frequency'];
       console.log("jpush收到内容", JSON.stringify(event));
       console.log("jpush收到内容", content);
       if (content) {
-        this.speaking.startSpeak(content, 1);
+        this.speaking.startSpeak(content, loop);
       }
     }, false);
 
