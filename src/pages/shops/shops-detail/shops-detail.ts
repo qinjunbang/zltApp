@@ -36,7 +36,7 @@ export class ShopsDetailPage {
     detail_address: '', // 店铺详细地址
     startTime: '', // 开始营业时间
     endTime: '', // 结束营业时间
-    is_takeout: 1, // 是否开启外卖
+    is_takeout: 1, // 是否开启配送
     is_reserve: 0, // 是否开启预定
     is_list: 0, // 是否开户排队
     name: '', // 店主姓名
@@ -112,7 +112,7 @@ export class ShopsDetailPage {
       this.shopInfo['detail_address'] =  addressArr[1]; // 店铺详细地址
       this.shopInfo['startTime'] = openTimeArr[0]; // 开始营业时间
       this.shopInfo['endTime'] = openTimeArr[1]; // 结束营业时间
-      this.shopInfo['is_takeout'] = res.data.is_takeout; // 是否开启外卖
+      this.shopInfo['is_takeout'] = res.data.is_takeout; // 是否开启配送
       this.shopInfo['is_reserve'] = res.data.is_reserve; // 是否开启预定
       this.shopInfo['is_list'] = res.data.is_list; // 是否开户排队
       this.shopInfo['name'] = res.data.name; // 店主姓名
@@ -258,7 +258,7 @@ export class ShopsDetailPage {
   }
 
 
-  // 是否外卖
+  // 是否配送
   isTakeout () {
 
     this.shopInfo.is_takeout ? this.shopInfo.is_takeout = 0 : this.shopInfo.is_takeout = 1;
@@ -283,7 +283,7 @@ export class ShopsDetailPage {
     data['shop_name'] = this.shopInfo['shop_name']; // 店铺名称
     data['type_id'] = this.shopInfo['type_id'].join(','); // 店铺类型id
     data['type_rid'] = this.shopInfo['type_rid'].join(',');
-    data['is_takeout'] = this.shopInfo['is_takeout']; // 是否开启外卖
+    data['is_takeout'] = this.shopInfo['is_takeout']; // 是否开启配送
     data['is_reserve'] = this.shopInfo['is_reserve']; // 是否开启预定
     data['is_list'] = this.shopInfo['is_list']; // 是否开户排队
     data['name'] = this.shopInfo['name']; // 店主姓名

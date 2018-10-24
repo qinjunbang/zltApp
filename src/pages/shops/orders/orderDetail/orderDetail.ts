@@ -61,7 +61,7 @@ export class OrderDetailPage {
   }
 
 
-  //外卖部分：
+  //配送部分：
   //接单
   receipt() {
     // 关闭播放的声音

@@ -28,7 +28,7 @@
   </div>
 
   <div class="orders" *ngFor="let orders of ordersList">
-    <!-- 外卖列表 -->
+    <!-- 配送列表 -->
     <div class="orders-list" (click)="listDetail(orders.id,orders.order_type)" *ngIf="orders.order_type == 0">
       <ion-list no-lines>
         <ion-item>订单号：{{orders.order_number}}

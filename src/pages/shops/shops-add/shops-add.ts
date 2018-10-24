@@ -29,7 +29,7 @@ export class ShopsAddPage {
    public codeList = []; // 商圈列表
    public startTime:string = '08:00'; // 开始营业时间
    public endTime:string = '22:00'; // 结束营业时间
-   public is_takeout: number = 0; // 是否开启外卖
+   public is_takeout: number = 0; // 是否开启配送
    public is_reserve: number = 0; // 是否开启预定
    public is_list: number = 0; // 是否开户排队
    public shopsType: any = []; // 店铺所有分类
@@ -200,7 +200,7 @@ export class ShopsAddPage {
   }
 
 
-  // 是否外卖
+  // 是否配送
   isTakeout () {
 
     this.is_takeout ? this.is_takeout = 0 : this.is_takeout = 1;
@@ -227,7 +227,7 @@ export class ShopsAddPage {
     // data['startTime'] = this.startTime; // 开始营业时间
     // data['endTime'] = this.endTime; // 结束营业时间
     data['opentime'] = this.startTime + '--' + this.endTime;
-    data['is_takeout'] = this.is_takeout; // 是否开启外卖
+    data['is_takeout'] = this.is_takeout; // 是否开启配送
     data['is_reserve'] = this.is_reserve; // 是否开启预定
     data['is_list'] = this.is_list; // 是否开户排队
     data['type_id'] = this.type_id.join(","); // 店铺类型id

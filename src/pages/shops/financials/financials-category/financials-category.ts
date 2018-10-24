@@ -15,7 +15,7 @@ import { FinancialsFindPage } from '../financials-find/financials-find';
 })
 export class FinancialsCategoryPage {
   public sid; // 店铺id
-  public items = ["预定", "扫码", "排队", "外卖"];
+  public items = ["预定", "扫码", "排队", "配送"];
 
   constructor(
     public http: HttpService,
@@ -49,7 +49,7 @@ export class FinancialsCategoryPage {
       case "排队":
         type = "2";
         break;
-      case "外卖":
+      case "配送":
         type = "0";
         break;
     }

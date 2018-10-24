@@ -16,7 +16,7 @@ import { Config } from '../../../../providers/Config';
 })
 export class OrdersListPage {
   public menuList = [
-    {id: 0,title:'外卖'},
+    {id: 0,title:'配送'},
     {id: 1,title:'预定'},
     {id: 2,title:'排队'},
     {id: 3,title:'扫码'}

@@ -3,7 +3,7 @@
       <ion-title text-center>管理设备</ion-title>
     </ion-navbar>
   </ion-header>
-  
+
   <ion-content>
       <ion-list>
           <ion-item>
@@ -21,14 +21,14 @@
               <ion-label>打印份数</ion-label>
               <ion-input type="number"  placeholder="请输入要打印的份数" [(ngModel)]="priterNum"></ion-input>
             </ion-item>
-            <ion-item *ngIf="useAll == '1'">
+            <ion-item *ngIf="useAll == 1">
                 <ion-label>菜品分类</ion-label>
-                <ion-select [(ngModel)]="dishesSelect" (ionChange)="getSelect($event)" okText="确认" cancelText="取消">
+                <ion-select [(ngModel)]="dishesSelect" multiple="true" [compareWith]="compareFn" (ionChange)="getSelect($event)" okText="确认" cancelText="取消">
                     <ion-option *ngFor="let item of dishesList" value="{{item.id}}">{{item.menu_name}}</ion-option>
                 </ion-select>
             </ion-item>
     </ion-list>
-  
+
         <div padding>
             <button ion-button block (click)="changeEquip()">保存设置</button>
         </div>

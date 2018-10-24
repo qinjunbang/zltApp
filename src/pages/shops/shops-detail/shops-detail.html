@@ -15,7 +15,7 @@
     <ion-item>
       <ion-label>经营模块</ion-label>
       <ion-label>
-        <span class="business-btn" [class.active]="shopInfo.is_takeout" (click)="isTakeout()">外卖</span>
+        <span class="business-btn" [class.active]="shopInfo.is_takeout" (click)="isTakeout()">配送</span>
       </ion-label>
       <ion-label>
         <span class="business-btn" [class.active]="shopInfo.is_reserve" (click)="isReserve()">预定</span>
@@ -118,7 +118,7 @@
 
     <ion-item>
       <ion-label>店主姓名</ion-label>
-      <ion-input type="text" placeholder="请输入姓名" [(ngModel)]="shopInfo.name"></ion-input>
+      <ion-input type="text" placeholder="请输入姓名" disabled [(ngModel)]="shopInfo.name"></ion-input>
     </ion-item>
 
     <ion-item>
