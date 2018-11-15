@@ -84,12 +84,8 @@
           <div class="list-left">付款金额</div>
           <div class="list-right">{{orders.order_amount}}</div>
         </div>
-        <div class="list clearfix" *ngIf="orders.rorder.desk_room">
-          <div class="list-left">房间</div>
-          <div class="list-right">{{orders.rorder.desk_room}}</div>
-        </div>
-        <div class="list clearfix" *ngIf="orders.rorder.show_table">
-          <div class="list-left">桌号</div>
+        <div class="list clearfix" *ngIf="orders.rorder">
+          <div class="list-left">房间/桌号</div>
           <div class="list-right">{{orders.rorder.show_table}}</div>
         </div>
         <div class="list clearfix" *ngIf="orders.rorder">

@@ -152,7 +152,7 @@ export class Utils {
    * @returns {string}
    */
   static isUserName (val = ''): string {
-    return /^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(val) ? 'true' : '请输入正确名字';
+    return /^[\u4e00-\u9fa5]+(·[\u4e00-\u9fa5]+)*$/.test(val) ? '' : '请输入正确名字';
   }
 
   /**

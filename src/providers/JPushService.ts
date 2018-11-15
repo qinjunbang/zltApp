@@ -7,6 +7,7 @@ import { JPush } from '@jiguang-ionic/jpush';
 import { NativeService } from './NativeService';
 import { SpeakingService } from './SpeakingService';
 import { Config } from './Config';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 
@@ -15,7 +16,8 @@ export class JPushService {
     private jPush: JPush,
     private events: Events,
     private native: NativeService,
-    private speaking: SpeakingService
+    private speaking: SpeakingService,
+    private storage: Storage
   ) {
 
   }
@@ -65,7 +67,13 @@ export class JPushService {
       console.log("jpush收到内容", JSON.stringify(event));
       console.log("jpush收到内容", content);
       if (content) {
-        this.speaking.startSpeak(content, loop);
+        this.storage.get('openVideo').then(val => {
+          console.log("val", val);
+          if (val || val == null) {
+            this.speaking.startSpeak(content, loop);
+          }
+        });
+
       }
     }, false);
 

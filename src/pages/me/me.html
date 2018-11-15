@@ -53,6 +53,14 @@
       </ion-item>
     </ion-list>
 
+    <ion-list no-lines class="list-ion-mar" (click)="checkAppVersion()">
+      <ion-item>
+        <ion-icon class="iconfont icon-weibiaoti--10" item-start></ion-icon>
+        <ion-label>开启推送播放声音</ion-label>
+        <ion-toggle [(ngModel)]="openVideo" (ngModelChange)="changeOpenVideo()"></ion-toggle>
+      </ion-item>
+    </ion-list>
+
     <ion-list no-lines class="list-ion" (click)="logout()">
         <ion-item>
             <ion-icon class="iconfont icon-app-logout" item-start></ion-icon>

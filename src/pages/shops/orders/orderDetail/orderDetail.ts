@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { HttpService } from '../../../../providers/HttpService';
-import { NavController , ActionSheetController , NavParams} from 'ionic-angular';
+import { NavController , ActionSheetController , NavParams, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeService } from '../../../../providers/NativeService';
 import { SpeakingService } from '../../../../providers/SpeakingService';
@@ -31,7 +31,8 @@ export class OrderDetailPage {
     public storage: Storage,
     public native: NativeService,
     public params: NavParams,
-    public speaking: SpeakingService
+    public speaking: SpeakingService,
+    public alertCtrl: AlertController
   ) {
     this.shopId = this.params.get('shopId');
     this.order_id = this.params.get('order_id');
@@ -126,16 +127,50 @@ export class OrderDetailPage {
   }
   //修改价格
   editPrice() {
-    this.http.post("/api/app/reserveEditMenu", {'token':this.token,'device_id': this.device_id,'order_id':this.order_id}).subscribe(res => {
-        console.log("res", res);
-        if(res.code == 200){
-          this.native.alert(res.info, "", "", () => {
-            this.getOrders();
-          });
-        }else {
-          this.native.alert('提示','',res.info)
+    let alert = this.alertCtrl.create({
+      title: '修改订单价格',
+      inputs: [
+        {
+          name: 'price',
+          type: 'number',
+          placeholder: '输入新的订单价格'
+        },
+      ],
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: '确定',
+          handler: data => {
+            console.log("data", data);
+            const ldata = {
+              'token':this.token,
+              'device_id': this.device_id,
+              'order_id':this.order_id,
+              'price': data.price
+            };
+            this.http.post("/api/app/reserveEditMenu", ldata).subscribe(res => {
+              console.log("res", res);
+              if(res.code == 200){
+                this.native.alert(res.info, "", "", () => {
+                  this.getOrders();
+                });
+              }else {
+                this.native.alert('提示','',res.info)
+              }
+            })
+          }
         }
-    })
+      ]
+    });
+    alert.present();
+
+
   }
   //同意退款
   refund() {

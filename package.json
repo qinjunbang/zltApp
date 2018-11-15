@@ -46,7 +46,6 @@
     "call-number": "^1.0.1",
     "cordova": "^8.0.0",
     "cordova-android": "7.0.0",
-    "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-appminimize": "^1.0.0",
@@ -107,9 +106,6 @@
       },
       "cordova-plugin-camera": {},
       "cordova-plugin-file-opener2": {},
-      "cordova-android-support-gradle-release": {
-        "ANDROID_SUPPORT_VERSION": "27.+"
-      },
       "cordova-plugin-themeablebrowser": {},
       "cordova-plugin-xunfeiListenSpeaking": {},
       "cordova-plugin-file": {},

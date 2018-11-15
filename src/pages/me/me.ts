@@ -19,7 +19,8 @@ import { SpeakingService } from '../../providers/SpeakingService';
 
 export class MePage {
     public user = {};
-    public serverUrl = 'https://www.zltgs.com'
+    public serverUrl = 'https://www.zltgs.com';
+    public openVideo = Config.openVideo;
     constructor(
         public native: NativeService,
         public navCtrl: NavController,
@@ -31,6 +32,13 @@ export class MePage {
         this.storage.get('userInfo').then((val) => {
             console.log(val)
             this.user = val
+        });
+        this.storage.get('openVideo').then(val => {
+
+          if (val != null) {
+            console.log("val11", val);
+            this.openVideo = val;
+          }
         });
     }
     wallet() {
@@ -96,4 +104,11 @@ export class MePage {
       });
 
   }
+
+  // 开启播放声音
+  changeOpenVideo () {
+      console.log("this.openVideo", this.openVideo);
+      Config.openVideo = this.openVideo;
+      this.storage.set("openVideo", this.openVideo);
+    }
 }

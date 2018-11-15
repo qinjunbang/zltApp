@@ -45,6 +45,7 @@ import { ContactPage } from '../pages/me/contact/contact';
 import { AddressPage } from '../pages/shops/address/address';
 
 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
@@ -110,7 +111,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
     FinancialsListPage,
     RoomTablesQrCodePage,
     ContactPage,
-    AddressPage
+    AddressPage,
   ],
   imports: [
     BrowserModule,
@@ -179,7 +180,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
     FinancialsListPage,
     RoomTablesQrCodePage,
     ContactPage,
-    AddressPage
+    AddressPage,
   ],
   providers: [
     StatusBar,
